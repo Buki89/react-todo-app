@@ -1,29 +1,49 @@
 import React from "react";
 import styled from "styled-components";
-import AddItem from "./AddItem";
+import AddItemForm from "./AddItemForm";
+import ItemList from "./ItemList";
+import { connect } from "react-redux";
+import { taskAdd, taskRemove, taskEdit } from "../store/actions/taskActions";
+import { TaskAction } from "../store/reducers/taskReducers";
 
 const BodyContainer = styled.div`
   background: #f2f2f2;
 `;
 
 interface DashBoardState {
-  textValue: string;
+  task: string;
+  category: string;
+}
+interface DashboardProps {
+  taskList: Array<Task>;
+}
+interface DashboardActions {
+  taskAdd: (param: Task) => { type: TaskAction.addTask; payload: Task };
+  taskRemove: ({
+    id: string
+  }) => { type: TaskAction.removeTask; payload: { id: string } };
+  taskEdit: any;
+}
+export interface Task {
+  task: string;
+  category: string;
+  id?: string;
 }
 
-interface Props {
-  defaultValue?: string;
-}
-
-class Dashboard extends React.PureComponent<{}, DashBoardState> {
-  state = {
-    textValue: ""
+class Dashboard extends React.PureComponent<
+  DashboardProps & DashboardActions,
+  DashBoardState
+> {
+  handleAddTask = ({ e, category, task }) => {
+    this.props.taskAdd({ category, task });
   };
 
-  onClick = (e: any) => {
-    e.preventDefault();
+  handleEditTask = ({ e, id, task, category }) => {
+    this.props.taskEdit({ id, task, category });
   };
-  onTextChange = (e: any) => {
-    this.setState({ textValue: e.target.value });
+
+  handleRemoveTask = (id: string) => {
+    this.props.taskRemove({ id });
   };
 
   render() {
@@ -32,10 +52,26 @@ class Dashboard extends React.PureComponent<{}, DashBoardState> {
         <div>
           <h2>Add what you should do</h2>
         </div>
-        <AddItem />
+        <AddItemForm
+          handleSubmit={this.handleAddTask}
+          buttonTitle='Add Item'
+          list={this.props.taskList}
+        />
+        <ItemList
+          list={this.props.taskList}
+          handleEditTask={this.handleEditTask}
+          handleRemoveTask={this.handleRemoveTask}
+        />
       </BodyContainer>
     );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    taskList: state
+  };
+};
+const mapDispatchToProps = { taskAdd, taskRemove, taskEdit };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
