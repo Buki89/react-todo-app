@@ -25,3 +25,10 @@ export const taskEdit = ({ id, task, category }) => ({
     task
   }
 });
+
+export const searchByName = ({ text }) => ({
+  type: TaskAction.searchByName,
+  payload: {
+    text
+  }
+});

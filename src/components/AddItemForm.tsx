@@ -27,12 +27,8 @@ class AddItemForm extends React.PureComponent<ItemProps> {
     e.preventDefault();
     const { id } = this.props;
     const { task, category } = this.state;
-    const isUnique =
-      this.props.list.find(item => item.task === task) === undefined;
-    if (isUnique) {
-      this.props.handleSubmit({ e, task, category, id });
-      this.setState({ task: "" });
-    }
+    this.props.handleSubmit({ e, task, category, id });
+    this.setState({ task: "" });
   };
 
   render() {
@@ -40,25 +36,25 @@ class AddItemForm extends React.PureComponent<ItemProps> {
       <div>
         <form onSubmit={this.handleSubmitForm}>
           <input
-            name='task'
-            type='text'
+            name="task"
+            type="text"
             onChange={this.handleChangeTask}
-            placeholder='text'
+            placeholder="text"
             value={this.state.task}
           />
           <select
-            name='category'
+            name="category"
             onChange={this.handleChangeCat}
             value={this.state.category}
             required
           >
-            <option value=''>select</option>
-            <option value='work'>Work</option>
-            <option value='hobby'>Hobby</option>
-            <option value='other'>Other</option>
+            <option value="">select</option>
+            <option value="work">Work</option>
+            <option value="hobby">Hobby</option>
+            <option value="other">Other</option>
           </select>
 
-          <button type='submit'>{this.props.buttonTitle}</button>
+          <button type="submit">{this.props.buttonTitle}</button>
         </form>
       </div>
     );

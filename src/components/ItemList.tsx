@@ -8,6 +8,8 @@ interface ItemListProps {
   handleEditTask: any;
 }
 
+const textFilter = () => {};
+
 class ItemList extends React.PureComponent<ItemListProps> {
   render() {
     const { list, handleRemoveTask, handleEditTask } = this.props;
@@ -15,6 +17,9 @@ class ItemList extends React.PureComponent<ItemListProps> {
     return (
       <>
         <h1>To Do List of items</h1>
+
+        <input name="filter" type="text" onChange={textFilter} />
+
         {list &&
           list.map((item: Task, index: number) => (
             <div key={index}>

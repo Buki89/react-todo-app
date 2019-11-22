@@ -1,12 +1,10 @@
 import React from "react";
 import AddItemForm from "./AddItemForm";
-import { Task } from "./Dashboard";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-around;
-  h2 {
+  div {
     margin: 0 20px;
   }
 `;
@@ -26,18 +24,26 @@ class Item extends React.PureComponent<ItemProps> {
     return (
       <div>
         <Wrapper>
-          <h2>to do:{item.task}</h2>
-          <h2>category: {item.category}</h2>
-          <button onClick={() => handleRemoveTask(item.id)}>Remove item</button>
-          <button
-            onClick={() => this.setState({ isVisible: !this.state.isVisible })}
-          >
-            Edit item
-          </button>
+          <div>to do:{item.task}</div>
+          <div>category: {item.category}</div>
+          <div>
+            <button onClick={() => handleRemoveTask(item.id)}>
+              Remove item
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() =>
+                this.setState({ isVisible: !this.state.isVisible })
+              }
+            >
+              Edit item
+            </button>
+          </div>
           {this.state.isVisible && (
             <AddItemForm
               handleSubmit={this.props.handleEditTask}
-              buttonTitle='Edit item'
+              buttonTitle="Edit item"
               id={item.id}
             />
           )}
