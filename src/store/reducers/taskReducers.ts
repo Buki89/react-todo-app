@@ -11,8 +11,8 @@ export default (state = taskInitialState, action) => {
   switch (action.type) {
     case TaskAction.addTask:
       return state.some(item => item.task === action.payload.task)
-        ? [...state, action.payload]
-        : state;
+        ? state
+        : [...state, action.payload];
     case TaskAction.removeTask:
       return state.filter(item => item.id !== action.payload.id);
     case TaskAction.editTask:
