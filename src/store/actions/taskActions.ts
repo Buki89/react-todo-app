@@ -1,4 +1,4 @@
-import { TaskAction } from "../reducers/taskReducers";
+import { TaskAction } from "../types";
 import uuid from "uuid";
 
 export const taskAdd = ({ task, category }) => ({
@@ -6,7 +6,8 @@ export const taskAdd = ({ task, category }) => ({
   payload: {
     task,
     category,
-    id: uuid()
+    id: uuid(),
+    isCompleted: false
   }
 });
 
@@ -30,5 +31,12 @@ export const searchByName = ({ text }) => ({
   type: TaskAction.searchByName,
   payload: {
     text
+  }
+});
+
+export const taskCompleted = ({ id }) => ({
+  type: TaskAction.completingTask,
+  payload: {
+    id
   }
 });

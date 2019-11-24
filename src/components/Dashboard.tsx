@@ -2,48 +2,39 @@ import React from "react";
 import styled from "styled-components";
 import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
+import ItemListCompleted from "./ItemListCompleted";
 import { connect } from "react-redux";
-import { taskAdd, taskRemove, taskEdit } from "../store/actions/taskActions";
-import { TaskAction } from "../store/reducers/taskReducers";
+import {
+  taskAdd,
+  taskRemove,
+  taskEdit,
+  taskCompleted
+} from "../store/actions/taskActions";
+import { Task, State, Actions } from "../store/types";
 
 const BodyContainer = styled.div`
   background: #f2f2f2;
 `;
 
-interface DashBoardState {
-  task: string;
-  category: string;
-}
 interface DashboardProps {
   taskList: Array<Task>;
 }
-interface DashboardActions {
-  taskAdd: (param: Task) => { type: TaskAction.addTask; payload: Task };
-  taskRemove: ({
-    id: string
-  }) => { type: TaskAction.removeTask; payload: { id: string } };
-  taskEdit: any;
-}
-export interface Task {
-  task: string;
-  category: string;
-  id?: string;
-}
 
-class Dashboard extends React.PureComponent<
-  DashboardProps & DashboardActions,
-  DashBoardState
-> {
-  handleAddTask = ({ e, category, task }) => {
+class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
+  handleAddTask = ({ category, task }) => {
     this.props.taskAdd({ category, task });
   };
 
-  handleEditTask = ({ e, id, task, category }) => {
+  handleEditTask = ({ id, task, category }) => {
     this.props.taskEdit({ id, task, category });
   };
 
   handleRemoveTask = (id: string) => {
     this.props.taskRemove({ id });
+  };
+
+  handleCompleteTask = (id: string) => {
+    this.props.taskCompleted({ id });
   };
 
   render() {
@@ -54,14 +45,16 @@ class Dashboard extends React.PureComponent<
         </div>
         <AddItemForm
           handleSubmit={this.handleAddTask}
-          buttonTitle='Add Item'
+          buttonTitle="Add Item"
           list={this.props.taskList}
         />
         <ItemList
           list={this.props.taskList}
           handleEditTask={this.handleEditTask}
           handleRemoveTask={this.handleRemoveTask}
+          handleCompleteTask={this.handleCompleteTask}
         />
+        <ItemListCompleted list={this.props.taskList} />
       </BodyContainer>
     );
   }
@@ -72,6 +65,6 @@ const mapStateToProps = state => {
     taskList: state
   };
 };
-const mapDispatchToProps = { taskAdd, taskRemove, taskEdit };
+const mapDispatchToProps = { taskAdd, taskRemove, taskEdit, taskCompleted };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -27,7 +27,7 @@ class AddItemForm extends React.PureComponent<ItemProps> {
     e.preventDefault();
     const { id } = this.props;
     const { task, category } = this.state;
-    this.props.handleSubmit({ e, task, category, id });
+    task !== "" && this.props.handleSubmit({ e, task, category, id });
     this.setState({ task: "" });
   };
 

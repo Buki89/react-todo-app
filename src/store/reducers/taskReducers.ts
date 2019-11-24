@@ -1,11 +1,6 @@
-const taskInitialState = [];
+import { TaskAction } from "../types";
 
-export enum TaskAction {
-  addTask = "ADD_TASK",
-  removeTask = "REMOVE_TASK",
-  editTask = "EDIT_TASK",
-  searchByName = "SEARCH_BY_NAME"
-}
+const taskInitialState = [];
 
 export default (state = taskInitialState, action) => {
   switch (action.type) {
@@ -24,6 +19,13 @@ export default (state = taskInitialState, action) => {
       });
     case TaskAction.searchByName:
       return;
+    case TaskAction.completingTask:
+      return state.map(item => {
+        if (item.id === action.payload.id) {
+          return { ...item, isCompleted: !item.isCompleted };
+        }
+        return item;
+      });
     default:
       return state;
   }
