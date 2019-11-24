@@ -17,8 +17,7 @@ export interface Actions {
   }) => { type: TaskAction.removeTask; payload: { id: string } };
   taskEdit: (param: Task) => { type: TaskAction.editTask; payload: Task };
   taskCompleted: ({
-    id,
-    checker: string
+    id
   }) => { type: TaskAction.completingTask; payload: { id: string } };
 }
 

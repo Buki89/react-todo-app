@@ -1,7 +1,7 @@
 import { TaskAction } from "../types";
 import { tasks } from "../../test/test";
 
-const taskInitialState = [...tasks];
+const taskInitialState = tasks;
 
 export default (state = taskInitialState, action) => {
   switch (action.type) {
@@ -18,18 +18,12 @@ export default (state = taskInitialState, action) => {
         }
         return item;
       });
-    case TaskAction.searchByName:
-      return;
     case TaskAction.completingTask:
-      return state.map(item => {
-        if (
-          item.id === action.payload.id &&
-          action.payload.checker === "complete"
-        ) {
-          return { ...item, isCompleted: !item.isCompleted };
-        }
-        return item;
-      });
+      return state.map(item =>
+        item.id === action.payload.id
+          ? { ...item, isCompleted: !item.isCompleted }
+          : item
+      );
     default:
       return state;
   }

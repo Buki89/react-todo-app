@@ -23,8 +23,18 @@ interface ItemProps {
 class Item extends React.PureComponent<ItemProps> {
   state = {
     isVisible: false,
-    checker: "complete"
+    isChecked: false
   };
+
+  handleOnCheckboxChange = e => {
+    this.setState({ isChecked: e.target.checked });
+  };
+
+  componentDidUpdate(prevProps: ItemProps, prevState) {
+    if (prevState.isChecked !== this.state.isChecked) {
+      setTimeout(() => this.props.handleCompleteTask(this.props.item.id), 2000);
+    }
+  }
 
   render() {
     const { handleRemoveTask, item } = this.props;
@@ -40,7 +50,7 @@ class Item extends React.PureComponent<ItemProps> {
           </div>
           <div>
             <button
-              name="Edit button"
+              name='Edit button'
               onClick={() =>
                 this.setState({ isVisible: !this.state.isVisible })
               }
@@ -51,17 +61,16 @@ class Item extends React.PureComponent<ItemProps> {
 
           <div>
             <input
-              type="checkbox"
-              value={this.state.checker}
-              onChange={() =>
-                this.props.handleCompleteTask(item.id, this.state.checker)
-              }
+              name={`checkbox-${item.id}`}
+              type='checkbox'
+              checked={this.state.isChecked}
+              onChange={this.handleOnCheckboxChange}
             />
           </div>
           {this.state.isVisible && (
             <AddItemForm
               handleSubmit={this.props.handleEditTask}
-              buttonTitle="Edit item"
+              buttonTitle='Edit item'
               id={item.id}
             />
           )}

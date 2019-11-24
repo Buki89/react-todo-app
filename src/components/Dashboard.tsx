@@ -33,8 +33,8 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
     this.props.taskRemove({ id });
   };
 
-  handleCompleteTask = (id: string, checker: string) => {
-    this.props.taskCompleted({ id, checker });
+  handleCompleteTask = (id: string) => {
+    this.props.taskCompleted({ id });
   };
 
   render() {
@@ -45,7 +45,7 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
         </div>
         <AddItemForm
           handleSubmit={this.handleAddTask}
-          buttonTitle="Add Item"
+          buttonTitle='Add Item'
           list={this.props.taskList}
         />
         <ItemList
