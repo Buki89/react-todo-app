@@ -33,8 +33,8 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
     this.props.taskRemove({ id });
   };
 
-  handleCompleteTask = (id: string) => {
-    this.props.taskCompleted({ id });
+  handleCompleteTask = (id: string, checker: string) => {
+    this.props.taskCompleted({ id, checker });
   };
 
   render() {

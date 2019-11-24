@@ -50,6 +50,7 @@ class AddItemForm extends React.PureComponent<ItemProps> {
           >
             <option value="">select</option>
             <option value="work">Work</option>
+            <option value="life">Life</option>
             <option value="hobby">Hobby</option>
             <option value="other">Other</option>
           </select>

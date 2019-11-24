@@ -9,10 +9,18 @@ interface ItemListProps {
   handleCompleteTask: any;
 }
 
-const textFilter = () => {};
+class ItemList extends React.PureComponent<ItemListProps, any> {
+  state = {
+    textFilter: ""
+  };
 
-class ItemList extends React.PureComponent<ItemListProps> {
+  onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const textFilter = e.target.value;
+    this.setState({ textFilter });
+  };
+
   render() {
+    console.log(this.state.textFilter);
     const {
       list,
       handleRemoveTask,
@@ -25,11 +33,22 @@ class ItemList extends React.PureComponent<ItemListProps> {
         <h1>To Do List of items</h1>
         <h3>Incompleted tasks</h3>
 
-        <input name="filter" type="text" onChange={textFilter} />
+        <input
+          name="filter"
+          type="text"
+          value={this.state.textFilter}
+          onChange={this.onTextChange}
+        />
 
         {list &&
           list
-            .filter(item => !item.isCompleted)
+            .filter(
+              item =>
+                !item.isCompleted &&
+                item.task
+                  .toLowerCase()
+                  .includes(this.state.textFilter.toLocaleLowerCase())
+            )
             .map((item: Task, index: number) => (
               <div key={index}>
                 <Item

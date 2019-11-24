@@ -22,11 +22,11 @@ interface ItemProps {
 
 class Item extends React.PureComponent<ItemProps> {
   state = {
-    isVisible: false
+    isVisible: false,
+    checker: "complete"
   };
 
   render() {
-    console.log(this.state);
     const { handleRemoveTask, item } = this.props;
     return (
       <div>
@@ -48,10 +48,15 @@ class Item extends React.PureComponent<ItemProps> {
               Edit item
             </button>
           </div>
+
           <div>
-            <button onClick={() => this.props.handleCompleteTask(item.id)}>
-              Complete Task
-            </button>
+            <input
+              type="checkbox"
+              value={this.state.checker}
+              onChange={() =>
+                this.props.handleCompleteTask(item.id, this.state.checker)
+              }
+            />
           </div>
           {this.state.isVisible && (
             <AddItemForm

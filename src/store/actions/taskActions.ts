@@ -34,9 +34,10 @@ export const searchByName = ({ text }) => ({
   }
 });
 
-export const taskCompleted = ({ id }) => ({
+export const taskCompleted = ({ id, checker }) => ({
   type: TaskAction.completingTask,
   payload: {
-    id
+    id,
+    checker
   }
 });
