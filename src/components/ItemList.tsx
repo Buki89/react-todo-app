@@ -34,8 +34,8 @@ class ItemList extends React.PureComponent<ItemListProps, any> {
         <h3>Incompleted tasks</h3>
 
         <input
-          name="filter"
-          type="text"
+          name='filter'
+          type='text'
           value={this.state.textFilter}
           onChange={this.onTextChange}
         />
@@ -50,12 +50,13 @@ class ItemList extends React.PureComponent<ItemListProps, any> {
                   .includes(this.state.textFilter.toLocaleLowerCase())
             )
             .map((item: Task, index: number) => (
-              <div key={index}>
+              <div key={item.id}>
                 <Item
                   item={item}
                   handleRemoveTask={handleRemoveTask}
                   handleEditTask={handleEditTask}
                   handleCompleteTask={handleCompleteTask}
+                  index={index}
                 />
               </div>
             ))}

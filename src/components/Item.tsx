@@ -18,6 +18,7 @@ interface ItemProps {
   handleRemoveTask: (id: string) => void;
   handleEditTask: any;
   handleCompleteTask: any;
+  index: any;
 }
 
 class Item extends React.PureComponent<ItemProps> {
@@ -32,8 +33,9 @@ class Item extends React.PureComponent<ItemProps> {
 
   componentDidUpdate(prevProps: ItemProps, prevState) {
     if (prevState.isChecked !== this.state.isChecked) {
-      setTimeout(() => this.props.handleCompleteTask(this.props.item.id), 2000);
+      this.props.handleCompleteTask(this.props.item.id);
     }
+    console.log(this.state, this.props.index);
   }
 
   render() {
@@ -61,7 +63,6 @@ class Item extends React.PureComponent<ItemProps> {
 
           <div>
             <input
-              name={`checkbox-${item.id}`}
               type='checkbox'
               checked={this.state.isChecked}
               onChange={this.handleOnCheckboxChange}
