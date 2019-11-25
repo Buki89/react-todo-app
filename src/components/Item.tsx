@@ -35,7 +35,6 @@ class Item extends React.PureComponent<ItemProps> {
     if (prevState.isChecked !== this.state.isChecked) {
       this.props.handleCompleteTask(this.props.item.id);
     }
-    console.log(this.state, this.props.index);
   }
 
   render() {
@@ -52,7 +51,7 @@ class Item extends React.PureComponent<ItemProps> {
           </div>
           <div>
             <button
-              name='Edit button'
+              name="Edit button"
               onClick={() =>
                 this.setState({ isVisible: !this.state.isVisible })
               }
@@ -63,7 +62,7 @@ class Item extends React.PureComponent<ItemProps> {
 
           <div>
             <input
-              type='checkbox'
+              type="checkbox"
               checked={this.state.isChecked}
               onChange={this.handleOnCheckboxChange}
             />
@@ -71,7 +70,7 @@ class Item extends React.PureComponent<ItemProps> {
           {this.state.isVisible && (
             <AddItemForm
               handleSubmit={this.props.handleEditTask}
-              buttonTitle='Edit item'
+              buttonTitle="Edit item"
               id={item.id}
             />
           )}

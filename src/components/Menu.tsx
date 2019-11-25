@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   background: #ffbb33;
@@ -10,9 +11,9 @@ const Wrapper = styled.div`
 
 const Menu = () => (
   <Wrapper>
-    <div>Home</div>
-    <div>ToDO</div>
-    <div>Summary</div>
+    <Link to="/">Home</Link>
+    <Link to="/todo">ToDo</Link>
+    <Link to="/summary">Summary</Link>
   </Wrapper>
 );
 

@@ -1,15 +1,11 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import theme from "../themes/theme";
-import Dashboard from "./Dashboard";
-import Header from "./Header";
-import Menu from "./Menu";
+import AppRouter from "../Router/Router";
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <Header />
-    <Menu />
-    <Dashboard />
+    <AppRouter />
   </ThemeProvider>
 );
 

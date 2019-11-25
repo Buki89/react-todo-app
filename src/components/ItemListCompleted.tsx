@@ -25,9 +25,11 @@ class ItemListCompleted extends React.PureComponent<
         <input
           name="filter"
           type="text"
+          placeholder="filter"
           value={this.state.textFilter}
           onChange={this.onTextChange}
         />
+
         {list &&
           list
             .filter(
