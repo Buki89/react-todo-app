@@ -1,15 +1,39 @@
 import { TaskAction } from "../types";
 import uuid from "uuid";
+import database from "../../firebase/firebase";
 
-export const taskAdd = ({ task, category }) => ({
+interface TaskData {
+  task: string;
+  category: string;
+  id: string;
+  isCompleted: boolean;
+}
+
+export const taskAdd = ({ task, category, id }) => ({
   type: TaskAction.addTask,
   payload: {
     task,
     category,
-    id: uuid(),
+    id,
     isCompleted: false
   }
 });
+
+export const startTaskAdd = (taskData: TaskData) => {
+  return dispatch => {
+    const { task = "", category = "", isCompleted = false } = taskData;
+    const tasks = { task, category, isCompleted };
+    return database
+      .ref(`tasks`)
+      .push(tasks)
+      .then(ref => {
+        dispatch(taskAdd({ task, category, id: ref.key }));
+      })
+      .catch(e => {
+        alert("chyba");
+      });
+  };
+};
 
 export const taskRemove = ({ id }) => ({
   type: TaskAction.removeTask,

@@ -12,7 +12,10 @@ export interface State {
 }
 
 export interface Actions {
-  taskAdd: (param: Task) => { type: TaskAction.addTask; payload: Task };
+  taskAdd: (
+    param: Task
+  ) => { type: TaskAction.addTask; payload: Task; id: string };
+  startTaskAdd: any;
   taskRemove: ({
     id: string
   }) => { type: TaskAction.removeTask; payload: { id: string } };

@@ -11,9 +11,9 @@ const Wrapper = styled.div`
 
 const Menu = () => (
   <Wrapper>
-    <Link to="/">Home</Link>
-    <Link to="/todo">ToDo</Link>
-    <Link to="/summary">Summary</Link>
+    <Link to='/'>Home</Link>
+    <Link to='/todo'>ToDo</Link>
+    <Link to='/summary'>Summary</Link>
   </Wrapper>
 );
 

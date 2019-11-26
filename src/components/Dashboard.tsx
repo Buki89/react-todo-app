@@ -6,6 +6,7 @@ import ItemListCompleted from "./ItemListCompleted";
 import { connect } from "react-redux";
 import {
   taskAdd,
+  startTaskAdd,
   taskRemove,
   taskEdit,
   taskCompleted
@@ -21,8 +22,8 @@ interface DashboardProps {
 }
 
 class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
-  handleAddTask = ({ category, task }) => {
-    this.props.taskAdd({ category, task });
+  handleAddTask = ({ category, task, id }) => {
+    this.props.startTaskAdd({ category, task, id });
   };
 
   handleEditTask = ({ id, task, category }) => {
@@ -65,6 +66,12 @@ const mapStateToProps = state => {
     taskList: state
   };
 };
-const mapDispatchToProps = { taskAdd, taskRemove, taskEdit, taskCompleted };
+const mapDispatchToProps = {
+  taskAdd,
+  startTaskAdd,
+  taskRemove,
+  taskEdit,
+  taskCompleted
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
