@@ -1,7 +1,7 @@
 import { TaskAction } from "../types";
-import { tasks } from "../../test/test";
+//import { tasks } from "../../test/test";
 
-const taskInitialState = tasks;
+const taskInitialState = [];
 
 export default (state = taskInitialState, action) => {
   switch (action.type) {
@@ -9,6 +9,8 @@ export default (state = taskInitialState, action) => {
       return state.some(item => item.task === action.payload.task)
         ? state
         : [...state, action.payload];
+    case TaskAction.settingTasks:
+      return action.payload;
     case TaskAction.removeTask:
       return state.filter(item => item.id !== action.payload.id);
     case TaskAction.editTask:

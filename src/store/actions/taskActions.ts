@@ -1,5 +1,4 @@
 import { TaskAction } from "../types";
-import uuid from "uuid";
 import database from "../../firebase/firebase";
 
 interface TaskData {
@@ -35,14 +34,48 @@ export const startTaskAdd = (taskData: TaskData) => {
   };
 };
 
-export const taskRemove = ({ id }) => ({
+export const setTasks = payload => ({
+  type: TaskAction.settingTasks,
+  payload
+});
+
+export const startSetTasks = () => {
+  return dispatch => {
+    return database
+      .ref("tasks")
+      .once("value")
+      .then(snapshot => {
+        const tasks = [];
+        snapshot.forEach(item => {
+          tasks.push({
+            id: item.key,
+            ...item.val()
+          });
+        });
+        dispatch(setTasks(tasks));
+      });
+  };
+};
+
+export const removeTask = ({ id }) => ({
   type: TaskAction.removeTask,
   payload: {
     id
   }
 });
 
-export const taskEdit = ({ id, task, category }) => ({
+export const startRemoveTask = ({ id }) => {
+  return dispatch => {
+    return database
+      .ref(`tasks/${id}`)
+      .remove()
+      .then(() => {
+        dispatch(removeTask({ id }));
+      });
+  };
+};
+
+export const editTask = ({ id, task, category }) => ({
   type: TaskAction.editTask,
   payload: {
     id,
@@ -50,6 +83,18 @@ export const taskEdit = ({ id, task, category }) => ({
     task
   }
 });
+
+export const startEditTask = ({ id, task, category }) => {
+  return dispatch => {
+    return database
+      .ref(`tasks/${id}`)
+      .update({ task, category })
+      .then(() => {
+        dispatch(editTask({ id, task, category }));
+      })
+      .catch(e => alert("něco je špatně"));
+  };
+};
 
 export const searchByName = ({ text }) => ({
   type: TaskAction.searchByName,

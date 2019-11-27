@@ -7,8 +7,10 @@ import { connect } from "react-redux";
 import {
   taskAdd,
   startTaskAdd,
-  taskRemove,
-  taskEdit,
+  removeTask,
+  startRemoveTask,
+  editTask,
+  startEditTask,
   taskCompleted
 } from "../store/actions/taskActions";
 import { Task, State, Actions } from "../store/types";
@@ -27,11 +29,11 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
   };
 
   handleEditTask = ({ id, task, category }) => {
-    this.props.taskEdit({ id, task, category });
+    this.props.startEditTask({ id, task, category });
   };
 
   handleRemoveTask = (id: string) => {
-    this.props.taskRemove({ id });
+    this.props.startRemoveTask({ id });
   };
 
   handleCompleteTask = (id: string) => {
@@ -46,7 +48,7 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
         </div>
         <AddItemForm
           handleSubmit={this.handleAddTask}
-          buttonTitle='Add Item'
+          buttonTitle="Add Item"
           list={this.props.taskList}
         />
         <ItemList
@@ -69,8 +71,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   taskAdd,
   startTaskAdd,
-  taskRemove,
-  taskEdit,
+  removeTask,
+  startRemoveTask,
+  editTask,
+  startEditTask,
   taskCompleted
 };
 

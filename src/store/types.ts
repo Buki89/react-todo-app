@@ -16,10 +16,12 @@ export interface Actions {
     param: Task
   ) => { type: TaskAction.addTask; payload: Task; id: string };
   startTaskAdd: any;
-  taskRemove: ({
+  removeTask: ({
     id: string
   }) => { type: TaskAction.removeTask; payload: { id: string } };
-  taskEdit: (param: Task) => { type: TaskAction.editTask; payload: Task };
+  startRemoveTask: any;
+  editTask: (param: Task) => { type: TaskAction.editTask; payload: Task };
+  startEditTask: any;
   taskCompleted: ({
     id
   }) => { type: TaskAction.completingTask; payload: { id: string } };
@@ -30,5 +32,6 @@ export enum TaskAction {
   removeTask = "REMOVE_TASK",
   editTask = "EDIT_TASK",
   searchByName = "SEARCH_BY_NAME",
-  completingTask = "COMPLETING_TASK"
+  completingTask = "COMPLETING_TASK",
+  settingTasks = "SET_TASKS"
 }
