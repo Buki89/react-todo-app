@@ -3,6 +3,7 @@ import styled from "styled-components";
 import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
 import ItemListCompleted from "./ItemListCompleted";
+import theme from "../themes/theme";
 import { connect } from "react-redux";
 import {
   taskAdd,
@@ -17,7 +18,11 @@ import {
 import { Task, State, Actions } from "../types/types";
 
 const BodyContainer = styled.div`
-  background: #f2f2f2;
+  background: ${theme.colors.color1};
+  margin: 0 20px 20px 20px;
+  padding: 40px;
+  border: 1px solid ${theme.colors.color2};
+  border-radius: 10px;
 `;
 
 interface DashboardProps {
@@ -44,9 +49,7 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
   render() {
     return (
       <BodyContainer>
-        <div>
-          <h2>Add what you should do</h2>
-        </div>
+        <div>Add what you should do</div>
         <AddItemForm
           handleSubmit={this.handleAddTask}
           buttonTitle='Add Item'
