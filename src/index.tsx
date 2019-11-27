@@ -1,10 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import * as serviceWorker from "./serviceWorker";
 import { startSetTasks } from "./store/actions/taskActions";
+import { ThemeProvider } from "styled-components";
+import theme from "./themes/theme";
+import AppRouter from "./Router/Router";
+
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <AppRouter />
+  </ThemeProvider>
+);
 
 ReactDOM.render(
   <Provider store={store}>
@@ -13,7 +21,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 store.dispatch(startSetTasks());
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

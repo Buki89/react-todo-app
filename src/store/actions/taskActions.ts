@@ -1,4 +1,4 @@
-import { TaskAction } from "../types";
+import { TaskAction } from "../../types/types";
 import database from "../../firebase/firebase";
 
 interface TaskData {
@@ -103,9 +103,20 @@ export const searchByName = ({ text }) => ({
   }
 });
 
-export const taskCompleted = ({ id }) => ({
+export const completeTask = ({ id }) => ({
   type: TaskAction.completingTask,
   payload: {
     id
   }
 });
+
+export const startCompleteTask = ({ id }) => {
+  return dispatch => {
+    return database
+      .ref(`tasks/${id}`)
+      .update({ isCompleted: true })
+      .then(() => {
+        dispatch(completeTask({ id }));
+      });
+  };
+};

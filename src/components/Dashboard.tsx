@@ -11,9 +11,10 @@ import {
   startRemoveTask,
   editTask,
   startEditTask,
-  taskCompleted
+  completeTask,
+  startCompleteTask
 } from "../store/actions/taskActions";
-import { Task, State, Actions } from "../store/types";
+import { Task, State, Actions } from "../types/types";
 
 const BodyContainer = styled.div`
   background: #f2f2f2;
@@ -37,7 +38,7 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
   };
 
   handleCompleteTask = (id: string) => {
-    this.props.taskCompleted({ id });
+    this.props.startCompleteTask({ id });
   };
 
   render() {
@@ -48,7 +49,7 @@ class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
         </div>
         <AddItemForm
           handleSubmit={this.handleAddTask}
-          buttonTitle="Add Item"
+          buttonTitle='Add Item'
           list={this.props.taskList}
         />
         <ItemList
@@ -75,7 +76,8 @@ const mapDispatchToProps = {
   startRemoveTask,
   editTask,
   startEditTask,
-  taskCompleted
+  completeTask,
+  startCompleteTask
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

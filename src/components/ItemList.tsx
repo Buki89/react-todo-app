@@ -1,5 +1,5 @@
 import React from "react";
-import { Task } from "../store/types";
+import { Task } from "../types/types";
 import Item from "./Item";
 
 interface ItemListProps {
@@ -57,15 +57,15 @@ class ItemList extends React.PureComponent<ItemListProps, any> {
         <h3>Incompleted tasks</h3>
 
         <input
-          name="filter"
-          type="text"
-          placeholder="filter"
+          name='filter'
+          type='text'
+          placeholder='filter'
           value={this.state.textFilter}
           onChange={this.onTextChange}
         />
         <select onChange={this.handleSortByChange} value={this.state.sortBy}>
-          <option value="name">Name</option>
-          <option value="category">Category</option>
+          <option value='name'>Name</option>
+          <option value='category'>Category</option>
         </select>
         {list &&
           list

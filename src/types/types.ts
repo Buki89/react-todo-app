@@ -22,9 +22,10 @@ export interface Actions {
   startRemoveTask: any;
   editTask: (param: Task) => { type: TaskAction.editTask; payload: Task };
   startEditTask: any;
-  taskCompleted: ({
+  completeTask: ({
     id
   }) => { type: TaskAction.completingTask; payload: { id: string } };
+  startCompleteTask: any;
 }
 
 export enum TaskAction {
