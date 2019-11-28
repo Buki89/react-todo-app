@@ -18,9 +18,9 @@ const StyledLink = styled(Link)`
 
 const Menu = () => (
   <Wrapper>
-    <StyledLink to='/'>Home</StyledLink>
+    <StyledLink to='/'>HomePage</StyledLink>
     <StyledLink to='/todo'>ToDo</StyledLink>
-    <StyledLink to='/summary'>Summary</StyledLink>
+    <StyledLink to='/summary'>SummaryPage</StyledLink>
   </Wrapper>
 );
 

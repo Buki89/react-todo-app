@@ -1,17 +1,15 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Summary from "../components/Summary";
-import Home from "../components/Home";
+import SummaryPage from "../components/SummaryPage";
+import HomePage from "../components/HomePage";
 
 const AppRouter = () => (
   <BrowserRouter>
-    <div>
-      <Switch>
-        <Route path="/" component={Home} exact={true} />
-        <Route path="/todo" component={() => {}} exact={true} />
-        <Route path="/summary" component={Summary} exact={true} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route path='/' component={HomePage} exact={true} />
+      <Route path='/todo' component={() => {}} exact={true} />
+      <Route path='/summary' component={SummaryPage} exact={true} />
+    </Switch>
   </BrowserRouter>
 );
 

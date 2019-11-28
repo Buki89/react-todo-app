@@ -8,6 +8,10 @@ interface TaskData {
   isCompleted: boolean;
 }
 
+enum Database {
+  tasks = "tasks"
+}
+
 export const taskAdd = ({ task, category, id }) => ({
   type: TaskAction.addTask,
   payload: {
@@ -23,7 +27,7 @@ export const startTaskAdd = (taskData: TaskData) => {
     const { task = "", category = "", isCompleted = false } = taskData;
     const tasks = { task, category, isCompleted };
     return database
-      .ref(`tasks`)
+      .ref(`${Database.tasks}`)
       .push(tasks)
       .then(ref => {
         dispatch(taskAdd({ task, category, id: ref.key }));
@@ -42,7 +46,7 @@ export const setTasks = payload => ({
 export const startSetTasks = () => {
   return dispatch => {
     return database
-      .ref("tasks")
+      .ref(`${Database.tasks}`)
       .once("value")
       .then(snapshot => {
         const tasks = [];
@@ -67,7 +71,7 @@ export const removeTask = ({ id }) => ({
 export const startRemoveTask = ({ id }) => {
   return dispatch => {
     return database
-      .ref(`tasks/${id}`)
+      .ref(`${Database.tasks}/${id}`)
       .remove()
       .then(() => {
         dispatch(removeTask({ id }));
@@ -87,7 +91,7 @@ export const editTask = ({ id, task, category }) => ({
 export const startEditTask = ({ id, task, category }) => {
   return dispatch => {
     return database
-      .ref(`tasks/${id}`)
+      .ref(`${Database.tasks}/${id}`)
       .update({ task, category })
       .then(() => {
         dispatch(editTask({ id, task, category }));
@@ -113,7 +117,7 @@ export const completeTask = ({ id }) => ({
 export const startCompleteTask = ({ id }) => {
   return dispatch => {
     return database
-      .ref(`tasks/${id}`)
+      .ref(`${Database.tasks}/${id}`)
       .update({ isCompleted: true })
       .then(() => {
         dispatch(completeTask({ id }));

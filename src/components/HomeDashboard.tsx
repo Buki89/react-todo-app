@@ -17,7 +17,7 @@ import {
 } from "../store/actions/taskActions";
 import { Task, State, Actions } from "../types/types";
 
-const BodyContainer = styled.div`
+export const BodyContainer = styled.div`
   background: ${theme.colors.color1};
   margin: 0 20px 20px 20px;
   padding: 40px;
@@ -29,7 +29,10 @@ interface DashboardProps {
   taskList: Array<Task>;
 }
 
-class Dashboard extends React.PureComponent<DashboardProps & Actions, State> {
+class HomeDashboard extends React.PureComponent<
+  DashboardProps & Actions,
+  State
+> {
   handleAddTask = ({ category, task, id }) => {
     this.props.startTaskAdd({ category, task, id });
   };
@@ -83,4 +86,4 @@ const mapDispatchToProps = {
   startCompleteTask
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeDashboard);

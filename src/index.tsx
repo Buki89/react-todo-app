@@ -9,16 +9,13 @@ import theme from "./themes/theme";
 import AppRouter from "./Router/Router";
 
 const App = () => (
-  <ThemeProvider theme={theme}>
-    <AppRouter />
-  </ThemeProvider>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <AppRouter />
+    </ThemeProvider>
+  </Provider>
 );
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));
 store.dispatch(startSetTasks());
 serviceWorker.unregister();

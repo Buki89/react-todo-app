@@ -1,21 +1,21 @@
 import React from "react";
-import Dashboard from "./Dashboard";
+import HomeDashboard from "./HomeDashboard";
 import Header from "./Header";
 import Menu from "./Menu";
 import styled from "styled-components";
 import theme from "../themes/theme";
 
-const MainContainer = styled.div`
+export const MainContainer = styled.div`
   background: ${theme.colors.color2};
   padding: 20px;
 `;
 
-const Home = () => (
+const HomePage = () => (
   <MainContainer>
     <Header />
     <Menu />
-    <Dashboard />
+    <HomeDashboard />
   </MainContainer>
 );
 
-export default Home;
+export default HomePage;
