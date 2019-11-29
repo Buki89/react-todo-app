@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 
 const store = createStore(
   todoApp,
-  compose(applyMiddleware(thunk), composeWithDevTools())
+  compose(composeWithDevTools(applyMiddleware(thunk)))
 );
 
 export default store;

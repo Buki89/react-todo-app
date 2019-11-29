@@ -1,12 +1,6 @@
 import { TaskAction } from "../../types/types";
 import database from "../../firebase/firebase";
-
-interface TaskData {
-  task: string;
-  category: string;
-  id: string;
-  isCompleted: boolean;
-}
+import { Task } from "../../types/types";
 
 enum Database {
   tasks = "tasks"
@@ -22,7 +16,7 @@ export const taskAdd = ({ task, category, id }) => ({
   }
 });
 
-export const startTaskAdd = (taskData: TaskData) => {
+export const startTaskAdd = (taskData: Task) => {
   return dispatch => {
     const { task = "", category = "", isCompleted = false } = taskData;
     const tasks = { task, category, isCompleted };

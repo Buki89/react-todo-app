@@ -12,20 +12,20 @@ export interface State {
 }
 
 export interface Actions {
-  taskAdd: (
+  taskAdd?: (
     param: Task
   ) => { type: TaskAction.addTask; payload: Task; id: string };
-  startTaskAdd: any;
-  removeTask: ({
+  startTaskAdd: (param: Task) => {};
+  removeTask?: ({
     id: string
   }) => { type: TaskAction.removeTask; payload: { id: string } };
-  startRemoveTask: any;
-  editTask: (param: Task) => { type: TaskAction.editTask; payload: Task };
-  startEditTask: any;
-  completeTask: ({
+  startRemoveTask: ({ id: string }) => {};
+  editTask?: (param: Task) => { type: TaskAction.editTask; payload: Task };
+  startEditTask: ({ id, task, category: string }) => {};
+  completeTask?: ({
     id
   }) => { type: TaskAction.completingTask; payload: { id: string } };
-  startCompleteTask: any;
+  startCompleteTask: ({ id: string }) => {};
 }
 
 export enum TaskAction {

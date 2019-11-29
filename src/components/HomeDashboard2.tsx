@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import theme from "../themes/theme";
 import AddItemForm from "./AddItemForm";
-import NewItemList from "./NewItemList";
+import ItemList from "./ItemList";
+import theme from "../themes/theme";
 
 export const BodyContainer = styled.div`
   background: ${theme.colors.color1};
@@ -14,12 +14,18 @@ export const BodyContainer = styled.div`
 
 const HomeDashboard = props => (
   <BodyContainer>
+    <div>Add what you should do</div>
     <AddItemForm
       handleSubmit={props.handleAddTask}
       buttonTitle="Add Item"
       taskList={props.taskList}
     />
-    <NewItemList />
+    <ItemList
+      taskList={props.taskList}
+      handleEditTask={props.handleEditTask}
+      handleRemoveTask={props.handleRemoveTask}
+      handleCompleteTask={props.handleCompleteTask}
+    />
   </BodyContainer>
 );
 
