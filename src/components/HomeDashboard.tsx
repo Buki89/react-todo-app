@@ -16,10 +16,10 @@ const HomeDashboard = props => (
   <BodyContainer>
     <AddItemForm
       handleSubmit={props.handleAddTask}
-      buttonTitle="Add Item"
+      buttonTitle='Add Item'
       taskList={props.taskList}
     />
-    <NewItemList />
+    <NewItemList taskList={props.taskList} />
   </BodyContainer>
 );
 

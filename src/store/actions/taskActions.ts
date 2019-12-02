@@ -6,25 +6,37 @@ enum Database {
   tasks = "tasks"
 }
 
-export const taskAdd = ({ task, category, id }) => ({
+export const taskAdd = ({ task, category, id, createdAt, note, deadline }) => ({
   type: TaskAction.addTask,
   payload: {
     task,
     category,
     id,
-    isCompleted: false
+    isCompleted: false,
+    createdAt,
+    note,
+    deadline
   }
 });
 
 export const startTaskAdd = (taskData: Task) => {
   return dispatch => {
-    const { task = "", category = "", isCompleted = false } = taskData;
-    const tasks = { task, category, isCompleted };
+    const {
+      task = "",
+      category = "",
+      isCompleted = false,
+      createdAt = 0,
+      note = "",
+      deadline = undefined
+    } = taskData;
+    const tasks = { task, category, isCompleted, createdAt, note, deadline };
     return database
       .ref(`${Database.tasks}`)
       .push(tasks)
       .then(ref => {
-        dispatch(taskAdd({ task, category, id: ref.key }));
+        dispatch(
+          taskAdd({ task, category, id: ref.key, createdAt, note, deadline })
+        );
       })
       .catch(e => {
         alert("chyba");

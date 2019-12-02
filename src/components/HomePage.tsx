@@ -20,8 +20,8 @@ interface HomePageProps {
 }
 
 class HomePage extends React.PureComponent<HomePageProps & Actions, any> {
-  handleAddTask = ({ category, task, id }) => {
-    this.props.startTaskAdd({ category, task, id });
+  handleAddTask = ({ category, task, id, createdAt, note, deadline }) => {
+    this.props.startTaskAdd({ category, task, id, createdAt, note, deadline });
   };
 
   render() {

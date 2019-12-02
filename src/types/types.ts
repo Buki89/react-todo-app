@@ -3,7 +3,9 @@ export interface Task {
   category: string;
   id?: string;
   isCompleted?: boolean;
-  sortBy?: string;
+  createdAt?: number;
+  note?: string;
+  deadline?: string;
 }
 
 export interface State {

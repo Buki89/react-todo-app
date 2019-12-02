@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../themes/theme";
+import moment from "moment";
 
 interface ItemProps {
   taskList?: any;
@@ -9,10 +10,18 @@ interface ItemProps {
   id?: string;
 }
 
+interface State {
+  task: string;
+  category: string;
+  note: string;
+  deadline: string;
+}
+
 const BordedWrapper = styled.div`
   border: 1px solid black;
   border-radius: 10px;
   padding: 15px;
+
   input {
     border: 1px solid black;
     border-radius: 5px;
@@ -37,16 +46,36 @@ const BordedWrapper = styled.div`
     margin: 5px;
     height: 40px;
   }
+  textarea {
+    border: 1px solid black;
+    box-sizing: border-box;
+    border-radius: 5px;
+    height: 80px;
+    padding: 0;
+    margin: 5px;
+    width: 300px;
+  }
+`;
+
+const BodyWrapper = styled.div`
+  display: flex;
 `;
 
 const Menu = styled.div`
   display: flex;
 `;
 
-class AddItemForm extends React.PureComponent<ItemProps> {
+class AddItemForm extends React.PureComponent<ItemProps, State> {
   state = {
     task: "",
-    category: ""
+    category: "",
+    note: "",
+    deadline: undefined
+  };
+
+  handleChangeDeadline = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const deadline = e.target.value;
+    this.setState({ deadline });
   };
 
   handleChangeTask = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,46 +88,83 @@ class AddItemForm extends React.PureComponent<ItemProps> {
     this.setState({ category });
   };
 
+  handleChangeNote = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const note = e.target.value;
+    this.setState({ note });
+  };
+
   handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const createdAt = moment().format("YYYY-MM-DD");
     const { id } = this.props;
-    const { task, category } = this.state;
-    task !== "" && this.props.handleSubmit({ e, task, category, id });
+    const { task, category, note, deadline } = this.state;
+    console.log(moment().format("YYYY-MM-DD"));
+
+    task !== "" &&
+      this.props.handleSubmit({
+        e,
+        task,
+        category,
+        id,
+        createdAt,
+        note,
+        deadline
+      });
     this.setState({ task: "" });
   };
 
   render() {
+    console.log(this.state);
     return (
       <BordedWrapper>
         <form onSubmit={this.handleSubmitForm}>
-          <Menu>
-            <div>
-              <input
-                name="task"
-                type="text"
-                onChange={this.handleChangeTask}
-                placeholder=" Insert task name"
-                value={this.state.task}
-              />
-            </div>
-            <div>
-              <select
-                name="category"
-                onChange={this.handleChangeCat}
-                value={this.state.category}
-                required
-              >
-                <option value="">select</option>
-                <option value="work">Work</option>
-                <option value="life">Life</option>
-                <option value="hobby">Hobby</option>
-                <option value="other">Other</option>
-              </select>
+          <BodyWrapper>
+            <Menu>
               <div>
-                <button type="submit">{this.props.buttonTitle}</button>
+                Task Name
+                <input
+                  name='task'
+                  type='text'
+                  onChange={this.handleChangeTask}
+                  placeholder=' Insert task name'
+                  value={this.state.task}
+                />
               </div>
-            </div>
-          </Menu>
+              <div>
+                <select
+                  name='category'
+                  onChange={this.handleChangeCat}
+                  value={this.state.category}
+                  required
+                >
+                  <option value=''>select</option>
+                  <option value='work'>Work</option>
+                  <option value='life'>Life</option>
+                  <option value='hobby'>Hobby</option>
+                  <option value='other'>Other</option>
+                </select>
+              </div>
+              <div>
+                <input
+                  name='deadline'
+                  type='date'
+                  value={this.state.deadline}
+                  onChange={this.handleChangeDeadline}
+                />
+              </div>
+              <div>
+                <textarea
+                  name='note'
+                  value={this.state.note}
+                  onChange={this.handleChangeNote}
+                ></textarea>
+              </div>
+            </Menu>
+          </BodyWrapper>
+
+          <div>
+            <button type='submit'>{this.props.buttonTitle}</button>
+          </div>
         </form>
       </BordedWrapper>
     );
