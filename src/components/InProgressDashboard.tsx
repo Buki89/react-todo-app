@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../themes/theme";
+import { Task } from "../types/types";
+import InProgressTaskList from "./InProgressTaskList";
 
 const BodyContainer = styled.div`
   background: ${theme.colors.color1};
@@ -10,9 +12,24 @@ const BodyContainer = styled.div`
   border-radius: 10px;
 `;
 
-const InProgressDashboard = () => (
+const BordedWrapper = styled.div`
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 15px;
+`;
+
+interface InProgressDashboardProps {
+  taskList: Array<Task>;
+}
+
+const InProgressDashboard = ({ taskList }: InProgressDashboardProps) => (
   <BodyContainer>
-    <div></div>
+    <BordedWrapper>
+      <>
+        <h2>Tasks in progress</h2>
+        <InProgressTaskList taskList={taskList} />
+      </>
+    </BordedWrapper>
   </BodyContainer>
 );
 

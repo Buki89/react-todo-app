@@ -121,50 +121,60 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
           <BodyWrapper>
             <Menu>
               <div>
-                Task Name
-                <input
-                  name='task'
-                  type='text'
-                  onChange={this.handleChangeTask}
-                  placeholder=' Insert task name'
-                  value={this.state.task}
-                />
+                <div>Task Name</div>
+                <div>
+                  <input
+                    name="task"
+                    type="text"
+                    onChange={this.handleChangeTask}
+                    placeholder=" Insert task name"
+                    value={this.state.task}
+                  />
+                </div>
               </div>
               <div>
-                <select
-                  name='category'
-                  onChange={this.handleChangeCat}
-                  value={this.state.category}
-                  required
-                >
-                  <option value=''>select</option>
-                  <option value='work'>Work</option>
-                  <option value='life'>Life</option>
-                  <option value='hobby'>Hobby</option>
-                  <option value='other'>Other</option>
-                </select>
+                <div>Category</div>
+                <div>
+                  <select
+                    name="category"
+                    onChange={this.handleChangeCat}
+                    value={this.state.category}
+                    required
+                  >
+                    <option value="">select</option>
+                    <option value="work">Work</option>
+                    <option value="life">Life</option>
+                    <option value="hobby">Hobby</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
               </div>
               <div>
-                <input
-                  name='deadline'
-                  type='date'
-                  value={this.state.deadline}
-                  onChange={this.handleChangeDeadline}
-                />
+                <div>Deadline</div>
+                <div>
+                  <input
+                    name="deadline"
+                    type="date"
+                    value={this.state.deadline}
+                    onChange={this.handleChangeDeadline}
+                  />
+                </div>
               </div>
               <div>
-                <textarea
-                  name='note'
-                  value={this.state.note}
-                  onChange={this.handleChangeNote}
-                ></textarea>
+                <div>Note</div>
+                <div>
+                  <textarea
+                    name="note"
+                    value={this.state.note}
+                    onChange={this.handleChangeNote}
+                  ></textarea>
+                  <div>
+                    <button type="submit">{this.props.buttonTitle}</button>
+                  </div>
+                </div>
               </div>
             </Menu>
           </BodyWrapper>
-
-          <div>
-            <button type='submit'>{this.props.buttonTitle}</button>
-          </div>
         </form>
       </BordedWrapper>
     );
