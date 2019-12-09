@@ -8,6 +8,8 @@ interface ItemProps {
   handleSubmit?: any;
   buttonTitle: string;
   id?: string;
+  handleRemoveTask?: any;
+  handleCompleteTask?: any;
 }
 
 interface State {
@@ -66,12 +68,15 @@ const Menu = styled.div`
 `;
 
 class AddItemForm extends React.PureComponent<ItemProps, State> {
-  state = {
-    task: "",
-    category: "",
-    note: "",
-    deadline: undefined
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      task: this.props.taskList ? this.props.taskList.task : "",
+      category: this.props.taskList ? this.props.taskList.category : "",
+      note: this.props.taskList ? this.props.taskList.note : "",
+      deadline: this.props.taskList ? this.props.taskList.deadline : ""
+    };
+  }
 
   handleChangeDeadline = (e: React.ChangeEvent<HTMLInputElement>) => {
     const deadline = e.target.value;
@@ -98,7 +103,6 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
     const createdAt = moment().format("YYYY-MM-DD");
     const { id } = this.props;
     const { task, category, note, deadline } = this.state;
-    console.log(moment().format("YYYY-MM-DD"));
 
     task !== "" &&
       this.props.handleSubmit({
@@ -114,7 +118,6 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
   };
 
   render() {
-    console.log(this.state);
     return (
       <BordedWrapper>
         <form onSubmit={this.handleSubmitForm}>
@@ -124,10 +127,10 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
                 <div>Task Name</div>
                 <div>
                   <input
-                    name="task"
-                    type="text"
+                    name='task'
+                    type='text'
                     onChange={this.handleChangeTask}
-                    placeholder=" Insert task name"
+                    placeholder=' Insert task name'
                     value={this.state.task}
                   />
                 </div>
@@ -136,16 +139,16 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
                 <div>Category</div>
                 <div>
                   <select
-                    name="category"
+                    name='category'
                     onChange={this.handleChangeCat}
                     value={this.state.category}
                     required
                   >
-                    <option value="">select</option>
-                    <option value="work">Work</option>
-                    <option value="life">Life</option>
-                    <option value="hobby">Hobby</option>
-                    <option value="other">Other</option>
+                    <option value=''>select</option>
+                    <option value='work'>Work</option>
+                    <option value='life'>Life</option>
+                    <option value='hobby'>Hobby</option>
+                    <option value='other'>Other</option>
                   </select>
                 </div>
               </div>
@@ -153,8 +156,8 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
                 <div>Deadline</div>
                 <div>
                   <input
-                    name="deadline"
-                    type="date"
+                    name='deadline'
+                    type='date'
                     value={this.state.deadline}
                     onChange={this.handleChangeDeadline}
                   />
@@ -164,13 +167,29 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
                 <div>Note</div>
                 <div>
                   <textarea
-                    name="note"
+                    name='note'
                     value={this.state.note}
                     onChange={this.handleChangeNote}
                   ></textarea>
-                  <div>
-                    <button type="submit">{this.props.buttonTitle}</button>
-                  </div>
+                  <Menu>
+                    <div>
+                      <button type='submit'>{this.props.buttonTitle}</button>
+                    </div>
+                    <div>
+                      {this.props.buttonTitle === "Edit Item" && (
+                        <button onClick={this.props.handleRemoveTask}>
+                          Delete Item
+                        </button>
+                      )}
+                    </div>
+                    <div>
+                      {this.props.buttonTitle === "Edit Item" && (
+                        <button onClick={this.props.handleCompleteTask}>
+                          Complete Task
+                        </button>
+                      )}
+                    </div>
+                  </Menu>
                 </div>
               </div>
             </Menu>

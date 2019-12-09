@@ -2,19 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import { Task } from "../types/types";
 import { Link } from "react-router-dom";
-import theme from "../themes/theme";
 
 const Column = styled.div`
   margin: 0 20px;
   width: 100px;
   text-align: center;
-  padding: 10px;
-  font-size: 20px;
+  padding: 5px;
+  font-size: 15px;
 `;
 const StyledLink = styled(Link)`
   display: flex;
   text-decoration: none;
   color: #000;
+  margin: 2px;
+  background: #ffffe6;
+  border: 1px solid black;
+  border-radius: 10px;
 `;
 
 interface InProgressItemProps {

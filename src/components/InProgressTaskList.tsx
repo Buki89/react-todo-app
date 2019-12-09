@@ -13,7 +13,7 @@ const Menu = styled.div`
     margin: 0 20px;
     width: 100px;
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     font-size: 20px;
     font-weight: bold;
   }
@@ -32,7 +32,7 @@ const InProgressTaskList = ({ taskList }: InProgressTaskListProps) => (
       {taskList &&
         taskList
           .filter((task: Task) => !task.isCompleted)
-          .map((item: Task) => <InProgressItem item={item} />)}
+          .map((item: Task) => <InProgressItem item={item} key={item.id} />)}
     </div>
   </div>
 );

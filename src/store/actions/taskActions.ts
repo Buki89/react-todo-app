@@ -27,7 +27,7 @@ export const startTaskAdd = (taskData: Task) => {
       isCompleted = false,
       createdAt = 0,
       note = "",
-      deadline = undefined
+      deadline = ""
     } = taskData;
     const tasks = { task, category, isCompleted, createdAt, note, deadline };
     return database
@@ -85,33 +85,63 @@ export const startRemoveTask = ({ id }) => {
   };
 };
 
-export const editTask = ({ id, task, category }) => ({
+export const editTask = ({
+  id,
+  task,
+  category,
+  note,
+  deadline,
+  createdAt,
+  isCompleted
+}) => ({
   type: TaskAction.editTask,
   payload: {
     id,
     category,
-    task
+    task,
+    note,
+    deadline,
+    createdAt,
+    isCompleted
   }
 });
 
-export const startEditTask = ({ id, task, category }) => {
+export const startEditTask = ({
+  id,
+  task,
+  category,
+  note,
+  deadline,
+  createdAt,
+  isCompleted
+}) => {
   return dispatch => {
     return database
       .ref(`${Database.tasks}/${id}`)
-      .update({ task, category })
+      .update({ task, category, note, deadline, createdAt, isCompleted })
       .then(() => {
-        dispatch(editTask({ id, task, category }));
+        dispatch(
+          editTask({
+            id,
+            task,
+            category,
+            note,
+            deadline,
+            createdAt,
+            isCompleted
+          })
+        );
       })
       .catch(e => alert("něco je špatně"));
   };
 };
 
-export const searchByName = ({ text }) => ({
-  type: TaskAction.searchByName,
-  payload: {
-    text
-  }
-});
+// export const searchByName = ({ text }) => ({
+//   type: TaskAction.searchByName,
+//   payload: {
+//     text
+//   }
+// });
 
 export const completeTask = ({ id }) => ({
   type: TaskAction.completingTask,

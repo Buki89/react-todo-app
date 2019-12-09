@@ -6,6 +6,9 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 15px;
 
   div {
     margin: 0 40px;
