@@ -60,7 +60,7 @@ class EditPage extends React.PureComponent<any, any> {
 
 const mapStateToProps = (state, props) => {
   return {
-    taskList: state.find(task => task.id === props.match.params.id)
+    taskList: state.tasks.find(task => task.id === props.match.params.id)
   };
 };
 

@@ -28,6 +28,7 @@ export interface Actions {
     id
   }) => { type: TaskAction.completingTask; payload: { id: string } };
   startCompleteTask: ({ id: string }) => {};
+  startSetTasks?: any;
 }
 
 export enum TaskAction {

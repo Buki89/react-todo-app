@@ -18,9 +18,9 @@ const SummaryPage = (props: SummaryPageProps) => (
   </MainContainer>
 );
 
-const mapStateToProps = (state: Array<Task>) => {
+const mapStateToProps = state => {
   return {
-    taskList: state
+    taskList: state.tasks
   };
 };
 

@@ -18,7 +18,7 @@ const StyledLink = styled(Link)`
 
 const Menu = () => (
   <Wrapper>
-    <StyledLink to="/">Home</StyledLink>
+    <StyledLink to="/home">Home</StyledLink>
     <StyledLink to="/progress">In progress</StyledLink>
     <StyledLink to="/summary">Summary</StyledLink>
   </Wrapper>

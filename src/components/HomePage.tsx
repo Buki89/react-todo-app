@@ -40,7 +40,7 @@ class HomePage extends React.PureComponent<HomePageProps & Actions, any> {
 
 const mapStateToProps = state => {
   return {
-    taskList: state
+    taskList: state.tasks
   };
 };
 const mapDispatchToProps = { startTaskAdd };

@@ -32,7 +32,7 @@ class InProgressPage extends React.PureComponent<InProgressProps, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    taskList: state
+    taskList: state.tasks
   };
 };
 

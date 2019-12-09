@@ -6,7 +6,9 @@ import * as serviceWorker from "./serviceWorker";
 import { startSetTasks } from "./store/actions/taskActions";
 import { ThemeProvider } from "styled-components";
 import theme from "./themes/theme";
-import AppRouter from "./Router/Router";
+import AppRouter, { history } from "./Router/Router";
+import { firebase } from "./firebase/firebase";
+import { login, logout } from "./store/actions/authActions";
 
 const App = () => (
   <Provider store={store}>
@@ -16,6 +18,16 @@ const App = () => (
   </Provider>
 );
 
-ReactDOM.render(<App />, document.getElementById("root"));
-store.dispatch(startSetTasks());
 serviceWorker.unregister();
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    store.dispatch(login(user.uid));
+    history.push("/home");
+    ReactDOM.render(<App />, document.getElementById("root"));
+    //@ts-ignore
+    store.dispatch(startSetTasks());
+  } else {
+    store.dispatch(logout());
+  }
+});
