@@ -1,48 +1,46 @@
 import React from "react";
-import styled from "styled-components";
-import theme from "../themes/theme";
 import Header from "./Header";
-import Menu from "./Menu";
 import HomeDashboard from "./HomeDashboard";
 import { connect } from "react-redux";
-import { startTaskAdd } from "../store/actions/taskActions";
-import { Task, Actions } from "../types/types";
-
-export const MainContainer = styled.div`
-  background: ${theme.colors.color2};
-  padding: 20px;
-  max-width: 80rem;
-  margin: 40px auto;
-`;
+import { startTaskAdd, startSetTasks } from "../store/actions/task";
+import { State, Task, ThunkResult } from "../types/types";
 
 interface HomePageProps {
   taskList: Array<Task>;
 }
 
-class HomePage extends React.PureComponent<HomePageProps & Actions, any> {
-  handleAddTask = ({ category, task, id, createdAt, note, deadline }) => {
-    this.props.startTaskAdd({ category, task, id, createdAt, note, deadline });
+type StartTaskAddAction = (task: Task) => ThunkResult<void>;
+type StartSetTasksAction = () => ThunkResult<void>;
+
+interface HomePageActions {
+  startTaskAdd: StartTaskAddAction;
+  startSetTasks: StartSetTasksAction;
+}
+
+class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
+  handleAddTask = ({ task, id, createdAt }: Task) => {
+    this.props.startTaskAdd({ task, id, createdAt });
   };
 
   render() {
     return (
-      <MainContainer>
+      <div>
         <Header />
-        <Menu />
         <HomeDashboard
           taskList={this.props.taskList}
           handleAddTask={this.handleAddTask}
         />
-      </MainContainer>
+      </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: State) => {
   return {
     taskList: state.tasks
   };
 };
-const mapDispatchToProps = { startTaskAdd };
+
+const mapDispatchToProps = { startTaskAdd, startSetTasks };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

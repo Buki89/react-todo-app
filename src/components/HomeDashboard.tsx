@@ -1,26 +1,43 @@
 import React from "react";
-import styled from "styled-components";
-import theme from "../themes/theme";
 import AddItemForm from "./AddItemForm";
-import NewItemList from "./NewItemList";
+import ItemList from "./ItemList";
+import { Task } from "../types/types";
+import styled from "styled-components";
+import Filter from "./Filter";
 
-export const BodyContainer = styled.div`
-  background: ${theme.colors.color1};
-  margin: 0 20px 20px 20px;
-  padding: 40px;
-  border: 1px solid ${theme.colors.color2};
-  border-radius: 10px;
+interface HomeDashboardProps {
+  handleAddTask: (params: Task) => void;
+  taskList: Array<Task>;
+}
+
+const Container = styled.div`
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const Item = styled.div`
+  margin: 20px;
 `;
 
-const HomeDashboard = props => (
-  <BodyContainer>
-    <AddItemForm
-      handleSubmit={props.handleAddTask}
-      buttonTitle='Add Item'
-      taskList={props.taskList}
-    />
-    <NewItemList taskList={props.taskList} />
-  </BodyContainer>
+const HomeDashboard = (props: HomeDashboardProps) => (
+  <Container>
+    <Item>
+      <AddItemForm
+        handleSubmit={props.handleAddTask}
+        buttonTitle="Add Item"
+        taskList={props.taskList}
+      />
+    </Item>
+    <Item>
+      <ItemList taskList={props.taskList} />
+    </Item>
+    <Item>
+      <Filter />
+    </Item>
+  </Container>
 );
 
 export default HomeDashboard;

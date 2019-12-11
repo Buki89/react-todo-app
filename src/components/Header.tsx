@@ -3,6 +3,7 @@ import styled from "styled-components";
 import theme from "../themes/theme";
 
 const HeaderWrapper = styled.div`
+  background: #333333;
   align-items: center;
   display: flex;
   max-height: 150px;

@@ -1,44 +1,31 @@
 import { TaskAction } from "../../types/types";
 import database from "../../firebase/firebase";
 import { Task } from "../../types/types";
-import { Dispatch } from "redux";
-import { type } from "os";
+
 enum Database {
   tasks = "tasks"
 }
 
-export const taskAdd = ({ task, category, id, createdAt, note, deadline }) => ({
+export const taskAdd = ({ task, id, createdAt }: Task) => ({
   type: TaskAction.addTask,
   payload: {
     task,
-    category,
     id,
     isCompleted: false,
-    createdAt,
-    note,
-    deadline
+    createdAt
   }
 });
 
 export const startTaskAdd = (taskData: Task) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    const {
-      task = "",
-      category = "",
-      isCompleted = false,
-      createdAt = 0,
-      note = "",
-      deadline = ""
-    } = taskData;
-    const tasks = { task, category, isCompleted, createdAt, note, deadline };
+    const { task = "", isCompleted = false, createdAt = "" } = taskData;
+    const tasks = { task, isCompleted, createdAt };
     return database
       .ref(`users/${uid}/${Database.tasks}`)
       .push(tasks)
       .then(ref => {
-        dispatch(
-          taskAdd({ task, category, id: ref.key, createdAt, note, deadline })
-        );
+        dispatch(taskAdd({ task, id: ref.key, createdAt }));
       })
       .catch(e => {
         alert("chyba");
@@ -50,8 +37,6 @@ export const setTasks = payload => ({
   type: TaskAction.settingTasks,
   payload
 });
-
-type Test = (dispatch, getState) => Promise<void>;
 
 export const startSetTasks = () => {
   return (dispatch, getState) => {
@@ -73,14 +58,14 @@ export const startSetTasks = () => {
   };
 };
 
-export const removeTask = ({ id }) => ({
-  type: TaskAction.removeTask,
+export const deleteTask = ({ id }) => ({
+  type: TaskAction.deleteTask,
   payload: {
     id
   }
 });
 
-export const startRemoveTask = ({ id }) => {
+export const startDeleteTask = ({ id }) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
@@ -88,55 +73,33 @@ export const startRemoveTask = ({ id }) => {
       .ref(`users/${uid}/${Database.tasks}/${id}`)
       .remove()
       .then(() => {
-        dispatch(removeTask({ id }));
+        dispatch(deleteTask({ id }));
       });
   };
 };
 
-export const editTask = ({
-  id,
-  task,
-  category,
-  note,
-  deadline,
-  createdAt,
-  isCompleted
-}) => ({
+export const editTask = ({ id, task, createdAt, isCompleted }) => ({
   type: TaskAction.editTask,
   payload: {
     id,
-    category,
     task,
-    note,
-    deadline,
     createdAt,
     isCompleted
   }
 });
 
-export const startEditTask = ({
-  id,
-  task,
-  category,
-  note,
-  deadline,
-  createdAt,
-  isCompleted
-}) => {
+export const startEditTask = ({ id, task, createdAt, isCompleted }) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
     return database
       .ref(`users/${uid}/${Database.tasks}/${id}`)
-      .update({ task, category, note, deadline, createdAt, isCompleted })
+      .update({ task, createdAt, isCompleted })
       .then(() => {
         dispatch(
           editTask({
             id,
             task,
-            category,
-            note,
-            deadline,
             createdAt,
             isCompleted
           })
@@ -169,6 +132,8 @@ export const startCompleteTask = ({ id }) => {
       .update({ isCompleted: true })
       .then(() => {
         dispatch(completeTask({ id }));
-      });
+        // TODO: dispatch redux action -> error handling
+      })
+      .catch(e => console.log(":(", e));
   };
 };

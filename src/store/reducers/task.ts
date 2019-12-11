@@ -1,9 +1,8 @@
-import { TaskAction } from "../../types/types";
-//import { tasks } from "../../test/test";
+import { TaskAction, TodoState } from "../../types/types";
 
-const taskInitialState = [];
+const initialState: TodoState = [];
 
-export default (state = taskInitialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case TaskAction.addTask:
       return state.some(item => item.task === action.payload.task)
@@ -11,7 +10,7 @@ export default (state = taskInitialState, action) => {
         : [...state, action.payload];
     case TaskAction.settingTasks:
       return action.payload;
-    case TaskAction.removeTask:
+    case TaskAction.deleteTask:
       return state.filter(item => item.id !== action.payload.id);
     case TaskAction.editTask:
       return state.map(item => {
@@ -30,11 +29,3 @@ export default (state = taskInitialState, action) => {
       return state;
   }
 };
-
-// case TaskAction.completingTask:
-//       return state.map(item => {
-//         if (item.id === action.payload.id) {
-//           return { ...item, isCompleted: !item.isCompleted };
-//         }
-//         return item;
-//       });
