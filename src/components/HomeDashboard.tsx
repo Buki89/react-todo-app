@@ -8,6 +8,8 @@ import Filter from "./Filter";
 interface HomeDashboardProps {
   handleAddTask: (params: Task) => void;
   taskList: Array<Task>;
+  filterList: { filter: string };
+  handleChangeFilter: (filter: string) => void;
 }
 
 const Container = styled.div`
@@ -32,10 +34,10 @@ const HomeDashboard = (props: HomeDashboardProps) => (
       />
     </Item>
     <Item>
-      <ItemList taskList={props.taskList} />
+      <ItemList taskList={props.taskList} filterList={props.filterList} />
     </Item>
     <Item>
-      <Filter />
+      <Filter handleChangeFilter={props.handleChangeFilter} />
     </Item>
   </Container>
 );

@@ -2,6 +2,7 @@ import React from "react";
 import { MdDone } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
 import styled from "styled-components";
+import { IconType } from "react-icons/lib/cjs";
 
 const Menu = styled.div`
   display: flex;
@@ -12,15 +13,20 @@ const Menu = styled.div`
     }
   }
 `;
-const Filter = () => (
+
+interface FilterProps {
+  handleChangeFilter: (filter: string) => void;
+}
+
+const Filter = ({ handleChangeFilter }: FilterProps) => (
   <Menu>
     <div>
-      <MdDone onClick={() => console.log("ahoj")} />
+      <MdDone onClick={() => handleChangeFilter("Completed")} />
     </div>
     <div>
-      <GiCancel onClick={() => console.log("ahoj")} />
+      <GiCancel onClick={() => handleChangeFilter("InCompleted")} />
     </div>
-    <div onClick={() => console.log("ahoj")}>ALL</div>
+    <div onClick={() => handleChangeFilter("Everything")}>ALL</div>
   </Menu>
 );
 

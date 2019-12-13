@@ -4,9 +4,10 @@ import { Task } from "../types/types";
 
 interface ItemListProps {
   taskList: Array<Task>;
+  filterList: { filter: string };
 }
 
-const ItemList = ({ taskList }: ItemListProps) => (
+const ItemList = ({ taskList, filterList }: ItemListProps) => (
   <div>
     {taskList &&
       taskList.map(task => (

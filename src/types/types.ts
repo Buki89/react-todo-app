@@ -27,9 +27,7 @@ export enum TaskAction {
 }
 
 export enum FilterAction {
-  showCompleted = "SHOW_COMPLETED",
-  showInCompleted = "SHOW_INCOMPLETED",
-  showEVERYTHING = "SHOW_EVERYTHING"
+  FilterChange = "FILTER_CHANGE"
 }
 
 export interface Task {

@@ -7,6 +7,7 @@ import {
   startCompleteTask,
   startEditTask
 } from "../store/actions/task";
+import Button from "./Button";
 
 const Menu = styled.div`
   display: flex;
@@ -23,35 +24,6 @@ const Menu = styled.div`
 `;
 const Flex = styled.div`
   display: flex;
-`;
-
-const DeleteButton = styled.button`
-  background: #cc0000;
-  color: #fff;
-  text-align: center;
-  border: 1px solid #ff0000;
-  border-radius: 3px;
-  width: 80px;
-  height: 40px;
-  font-weight: bold;
-  margin: 2px;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-const EditButton = styled.button`
-  background: #23cc33;
-  color: #fff;
-  text-align: center;
-  border: 1px solid #33cc33;
-  border-radius: 3px;
-  width: 80px;
-  height: 40px;
-  font-weight: bold;
-  margin: 2px;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 const EditInput = styled.input`
   width: 70px;
@@ -135,12 +107,17 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             checked={this.state.isChecked}
             onChange={this.handleOnCheckboxChange}
           ></input>
-          <EditButton
+          <Button
+            color="#23cc33"
             onClick={() => this.setState({ isVisible: !this.state.isVisible })}
-          >
-            Edit
-          </EditButton>
-          <DeleteButton onClick={this.handleDeleteTask}>Delete</DeleteButton>
+            name="Edit"
+          />
+
+          <Button
+            color="#cc0000"
+            onClick={this.handleDeleteTask}
+            name="Delete"
+          />
         </div>
       </Menu>
     );

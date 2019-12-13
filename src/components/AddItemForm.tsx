@@ -31,12 +31,9 @@ interface State {
 }
 
 class AddItemForm extends React.PureComponent<ItemProps, State> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      task: props.taskList ? props.taskList.task : ""
-    };
-  }
+  state = {
+    task: ""
+  };
 
   handleChangeTask = (e: React.ChangeEvent<HTMLInputElement>) => {
     const task = e.target.value;

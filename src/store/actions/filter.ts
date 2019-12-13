@@ -1,7 +1,7 @@
 import { FilterAction } from "../../types/types";
 
-export const showCompleted = ({ filter }) => ({
-  type: FilterAction.showCompleted,
+export const filterChange = (filter: string) => ({
+  type: FilterAction.FilterChange,
   payload: {
     filter
   }
