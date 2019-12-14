@@ -47,6 +47,7 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
     const { task } = this.state;
 
     task !== "" &&
+      this.props.taskList.filter(item => item.task === task).length === 0 &&
       this.props.handleSubmit({
         e,
         task,
@@ -62,14 +63,14 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
         <form onSubmit={this.handleSubmitForm}>
           <Menu>
             <input
-              name="task"
-              type="text"
+              name='task'
+              type='text'
               onChange={this.handleChangeTask}
-              placeholder="What should I do?"
+              placeholder='What should I do?'
               value={this.state.task}
             />
 
-            <AddButton type="submit">Add</AddButton>
+            <AddButton type='submit'>Add</AddButton>
           </Menu>
         </form>
       </div>
