@@ -3,12 +3,18 @@ import Header from "./Header";
 import HomeDashboard from "./HomeDashboard";
 import { connect } from "react-redux";
 import { startTaskAdd, startSetTasks } from "../store/actions/task";
-import { filterChange } from "../store/actions/filter";
-import { State, Task, ThunkResult, FilterAction } from "../types/types";
+import { filterChange, sortByMethod } from "../store/actions/filter";
+import {
+  State,
+  Task,
+  ThunkResult,
+  FilterAction,
+  FilterState
+} from "../types/types";
 
 interface HomePageProps {
   taskList: Array<Task>;
-  filterList: { filter: string };
+  filter: FilterState;
 }
 
 type StartTaskAddAction = (task: Task) => ThunkResult<void>;
@@ -21,11 +27,13 @@ type FilterChange = (
     filter: string;
   };
 };
-
+// TODO: naming
+type SortByMethod = () => void;
 interface HomePageActions {
   startTaskAdd: StartTaskAddAction;
   startSetTasks: StartSetTasksAction;
   filterChange: FilterChange;
+  sortByMethod: SortByMethod;
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
@@ -36,6 +44,9 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
   handleChangeFilter = (filter: string) => {
     this.props.filterChange(filter);
   };
+  handleSortByMethod = () => {
+    this.props.sortByMethod();
+  };
 
   render() {
     return (
@@ -43,9 +54,10 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
         <Header />
         <HomeDashboard
           taskList={this.props.taskList}
-          filterList={this.props.filterList}
+          filter={this.props.filter}
           handleAddTask={this.handleAddTask}
           handleChangeFilter={this.handleChangeFilter}
+          handleSortByMethod={this.handleSortByMethod}
         />
       </div>
     );
@@ -55,10 +67,15 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
 const mapStateToProps = (state: State) => {
   return {
     taskList: state.tasks,
-    filterList: state.filter
+    filter: state.filter
   };
 };
 
-const mapDispatchToProps = { startTaskAdd, startSetTasks, filterChange };
+const mapDispatchToProps = {
+  startTaskAdd,
+  startSetTasks,
+  filterChange,
+  sortByMethod
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

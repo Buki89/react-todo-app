@@ -6,3 +6,6 @@ export const filterChange = (filter: string) => ({
     filter
   }
 });
+export const sortByMethod = () => ({
+  type: FilterAction.SortMethod
+});

@@ -13,6 +13,7 @@ export interface AuthState {
 }
 export interface FilterState {
   filter: string;
+  ascendingSort: boolean;
 }
 
 // TODO: sjednotit naming settingTasks -> setTasks
@@ -27,7 +28,8 @@ export enum TaskAction {
 }
 
 export enum FilterAction {
-  FilterChange = "FILTER_CHANGE"
+  FilterChange = "FILTER_CHANGE",
+  SortMethod = "SORT_METHOD"
 }
 
 export interface Task {
@@ -36,24 +38,6 @@ export interface Task {
   isCompleted?: boolean;
   createdAt: any;
 }
-
-// export interface Actions {
-//   taskAdd?: (
-//     param: Task
-//   ) => { type: TaskAction.addTask; payload: Task; id: string };
-//   startTaskAdd: (param: Task) => {};
-//   removeTask?: ({
-//     id: string
-//   }) => { type: TaskAction.removeTask; payload: { id: string } };
-//   startRemoveTask: ({ id: string }) => {};
-//   editTask?: (param: Task) => { type: TaskAction.editTask; payload: Task };
-//   startEditTask: ({ id, task, category: string }) => {};
-//   completeTask?: ({
-//     id
-//   }) => { type: TaskAction.completingTask; payload: { id: string } };
-//   startCompleteTask: ({ id: string }) => {};
-//   startSetTasks?: any;
-// }
 
 export type Action =
   | {

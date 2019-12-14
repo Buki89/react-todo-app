@@ -8,24 +8,39 @@ import {
   startEditTask
 } from "../store/actions/task";
 import Button from "./Button";
+import StyledCheckbox from "../themes/checkbox";
 
 const Menu = styled.div`
   display: flex;
-  justify-content: space-between;
   border: 1px solid #ddd;
+  justify-content: space-between;
   border-radius: 3px;
-  margin: 3px;
+  margin: 5px;
   padding: 5px;
+  align-items: center;
   div {
-    display: inline-block;
-    margin: 3px;
-    width: 200px;
+    height: 60px;
+    height: 100%;
   }
 `;
+const LeftSide = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  justify-content: start;
+  display: flex;
+`;
+const RightSide = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Flex = styled.div`
   display: flex;
 `;
 const EditInput = styled.input`
+  border: none;
+  margin: 0 0 0 10px;
   width: 70px;
 `;
 type StartDeleteTaskAction = ({ id: string }) => ThunkResult<void>;
@@ -85,8 +100,8 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
   render() {
     return (
       <Menu>
-        <div>
-          <div>{this.props.task.task}</div>
+        <LeftSide>
+          <>{this.props.task.task}</>
           {this.state.isVisible && (
             <Flex>
               <form onSubmit={this.handleEdit}>
@@ -94,31 +109,34 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
                   value={this.state.task}
                   onChange={this.handleChangeTask}
                 ></EditInput>
-                <button type="submit">Ok</button>
+                <button type='submit'>Ok</button>
               </form>
             </Flex>
           )}
-        </div>
+        </LeftSide>
 
-        <div>{this.props.task.createdAt}</div>
-        <div>
-          <input
-            type="checkbox"
+        <RightSide>
+          <StyledCheckbox
+            type='checkbox'
             checked={this.state.isChecked}
             onChange={this.handleOnCheckboxChange}
-          ></input>
-          <Button
-            color="#23cc33"
-            onClick={() => this.setState({ isVisible: !this.state.isVisible })}
-            name="Edit"
-          />
+          ></StyledCheckbox>
+          <div>
+            <Button
+              color='#23cc33'
+              onClick={() =>
+                this.setState({ isVisible: !this.state.isVisible })
+              }
+              name='Edit'
+            />
+          </div>
 
           <Button
-            color="#cc0000"
+            color='#cc0000'
             onClick={this.handleDeleteTask}
-            name="Delete"
+            name='Delete'
           />
-        </div>
+        </RightSide>
       </Menu>
     );
   }

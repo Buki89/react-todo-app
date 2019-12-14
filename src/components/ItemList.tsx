@@ -1,21 +1,31 @@
 import React from "react";
 import Item from "./Item";
-import { Task } from "../types/types";
+import { Task, FilterState } from "../types/types";
+import { filtering } from "./Filterfunction";
+import { sorting } from "./Sorting";
+import styled from "styled-components";
 
 interface ItemListProps {
   taskList: Array<Task>;
-  filterList: { filter: string };
+  filter: FilterState;
 }
 
-const ItemList = ({ taskList, filterList }: ItemListProps) => (
-  <div>
+const Row = styled.div`
+  height: 70px;
+  height: 100%;
+`;
+
+const ItemList = ({ taskList, filter }: ItemListProps) => (
+  <>
     {taskList &&
-      taskList.map(task => (
-        <div key={task.id}>
-          <Item task={task} />
-        </div>
-      ))}
-  </div>
+      filtering(filter.filter, taskList)
+        .sort(sorting(filter.ascendingSort))
+        .map(task => (
+          <Row key={task.id}>
+            <Item task={task} />
+          </Row>
+        ))}
+  </>
 );
 
 export default ItemList;
