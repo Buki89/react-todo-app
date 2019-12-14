@@ -9,8 +9,8 @@ export const history = createBrowserHistory();
 const AppRouter = () => (
   <BrowserRouter history={history}>
     <Switch>
-      <Route path="/" component={LoginPage} exact={true} />
-      <Route path="/home" component={HomePage} />
+      <Route path='/' component={HomePage} exact={true} />
+      <Route path='/home' component={HomePage} />
     </Switch>
   </BrowserRouter>
 );
