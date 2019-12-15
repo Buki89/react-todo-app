@@ -36,7 +36,6 @@ export interface Task {
   task: string;
   id: string;
   isCompleted?: boolean;
-  createdAt: any;
 }
 
 export type Action =

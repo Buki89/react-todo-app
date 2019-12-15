@@ -15,6 +15,7 @@ import {
 interface HomePageProps {
   taskList: Array<Task>;
   filter: FilterState;
+  location: any;
 }
 
 type StartTaskAddAction = (task: Task) => ThunkResult<void>;
@@ -37,8 +38,8 @@ interface HomePageActions {
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
-  handleAddTask = ({ task, id, createdAt }: Task) => {
-    this.props.startTaskAdd({ task, id, createdAt });
+  handleAddTask = ({ task, id }: Task) => {
+    this.props.startTaskAdd({ task, id });
   };
 
   handleChangeFilter = (filter: string) => {
@@ -58,6 +59,7 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
           handleAddTask={this.handleAddTask}
           handleChangeFilter={this.handleChangeFilter}
           handleSortByMethod={this.handleSortByMethod}
+          location={this.props.location}
         />
       </div>
     );

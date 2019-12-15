@@ -1,10 +1,11 @@
 import React from "react";
 import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
-import { Task, FilterState } from "../types/types";
 import styled from "styled-components";
 import Filter from "./Filter";
+import TabMenu from "./TabMenu";
 import { FaSortAlphaDown, FaSortAlphaUp } from "react-icons/fa";
+import { Task, FilterState } from "../types/types";
 
 interface HomeDashboardProps {
   handleAddTask: (params: Task) => void;
@@ -12,10 +13,14 @@ interface HomeDashboardProps {
   filter: FilterState;
   handleChangeFilter: (filter: string) => void;
   handleSortByMethod: () => void;
+  location: { pathname: string };
 }
 
 const Container = styled.div`
   flex-direction: column;
+  background: #d9d9d9;
+  margin: auto;
+  max-width: 800px;
   height: 100%;
   width: 100%;
   display: flex;
@@ -52,8 +57,15 @@ const HomeDashboard = (props: HomeDashboardProps) => (
         )}
       </SortIcon>
 
-      <ItemList taskList={props.taskList} filter={props.filter} />
+      <ItemList
+        taskList={props.taskList}
+        filter={props.filter}
+        location={props.location}
+      />
     </ItemListContainer>
+    <Item>
+      <TabMenu />
+    </Item>
     <Item>
       <Filter handleChangeFilter={props.handleChangeFilter} />
     </Item>

@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-//import theme from "../themes/theme";
-import moment from "moment";
 import { Task } from "../types/types";
 
 const AddButton = styled.button`
@@ -17,6 +15,12 @@ const AddButton = styled.button`
 
 const Menu = styled.div`
   display: flex;
+`;
+const StyledInput = styled.input`
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 3px;
+  text-align: center;
 `;
 
 interface ItemProps {
@@ -42,7 +46,6 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
 
   handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const createdAt = moment().format("Do MMMM YYYY");
     const { id } = this.props;
     const { task } = this.state;
 
@@ -51,8 +54,7 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
       this.props.handleSubmit({
         e,
         task,
-        id,
-        createdAt
+        id
       });
     this.setState({ task: "" });
   };
@@ -62,7 +64,7 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
       <div>
         <form onSubmit={this.handleSubmitForm}>
           <Menu>
-            <input
+            <StyledInput
               name='task'
               type='text'
               onChange={this.handleChangeTask}

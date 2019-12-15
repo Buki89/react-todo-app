@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../themes/theme";
+import { Link } from "react-router-dom";
 
 const HeaderWrapper = styled.div`
   background: #333333;
@@ -15,10 +16,15 @@ const HeaderWrapper = styled.div`
     color: ${theme.colors.color1};
   }
 `;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const Header = () => (
   <HeaderWrapper>
-    <h1>Todo application</h1>
+    <StyledLink to='/'>
+      <h1>Todo application</h1>{" "}
+    </StyledLink>
   </HeaderWrapper>
 );
 

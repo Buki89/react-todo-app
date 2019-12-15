@@ -3,8 +3,6 @@ import { MdDone } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
 import styled from "styled-components";
 
-//TODO fsldghdiuhidf
-
 const Menu = styled.div`
   display: flex;
   div {

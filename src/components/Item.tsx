@@ -12,9 +12,9 @@ import StyledCheckbox from "../themes/checkbox";
 
 const Menu = styled.div`
   display: flex;
-  border: 1px solid #ddd;
+  border: 1px solid #fff;
   justify-content: space-between;
-  border-radius: 3px;
+  border-radius: 10px;
   margin: 5px;
   padding: 5px;
   align-items: center;
@@ -34,7 +34,6 @@ const RightSide = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
 const Flex = styled.div`
   display: flex;
 `;
@@ -45,12 +44,7 @@ const EditInput = styled.input`
 `;
 type StartDeleteTaskAction = ({ id: string }) => ThunkResult<void>;
 type StartCompleteTask = ({ id: string }) => ThunkResult<void>;
-type StartEditTask = ({
-  id,
-  task,
-  createdAt: string,
-  isCompleted: boolean
-}) => ThunkResult<void>;
+type StartEditTask = ({ id, task, isCompleted: boolean }) => ThunkResult<void>;
 
 interface ItemProps {
   task: Task;
@@ -78,22 +72,21 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
     this.props.startDeleteTask({ id: this.props.task.id });
   };
 
-  handleOnCheckboxChange = e => {
+  handleOnCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { task } = this.props;
     this.setState({ isChecked: e.target.checked });
     this.props.startCompleteTask({ id: task.id });
   };
-  handleEdit = e => {
+  handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     this.props.startEditTask({
       id: this.props.task.id,
       task: this.state.task,
-      createdAt: this.props.task.createdAt,
       isCompleted: this.props.task.isCompleted
     });
     this.setState({ isVisible: false });
   };
-  handleChangeTask = e => {
+  handleChangeTask = (e: React.ChangeEvent<HTMLInputElement>) => {
     const task = e.target.value;
     this.setState({ task });
   };
