@@ -1,17 +1,17 @@
 import { FilterAction } from "../../types/types";
 
 export const filterChange = (filter: string) => ({
-  type: FilterAction.FilterChange,
+  type: FilterAction.filterChange,
   payload: {
     filter
   }
 });
 export const sortByMethod = () => ({
-  type: FilterAction.SortMethod
+  type: FilterAction.sortMethod
 });
 
 export const showPage = (pageNumber: number) => ({
-  type: FilterAction.ShowPage,
+  type: FilterAction.showPage,
   payload: {
     pageNumber
   }

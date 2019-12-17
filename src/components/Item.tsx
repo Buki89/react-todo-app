@@ -12,7 +12,7 @@ import StyledCheckbox from "../themes/checkbox";
 
 const Menu = styled.div`
   display: flex;
-  border: 1px solid #fff;
+  border: 1px solid #000;
   justify-content: space-between;
   border-radius: 10px;
   margin: 5px;
@@ -24,7 +24,8 @@ const Menu = styled.div`
 `;
 const LeftSide = styled.div`
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 500;
+  margin: 0 0 0 10px;
   justify-content: flex-start;
   display: flex;
 `;
@@ -102,7 +103,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
                   value={this.state.task}
                   onChange={this.handleChangeTask}
                 ></EditInput>
-                <button type="submit">Ok</button>
+                <button type='submit'>Ok</button>
               </form>
             </Flex>
           )}
@@ -110,24 +111,24 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
         <RightSide>
           <StyledCheckbox
-            type="checkbox"
+            type='checkbox'
             checked={this.state.isChecked}
             onChange={this.handleOnCheckboxChange}
           ></StyledCheckbox>
           <div>
             <Button
-              color="#23cc33"
+              color='#23cc33'
               onClick={() =>
                 this.setState({ isVisible: !this.state.isVisible })
               }
-              name="Edit"
+              name='Edit'
             />
           </div>
 
           <Button
-            color="#cc0000"
+            color='#cc0000'
             onClick={this.handleDeleteTask}
-            name="Delete"
+            name='Delete'
           />
         </RightSide>
       </Menu>

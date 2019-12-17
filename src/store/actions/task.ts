@@ -3,7 +3,8 @@ import database from "../../firebase/firebase";
 import { Task } from "../../types/types";
 
 enum Database {
-  tasks = "tasks"
+  tasks = "tasks",
+  users = "users"
 }
 
 export const taskAdd = ({ task, id }: Task) => ({
@@ -21,7 +22,7 @@ export const startTaskAdd = (taskData: Task) => {
     const { task = "", isCompleted = false } = taskData;
     const tasks = { task, isCompleted };
     return database
-      .ref(`users/${uid}/${Database.tasks}`)
+      .ref(`${Database.users}/${uid}/${Database.tasks}`)
       .push(tasks)
       .then(ref => {
         dispatch(taskAdd({ task, id: ref.key }));
@@ -33,7 +34,7 @@ export const startTaskAdd = (taskData: Task) => {
 };
 
 export const setTasks = payload => ({
-  type: TaskAction.settingTasks,
+  type: TaskAction.setTasks,
   payload
 });
 
@@ -42,7 +43,7 @@ export const startSetTasks = () => {
     const uid = getState().auth.uid;
 
     return database
-      .ref(`users/${uid}/${Database.tasks}`)
+      .ref(`${Database.users}/${uid}/${Database.tasks}`)
       .once("value")
       .then(snapshot => {
         const tasks = [];
@@ -69,7 +70,7 @@ export const startDeleteTask = ({ id }) => {
     const uid = getState().auth.uid;
 
     return database
-      .ref(`users/${uid}/${Database.tasks}/${id}`)
+      .ref(`${Database.users}/${uid}/${Database.tasks}/${id}`)
       .remove()
       .then(() => {
         dispatch(deleteTask({ id }));
@@ -92,7 +93,7 @@ export const startEditTask = ({ id, task, isCompleted }) => {
     const uid = getState().auth.uid;
 
     return database
-      .ref(`users/${uid}/${Database.tasks}/${id}`)
+      .ref(`${Database.users}/${uid}/${Database.tasks}/${id}`)
       .update({ task, isCompleted })
       .then(() => {
         dispatch(
@@ -108,15 +109,15 @@ export const startEditTask = ({ id, task, isCompleted }) => {
   };
 };
 
-// export const searchByName = ({ text }) => ({
-//   type: TaskAction.searchByName,
+// export const searchTask = ({ text }) => ({
+//   type: TaskAction.searchTask,
 //   payload: {
 //     text
 //   }
 // });
 
 export const completeTask = ({ id }) => ({
-  type: TaskAction.completingTask,
+  type: TaskAction.completeTask,
   payload: {
     id
   }
@@ -127,7 +128,7 @@ export const startCompleteTask = ({ id }) => {
     const uid = getState().auth.uid;
 
     return database
-      .ref(`users/${uid}/${Database.tasks}/${id}`)
+      .ref(`${Database.users}/${uid}/${Database.tasks}/${id}`)
       .update({ isCompleted: true })
       .then(() => {
         dispatch(completeTask({ id }));

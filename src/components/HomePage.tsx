@@ -23,7 +23,7 @@ type StartSetTasksAction = () => ThunkResult<void>;
 type FilterChange = (
   filter: string
 ) => {
-  type: FilterAction.FilterChange;
+  type: FilterAction.filterChange;
   payload: {
     filter: string;
   };
@@ -39,7 +39,7 @@ interface HomePageActions {
   showPage: (
     pageNumber: number
   ) => {
-    type: FilterAction.ShowPage;
+    type: FilterAction.showPage;
     payload: {
       pageNumber: number;
     };
@@ -53,6 +53,7 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
 
   handleChangeFilter = (filter: string) => {
     this.props.filterChange(filter);
+    this.props.showPage(1);
   };
   handleSortByMethod = () => {
     this.props.sortByMethod();

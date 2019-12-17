@@ -1,16 +1,34 @@
 import React from "react";
+import { Task, FilterState } from "../types/types";
+import { renderRefToPages } from "../components/TodoFunctions";
+import styled from "styled-components";
 
-// TODO: smazat megasračka
+const Div = styled.div`
+  margin: 0 10px;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const Bar = styled.div`
+  display: flex;
+`;
+
 interface TabsProps {
   showPage: (pagenumber: number) => void;
+  taskList: Array<Task>;
+  filterList: FilterState;
 }
 const Tabs = (props: TabsProps) => (
-  <>
-    <div onClick={() => props.showPage(1)}>1</div>
-    <div onClick={() => props.showPage(2)}>2</div>
-    <div onClick={() => props.showPage(3)}>3</div>
-    <div onClick={() => props.showPage(4)}>4</div>
-  </>
+  <Bar>
+    {renderRefToPages(props.taskList, props.filterList).map(
+      (item: number, index) => (
+        <Div onClick={() => props.showPage(item)} key={index}>
+          {item}
+        </Div>
+      )
+    )}
+  </Bar>
 );
 
 export default Tabs;

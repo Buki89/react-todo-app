@@ -1,6 +1,4 @@
 import React from "react";
-import { MdDone } from "react-icons/md";
-import { GiCancel } from "react-icons/gi";
 import styled from "styled-components";
 
 const Menu = styled.div`
@@ -18,16 +16,35 @@ interface FilterProps {
 }
 
 const Filter = ({ handleChangeFilter }: FilterProps) => (
-  <Menu>
+  <>
     <div>
-      {/* TODO: enum */}
-      <MdDone onClick={() => handleChangeFilter("Completed")} />
+      <input
+        type='radio'
+        id='complete'
+        name='filter'
+        onChange={() => handleChangeFilter("Completed")}
+      />
+      <label htmlFor='complete'>Complete</label>
     </div>
     <div>
-      <GiCancel onClick={() => handleChangeFilter("InCompleted")} />
+      <input
+        type='radio'
+        id='incomplete'
+        name='filter'
+        onChange={() => handleChangeFilter("InCompleted")}
+      />
+      <label htmlFor='incomplete'>Incomplete</label>
     </div>
-    <div onClick={() => handleChangeFilter("Everything")}>ALL</div>
-  </Menu>
+    <div>
+      <input
+        type='radio'
+        id='total'
+        name='filter'
+        onChange={() => handleChangeFilter("Everything")}
+      />
+      <label htmlFor='total'>Total</label>
+    </div>
+  </>
 );
 
 export default Filter;

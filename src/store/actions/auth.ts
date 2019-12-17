@@ -1,8 +1,8 @@
 import { firebase, googleAuthProvider } from "../../firebase/firebase";
+import { AuthAction } from "../../types/types";
 
-// TODO: types -> enum
 export const login = (uid: string) => ({
-  type: "LOGIN",
+  type: AuthAction.login,
   uid
 });
 
@@ -13,7 +13,7 @@ export const startLogin = () => {
 };
 
 export const logout = () => ({
-  type: "LOGOUT"
+  type: AuthAction.logout
 });
 
 export const startLogout = () => {

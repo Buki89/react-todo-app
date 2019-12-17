@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
       return state.some(item => item.task === action.payload.task)
         ? state
         : [...state, action.payload];
-    case TaskAction.settingTasks:
+    case TaskAction.setTasks:
       return action.payload;
     case TaskAction.deleteTask:
       return state.filter(item => item.id !== action.payload.id);
@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
         }
         return item;
       });
-    case TaskAction.completingTask:
+    case TaskAction.completeTask:
       return state.map(item =>
         item.id === action.payload.id
           ? { ...item, isCompleted: !item.isCompleted }

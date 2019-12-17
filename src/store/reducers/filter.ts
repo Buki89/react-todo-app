@@ -1,23 +1,23 @@
 import { FilterAction, FilterState } from "../../types/types";
 
-// TODO: naming - ascendingSort -> isSortedAlphabetically
+// TODO: naming - sortAlphabetically -> isSortedAlphabetically
 const initialState: FilterState = {
-  filter: "",
-  ascendingSort: true,
+  displayTasks: "",
+  sortAlphabetically: true,
   pageNumber: 1
 };
 
 // TODO: type: Action
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FilterAction.FilterChange:
+    case FilterAction.filterChange:
       return {
         ...state,
-        filter: action.payload.filter
+        displayTasks: action.payload.filter
       };
-    case FilterAction.SortMethod:
-      return { ...state, ascendingSort: !state.ascendingSort };
-    case FilterAction.ShowPage:
+    case FilterAction.sortMethod:
+      return { ...state, sortAlphabetically: !state.sortAlphabetically };
+    case FilterAction.showPage:
       return { ...state, pageNumber: action.payload.pageNumber };
 
     default:
