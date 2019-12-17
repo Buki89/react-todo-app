@@ -6,7 +6,7 @@ const AddButton = styled.button`
   background: #0000ff;
   color: #fff;
   text-align: center;
-  border: 1px solid #0000ff;
+  border: none;
   border-radius: 3px;
   max-width: 70px;
   font-weight: bold;
@@ -65,14 +65,14 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
         <form onSubmit={this.handleSubmitForm}>
           <Menu>
             <StyledInput
-              name='task'
-              type='text'
+              name="task"
+              type="text"
               onChange={this.handleChangeTask}
-              placeholder='What should I do?'
+              placeholder="What should I do?"
               value={this.state.task}
             />
 
-            <AddButton type='submit'>Add</AddButton>
+            <AddButton type="submit">Add</AddButton>
           </Menu>
         </form>
       </div>

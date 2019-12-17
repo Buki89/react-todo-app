@@ -22,8 +22,8 @@ const StyledLink = styled(Link)`
 
 const Header = () => (
   <HeaderWrapper>
-    <StyledLink to='/'>
-      <h1>Todo application</h1>{" "}
+    <StyledLink to="/">
+      <h1>Todo application</h1>
     </StyledLink>
   </HeaderWrapper>
 );

@@ -20,6 +20,7 @@ interface FilterProps {
 const Filter = ({ handleChangeFilter }: FilterProps) => (
   <Menu>
     <div>
+      {/* TODO: enum */}
       <MdDone onClick={() => handleChangeFilter("Completed")} />
     </div>
     <div>

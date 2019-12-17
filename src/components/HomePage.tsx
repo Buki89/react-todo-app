@@ -3,7 +3,7 @@ import Header from "./Header";
 import HomeDashboard from "./HomeDashboard";
 import { connect } from "react-redux";
 import { startTaskAdd, startSetTasks } from "../store/actions/task";
-import { filterChange, sortByMethod } from "../store/actions/filter";
+import { filterChange, sortByMethod, showPage } from "../store/actions/filter";
 import {
   State,
   Task,
@@ -28,13 +28,22 @@ type FilterChange = (
     filter: string;
   };
 };
-// TODO: naming
+// TODO: debilní naming
 type SortByMethod = () => void;
 interface HomePageActions {
   startTaskAdd: StartTaskAddAction;
   startSetTasks: StartSetTasksAction;
   filterChange: FilterChange;
   sortByMethod: SortByMethod;
+  handleShowPage: (pageNumber: number) => void;
+  showPage: (
+    pageNumber: number
+  ) => {
+    type: FilterAction.ShowPage;
+    payload: {
+      pageNumber: number;
+    };
+  };
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
@@ -48,10 +57,13 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
   handleSortByMethod = () => {
     this.props.sortByMethod();
   };
+  handleShowPage = (pageNumber: number) => {
+    this.props.showPage(pageNumber);
+  };
 
   render() {
     return (
-      <div>
+      <>
         <Header />
         <HomeDashboard
           taskList={this.props.taskList}
@@ -59,9 +71,9 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
           handleAddTask={this.handleAddTask}
           handleChangeFilter={this.handleChangeFilter}
           handleSortByMethod={this.handleSortByMethod}
-          location={this.props.location}
+          showPage={this.handleShowPage}
         />
-      </div>
+      </>
     );
   }
 }
@@ -77,7 +89,8 @@ const mapDispatchToProps = {
   startTaskAdd,
   startSetTasks,
   filterChange,
-  sortByMethod
+  sortByMethod,
+  showPage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -7,7 +7,6 @@ import styled from "styled-components";
 interface ItemListProps {
   taskList: Array<Task>;
   filter: FilterState;
-  location: { pathname: string };
 }
 
 const Row = styled.div`
@@ -15,18 +14,15 @@ const Row = styled.div`
   height: 100%;
 `;
 
-const ItemList = ({ taskList, filter, location }: ItemListProps) => (
+const ItemList = ({ taskList, filter }: ItemListProps) => (
   <>
-    {console.log(location.pathname)}
     {taskList &&
       isCompletedFilter(filter.filter, taskList)
         .sort(sorting(filter.ascendingSort))
         .filter((item: Task, index) => {
-          if (location.pathname === "/") {
-            return index < 10;
-          } else {
-            return index > 10;
-          }
+          const end = filter.pageNumber * 10 - 1;
+          const start = end - 9;
+          return index >= start && index <= end;
         })
         .map((task: Task) => (
           <Row key={task.id}>

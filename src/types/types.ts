@@ -14,6 +14,7 @@ export interface AuthState {
 export interface FilterState {
   filter: string;
   ascendingSort: boolean;
+  pageNumber: number;
 }
 
 // TODO: sjednotit naming settingTasks -> setTasks
@@ -29,7 +30,8 @@ export enum TaskAction {
 
 export enum FilterAction {
   FilterChange = "FILTER_CHANGE",
-  SortMethod = "SORT_METHOD"
+  SortMethod = "SORT_METHOD",
+  ShowPage = "SHOW_PAGE"
 }
 
 export interface Task {

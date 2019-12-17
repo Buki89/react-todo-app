@@ -9,3 +9,10 @@ export const filterChange = (filter: string) => ({
 export const sortByMethod = () => ({
   type: FilterAction.SortMethod
 });
+
+export const showPage = (pageNumber: number) => ({
+  type: FilterAction.ShowPage,
+  payload: {
+    pageNumber
+  }
+});

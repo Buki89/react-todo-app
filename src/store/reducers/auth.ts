@@ -6,6 +6,7 @@ const initialState: AuthState = {
   uid: ""
 };
 
+// TODO: action type
 export default (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN":

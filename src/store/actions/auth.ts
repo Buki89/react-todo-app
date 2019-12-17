@@ -1,6 +1,7 @@
 import { firebase, googleAuthProvider } from "../../firebase/firebase";
 
-export const login = uid => ({
+// TODO: types -> enum
+export const login = (uid: string) => ({
   type: "LOGIN",
   uid
 });

@@ -10,6 +10,7 @@ class LoginPage extends React.PureComponent<any, any> {
   render() {
     return (
       <div>
+        {/* TODO: button compo */}
         <button onClick={this.handleLogin}>Login</button>
       </div>
     );

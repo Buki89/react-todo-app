@@ -2,6 +2,7 @@ import { TaskAction, TodoState } from "../../types/types";
 
 const initialState: TodoState = [];
 
+// TODO: action type
 export default (state = initialState, action) => {
   switch (action.type) {
     case TaskAction.addTask:

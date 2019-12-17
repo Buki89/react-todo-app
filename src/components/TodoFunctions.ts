@@ -1,7 +1,9 @@
 import { Task } from "../types/types";
 
+// filterStatusCompletion
 export const isCompletedFilter = (filter: string, taskList: Array<Task>) => {
   switch (filter) {
+    // TODO: enum pyco
     case "Completed":
       return taskList.filter((item: Task) => item.isCompleted);
 
@@ -13,6 +15,7 @@ export const isCompletedFilter = (filter: string, taskList: Array<Task>) => {
   }
 };
 
+// TODO: types
 export const sorting = isAscending => {
   switch (isAscending) {
     case true:

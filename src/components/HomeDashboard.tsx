@@ -13,7 +13,7 @@ interface HomeDashboardProps {
   filter: FilterState;
   handleChangeFilter: (filter: string) => void;
   handleSortByMethod: () => void;
-  location: { pathname: string };
+  showPage: (pageNumber: number) => void;
 }
 
 const Container = styled.div`
@@ -43,7 +43,7 @@ const HomeDashboard = (props: HomeDashboardProps) => (
     <Item>
       <AddItemForm
         handleSubmit={props.handleAddTask}
-        buttonTitle='Add Item'
+        buttonTitle="Add Item"
         taskList={props.taskList}
       />
     </Item>
@@ -57,14 +57,10 @@ const HomeDashboard = (props: HomeDashboardProps) => (
         )}
       </SortIcon>
 
-      <ItemList
-        taskList={props.taskList}
-        filter={props.filter}
-        location={props.location}
-      />
+      <ItemList taskList={props.taskList} filter={props.filter} />
     </ItemListContainer>
     <Item>
-      <TabMenu />
+      <TabMenu showPage={props.showPage} />
     </Item>
     <Item>
       <Filter handleChangeFilter={props.handleChangeFilter} />
