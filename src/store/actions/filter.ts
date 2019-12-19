@@ -6,8 +6,11 @@ export const filterChange = (filter: string) => ({
     filter
   }
 });
-export const sortByMethod = () => ({
-  type: FilterAction.sortMethod
+export const sortByMethod = (value: string) => ({
+  type: FilterAction.sortMethod,
+  payload: {
+    value
+  }
 });
 
 export const showPage = (pageNumber: number) => ({

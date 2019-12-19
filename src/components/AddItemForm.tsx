@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 import { Task } from "../types/types";
 
 const AddButton = styled.button`
@@ -27,7 +28,7 @@ interface ItemProps {
   taskList: Array<Task>;
   id?: string;
   buttonTitle: string;
-  handleSubmit: any;
+  handleSubmit: ({ task, id, createdAt: string }) => void;
 }
 
 interface State {
@@ -52,9 +53,9 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
     task !== "" &&
       this.props.taskList.filter(item => item.task === task).length === 0 &&
       this.props.handleSubmit({
-        e,
         task,
-        id
+        id,
+        createdAt: moment().toString()
       });
     this.setState({ task: "" });
   };

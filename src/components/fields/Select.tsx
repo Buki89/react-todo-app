@@ -8,6 +8,7 @@ interface Option {
 interface SelectProps {
   options: Array<Option>;
   label: string;
+  onChange: (value: string) => void;
 }
 
 interface SelectState {
@@ -20,7 +21,9 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
   };
 
   handleChangeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ value: e.target.value });
+    const value = e.target.value;
+    this.setState({ value });
+    this.props.onChange(value);
   };
 
   render() {

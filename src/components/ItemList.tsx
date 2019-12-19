@@ -1,7 +1,7 @@
 import React from "react";
 import Item from "./Item";
 import { Task, FilterState } from "../types/types";
-import { filterStatusCompletion, sortAlphabetically } from "../lib/helpers";
+import { filterStatusCompletion, sortBy } from "../lib/helpers";
 import styled from "styled-components";
 
 interface ItemListProps {
@@ -18,7 +18,7 @@ const ItemList = ({ taskList, filter }: ItemListProps) => (
   <>
     {taskList &&
       filterStatusCompletion(filter.displayTasks, taskList)
-        .sort(sortAlphabetically(filter.sortAlphabetically))
+        .sort(sortBy(filter.sortBy))
         .filter((_, index) => {
           const lastIndex = filter.pageNumber * 10 - 1;
           const firstIndex = lastIndex - 9;

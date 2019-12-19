@@ -29,7 +29,7 @@ type FilterChange = (
   };
 };
 // TODO: debilní naming
-type SortByMethod = () => void;
+type SortByMethod = (value: string) => void;
 interface HomePageActions {
   startTaskAdd: StartTaskAddAction;
   startSetTasks: StartSetTasksAction;
@@ -47,8 +47,8 @@ interface HomePageActions {
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
-  handleAddTask = ({ task, id }: Task) => {
-    this.props.startTaskAdd({ task, id });
+  handleAddTask = ({ task, id, createdAt }: Task) => {
+    this.props.startTaskAdd({ task, id, createdAt });
   };
 
   handleChangeFilter = (filter: string) => {
@@ -56,8 +56,8 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
     this.props.showPage(1);
   };
 
-  handleSortByMethod = () => {
-    this.props.sortByMethod();
+  handleSortBy = (value: string) => {
+    this.props.sortByMethod(value);
   };
 
   handleShowPage = (pageNumber: number) => {
@@ -73,7 +73,7 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
           filter={this.props.filter}
           handleAddTask={this.handleAddTask}
           handleChangeFilter={this.handleChangeFilter}
-          handleSortByMethod={this.handleSortByMethod}
+          handleSortBy={this.handleSortBy}
           showPage={this.handleShowPage}
         />
       </>

@@ -1,4 +1,4 @@
-import { Task, Filter } from "../types/types";
+import { Task, Filter, SortType } from "../types/types";
 
 export const filterStatusCompletion = (
   filter: string,
@@ -16,13 +16,20 @@ export const filterStatusCompletion = (
   }
 };
 
-export const sortAlphabetically = (sort: boolean) => {
-  if (sort) {
-    return (a: Task, b: Task) =>
-      a.task.toLocaleLowerCase() > b.task.toLocaleLowerCase() ? 1 : -1;
-  } else {
-    return (a: Task, b: Task) =>
-      a.task.toLocaleLowerCase() < b.task.toLocaleLowerCase() ? 1 : -1;
+const getDate = (date: string) => new Date(date).getTime();
+
+export const sortBy = (sortBy: string) => {
+  switch (sortBy) {
+    case SortType.dateNewest:
+      return (a: Task, b: Task) => getDate(b.createdAt) - getDate(a.createdAt);
+    case SortType.dateOldest:
+      return (a: Task, b: Task) => getDate(a.createdAt) - getDate(b.createdAt);
+    case SortType.fromAToZ:
+      return (a: Task, b: Task) =>
+        a.task.toLocaleLowerCase() > b.task.toLocaleLowerCase() ? 1 : -1;
+    case SortType.fromZToA:
+      return (a: Task, b: Task) =>
+        a.task.toLocaleLowerCase() < b.task.toLocaleLowerCase() ? 1 : -1;
   }
 };
 

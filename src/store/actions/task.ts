@@ -7,11 +7,12 @@ enum Database {
   users = "users"
 }
 
-export const taskAdd = ({ task, id }: Task) => ({
+export const taskAdd = ({ task, id, createdAt }: Task) => ({
   type: TaskAction.addTask,
   payload: {
     task,
     id,
+    createdAt,
     isCompleted: false
   }
 });
@@ -19,13 +20,13 @@ export const taskAdd = ({ task, id }: Task) => ({
 export const startTaskAdd = (taskData: Task) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    const { task = "", isCompleted = false } = taskData;
-    const tasks = { task, isCompleted };
+    const { task = "", isCompleted = false, createdAt } = taskData;
+    const taskItem = { task, isCompleted, createdAt };
     return database
       .ref(`${Database.users}/${uid}/${Database.tasks}`)
-      .push(tasks)
+      .push(taskItem)
       .then(ref => {
-        dispatch(taskAdd({ task, id: ref.key }));
+        dispatch(taskAdd({ task, id: ref.key, createdAt }));
       })
       .catch(e => {
         alert("chyba");

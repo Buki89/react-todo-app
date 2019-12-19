@@ -3,7 +3,7 @@ import { FilterAction, FilterState, Filter } from "../../types/types";
 // TODO: naming - sortAlphabetically -> isSortedAlphabetically
 const initialState: FilterState = {
   displayTasks: Filter.everything,
-  sortAlphabetically: true,
+  sortBy: "",
   pageNumber: 1
 };
 
@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
         displayTasks: action.payload.filter
       };
     case FilterAction.sortMethod:
-      return { ...state, sortAlphabetically: !state.sortAlphabetically };
+      return { ...state, sortBy: action.payload.value };
     case FilterAction.showPage:
       return { ...state, pageNumber: action.payload.pageNumber };
 

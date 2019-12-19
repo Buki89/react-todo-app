@@ -3,7 +3,7 @@ import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
 import styled from "styled-components";
 import Filter from "./Filter";
-import { Task, FilterState } from "../types/types";
+import { Task, FilterState, SortType } from "../types/types";
 import Overview from "./Overview";
 import Pagination from "./Pagination";
 import { numberOfTasks } from "../lib/helpers";
@@ -14,7 +14,7 @@ interface HomeDashboardProps {
   taskList: Array<Task>;
   filter: FilterState;
   handleChangeFilter: (filter: string) => void;
-  handleSortByMethod: () => void;
+  handleSortBy: (value: string) => void;
   showPage: (pageNumber: number) => void;
 }
 
@@ -32,12 +32,6 @@ const Item = styled.div`
 const ItemListContainer = styled.div`
   max-width: 600px;
   width: 100%;
-`;
-const SortIcon = styled.div`
-  align-items: flex-end;
-  display: flex;
-  margin: 0 0 0 30px;
-  padding: 10px;
 `;
 const OverviewBar = styled.div`
   display: flex;
@@ -65,12 +59,13 @@ const HomeDashboard = (props: HomeDashboardProps) => {
         <OverviewBar>
           <FlexDiv>
             <Select
+              onChange={props.handleSortBy}
               label="Sort by"
               options={[
-                { value: "dateNewest", label: "Newest" },
-                { value: "dateOldest", label: "Oldest" },
-                { value: "fromAToZ", label: "A - Z" },
-                { value: "fromZToA", label: "Z - A" }
+                { value: SortType.dateNewest, label: "Newest" },
+                { value: SortType.dateOldest, label: "Oldest" },
+                { value: SortType.fromAToZ, label: "A - Z" },
+                { value: SortType.fromZToA, label: "Z - A" }
               ]}
             />
 

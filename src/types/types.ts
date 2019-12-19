@@ -11,6 +11,7 @@ export type TodoState = Array<Task>;
 export interface Task {
   task: string;
   id: string;
+  createdAt: string;
   isCompleted?: boolean;
 }
 
@@ -20,7 +21,7 @@ export interface AuthState {
 
 export interface FilterState {
   displayTasks: string;
-  sortAlphabetically: boolean;
+  sortBy: string;
   pageNumber: number;
 }
 
@@ -48,6 +49,13 @@ export enum Filter {
   completed = "completed",
   incompleted = "inCompleted",
   everything = "total"
+}
+
+export enum SortType {
+  dateNewest = "dateNewest",
+  dateOldest = "dateOldest",
+  fromAToZ = "fromAToZ",
+  fromZToA = "fromZToA"
 }
 
 export type Action =
