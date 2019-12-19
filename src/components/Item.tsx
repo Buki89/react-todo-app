@@ -9,6 +9,7 @@ import {
 } from "../store/actions/task";
 import Button from "./Button";
 import StyledCheckbox from "../themes/checkbox";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
 
 const Menu = styled.div`
   display: flex;
@@ -22,14 +23,14 @@ const Menu = styled.div`
     height: 100%;
   }
 `;
-const LeftSide = styled.div`
+const NameWithEdit = styled.div`
   font-size: 20px;
   font-weight: 500;
   margin: 0 0 0 10px;
   justify-content: flex-start;
   display: flex;
 `;
-const RightSide = styled.div`
+const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,7 +94,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
   render() {
     return (
       <Menu>
-        <LeftSide>
+        <NameWithEdit>
           {this.props.task.task}
           {this.state.isVisible && (
             <Flex>
@@ -103,34 +104,25 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
                   value={this.state.task}
                   onChange={this.handleChangeTask}
                 ></EditInput>
-                <button type='submit'>Ok</button>
+                <button type="submit">Ok</button>
               </form>
             </Flex>
           )}
-        </LeftSide>
+        </NameWithEdit>
 
-        <RightSide>
+        <Buttons>
           <StyledCheckbox
-            type='checkbox'
+            type="checkbox"
             checked={this.state.isChecked}
             onChange={this.handleOnCheckboxChange}
           ></StyledCheckbox>
-          <div>
-            <Button
-              color='#23cc33'
-              onClick={() =>
-                this.setState({ isVisible: !this.state.isVisible })
-              }
-              name='Edit'
-            />
-          </div>
-
-          <Button
-            color='#cc0000'
-            onClick={this.handleDeleteTask}
-            name='Delete'
+          <FaEdit
+            color="#FFF"
+            onClick={() => this.setState({ isVisible: !this.state.isVisible })}
           />
-        </RightSide>
+
+          <FaTrashAlt onClick={this.handleDeleteTask} color="FFF" />
+        </Buttons>
       </Menu>
     );
   }

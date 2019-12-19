@@ -55,9 +55,11 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
     this.props.filterChange(filter);
     this.props.showPage(1);
   };
+
   handleSortByMethod = () => {
     this.props.sortByMethod();
   };
+
   handleShowPage = (pageNumber: number) => {
     this.props.showPage(pageNumber);
   };

@@ -44,6 +44,12 @@ export enum AuthAction {
   logout = "LOGOUT"
 }
 
+export enum Filter {
+  completed = "completed",
+  incompleted = "inCompleted",
+  everything = "total"
+}
+
 export type Action =
   | {
       type: TaskAction.addTask;

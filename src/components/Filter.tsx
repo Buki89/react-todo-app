@@ -1,50 +1,41 @@
 import React from "react";
-import styled from "styled-components";
+import Radio from "../components/fields/Radio";
+import { Filter as FilterType } from "../types/types";
 
-const Menu = styled.div`
-  display: flex;
-  div {
-    margin: 0 10px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
+// const Menu = styled.div`
+//   display: flex;
+//   div {
+//     margin: 0 10px;
+//     &:hover {
+//       cursor: pointer;
+//     }
+//   }
+// `;
 
 interface FilterProps {
   handleChangeFilter: (filter: string) => void;
 }
 
-const Filter = ({ handleChangeFilter }: FilterProps) => (
-  <>
-    <div>
-      <input
-        type='radio'
-        id='complete'
-        name='filter'
-        onChange={() => handleChangeFilter("Completed")}
-      />
-      <label htmlFor='complete'>Complete</label>
-    </div>
-    <div>
-      <input
-        type='radio'
-        id='incomplete'
-        name='filter'
-        onChange={() => handleChangeFilter("InCompleted")}
-      />
-      <label htmlFor='incomplete'>Incomplete</label>
-    </div>
-    <div>
-      <input
-        type='radio'
-        id='total'
-        name='filter'
-        onChange={() => handleChangeFilter("Everything")}
-      />
-      <label htmlFor='total'>Total</label>
-    </div>
-  </>
-);
+// TODO:  checked - default value
+
+class Filter extends React.PureComponent<FilterProps> {
+  render() {
+    const { handleChangeFilter } = this.props;
+    const options = [
+      {
+        id: FilterType.completed,
+        label: "Completed"
+      },
+      {
+        id: FilterType.incompleted,
+        label: "Incompleted"
+      },
+      { id: FilterType.everything, label: "Total" }
+    ];
+    return (
+      <Radio options={options} name="filter" onChange={handleChangeFilter} />
+    );
+  }
+}
 
 export default Filter;

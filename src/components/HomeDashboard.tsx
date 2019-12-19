@@ -3,10 +3,11 @@ import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
 import styled from "styled-components";
 import Filter from "./Filter";
-import TabMenu from "./TabMenu";
-import { FaSortAlphaDown, FaSortAlphaUp } from "react-icons/fa";
 import { Task, FilterState } from "../types/types";
 import Overview from "./Overview";
+import Pagination from "./Pagination";
+import { numberOfTasks } from "../lib/helpers";
+import Select from "./fields/Select";
 
 interface HomeDashboardProps {
   handleAddTask: (params: Task) => void;
@@ -47,43 +48,41 @@ const FlexDiv = styled.div`
   display: flex;
 `;
 
-const HomeDashboard = (props: HomeDashboardProps) => (
-  <Container>
-    <Item>
-      <AddItemForm
-        handleSubmit={props.handleAddTask}
-        buttonTitle='Add Item'
-        taskList={props.taskList}
-      />
-    </Item>
+const HomeDashboard = (props: HomeDashboardProps) => {
+  const tasksAmount = numberOfTasks(props.taskList, props.filter.displayTasks);
 
-    <ItemListContainer>
-      <OverviewBar>
-        <FlexDiv>
-          <SortIcon>
-            {props.filter.sortAlphabetically ? (
-              <FaSortAlphaDown onClick={props.handleSortByMethod} />
-            ) : (
-              <FaSortAlphaUp onClick={props.handleSortByMethod} />
-            )}
-          </SortIcon>
-          <div>
+  return (
+    <Container>
+      <Item>
+        <AddItemForm
+          handleSubmit={props.handleAddTask}
+          buttonTitle="Add Item"
+          taskList={props.taskList}
+        />
+      </Item>
+
+      <ItemListContainer>
+        <OverviewBar>
+          <FlexDiv>
+            <Select
+              label="Sort by"
+              options={[
+                { value: "dateNewest", label: "Newest" },
+                { value: "dateOldest", label: "Oldest" },
+                { value: "fromAToZ", label: "A - Z" },
+                { value: "fromZToA", label: "Z - A" }
+              ]}
+            />
+
             <Filter handleChangeFilter={props.handleChangeFilter} />
-          </div>
-        </FlexDiv>
-        <Overview taskList={props.taskList} />
-      </OverviewBar>
-
-      <ItemList taskList={props.taskList} filter={props.filter} />
-    </ItemListContainer>
-    <Item>
-      <TabMenu
-        showPage={props.showPage}
-        taskList={props.taskList}
-        filterList={props.filter}
-      />
-    </Item>
-  </Container>
-);
+          </FlexDiv>
+          <Overview taskList={props.taskList} />
+        </OverviewBar>
+        <ItemList taskList={props.taskList} filter={props.filter} />
+      </ItemListContainer>
+      <Pagination tasksAmount={tasksAmount} showPage={props.showPage} />
+    </Container>
+  );
+};
 
 export default HomeDashboard;

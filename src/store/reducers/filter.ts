@@ -1,8 +1,8 @@
-import { FilterAction, FilterState } from "../../types/types";
+import { FilterAction, FilterState, Filter } from "../../types/types";
 
 // TODO: naming - sortAlphabetically -> isSortedAlphabetically
 const initialState: FilterState = {
-  displayTasks: "",
+  displayTasks: Filter.everything,
   sortAlphabetically: true,
   pageNumber: 1
 };
