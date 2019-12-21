@@ -59,14 +59,14 @@ export const startSetTasks = () => {
   };
 };
 
-export const deleteTask = ({ id }) => ({
+export const deleteTask = (id: string) => ({
   type: TaskAction.deleteTask,
   payload: {
     id
   }
 });
 
-export const startDeleteTask = ({ id }) => {
+export const startDeleteTask = (id: string) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
@@ -74,7 +74,7 @@ export const startDeleteTask = ({ id }) => {
       .ref(`${Database.users}/${uid}/${Database.tasks}/${id}`)
       .remove()
       .then(() => {
-        dispatch(deleteTask({ id }));
+        dispatch(deleteTask(id));
       });
   };
 };
@@ -117,14 +117,14 @@ export const startEditTask = ({ id, task, isCompleted }) => {
 //   }
 // });
 
-export const completeTask = ({ id }) => ({
+export const completeTask = (id: string) => ({
   type: TaskAction.completeTask,
   payload: {
     id
   }
 });
 
-export const startCompleteTask = ({ id }) => {
+export const startCompleteTask = (id: string) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
@@ -132,7 +132,7 @@ export const startCompleteTask = ({ id }) => {
       .ref(`${Database.users}/${uid}/${Database.tasks}/${id}`)
       .update({ isCompleted: true })
       .then(() => {
-        dispatch(completeTask({ id }));
+        dispatch(completeTask(id));
         // TODO: dispatch redux action -> error handling
       })
       .catch(e => console.log(":(", e));

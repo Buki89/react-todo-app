@@ -29,7 +29,6 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div>
         {this.props.options.map((item: Option, index) => (

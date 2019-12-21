@@ -4,16 +4,13 @@ import styled from "styled-components";
 const ButtonStyled = styled.button`
   background: ${({ color }) => color};
   color: #fff;
+  text-align: center;
   border: none;
-  border-radius: 10px;
-  max-width: 80px;
-  max-height: 40px;
-  width: 100%;
-  height: 100%;
-  padding: 5px;
-  margin: 0 0 0 5px;
+  border-radius: 3px;
+  max-width: 70px;
   font-weight: bold;
-  &:hover {
+  margin: 0 0 0 5px;
+  :hover {
     cursor: pointer;
   }
 `;
@@ -22,7 +19,7 @@ interface ButtonProps {
   type?: "submit" | "button" | "reset";
   name: string;
   color: string;
-  onClick: () => any;
+  onClick?: () => any;
 }
 
 const Button = ({ type = "button", name, color, onClick }: ButtonProps) => (

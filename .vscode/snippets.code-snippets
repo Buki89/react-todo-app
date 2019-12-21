@@ -15,10 +15,16 @@
   // 	],
   // 	"description": "Log output to console"
   // }
-  "clsc": {
-    "prefix": "clsc",
+
+  "Create Class Component": {
+    "prefix": "clc",
     "body": [
-      "class $0 extends React.PureComponent<any,any> {",
+      "interface $0Props {}",
+      "interface $0State {}",
+      "",
+      "class $0 extends React.PureComponent<$0Props,$0State> {",
+      "  state = {",
+      "  }",
       "render(){",
       "return (",
       "<>",
@@ -26,8 +32,9 @@
       ")",
       "}",
       "}",
+      "",
       "export default $0;"
     ],
-    "description": "clsc"
+    "description": "Create Class Component"
   }
 }

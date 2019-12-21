@@ -7,7 +7,6 @@ import {
   startCompleteTask,
   startEditTask
 } from "../store/actions/task";
-import Button from "./Button";
 import StyledCheckbox from "../themes/checkbox";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 
@@ -43,16 +42,21 @@ const EditInput = styled.input`
   margin: 0 0 0 10px;
   width: 70px;
 `;
-type StartDeleteTaskAction = ({ id: string }) => ThunkResult<void>;
-type StartCompleteTask = ({ id: string }) => ThunkResult<void>;
-type StartEditTask = ({ id, task, isCompleted: boolean }) => ThunkResult<void>;
 
 interface ItemProps {
   task: Task;
-  item: TodoState;
-  startDeleteTask: StartDeleteTaskAction;
-  startCompleteTask: StartCompleteTask;
-  startEditTask: StartEditTask;
+  taskList: TodoState;
+  startDeleteTask: (id: string) => ThunkResult<void>;
+  startCompleteTask: (id: string) => ThunkResult<void>;
+  startEditTask: ({
+    id,
+    task,
+    isCompleted
+  }: {
+    id: string;
+    task: string;
+    isCompleted: boolean;
+  }) => ThunkResult<void>;
 }
 interface ItemState {
   isChecked: boolean;
@@ -70,22 +74,29 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
     };
   }
   handleDeleteTask = () => {
-    this.props.startDeleteTask({ id: this.props.task.id });
+    this.props.startDeleteTask(this.props.task.id);
   };
 
   handleOnCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { task } = this.props;
     this.setState({ isChecked: e.target.checked });
-    this.props.startCompleteTask({ id: task.id });
+    this.props.startCompleteTask(task.id);
   };
   handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.startEditTask({
-      id: this.props.task.id,
-      task: this.state.task,
-      isCompleted: this.props.task.isCompleted
-    });
-    this.setState({ isVisible: false });
+    const hasUniqueValue =
+      this.props.taskList.filter((item: Task) => item.task === this.state.task)
+        .length === 0;
+    if (hasUniqueValue) {
+      this.props.startEditTask({
+        id: this.props.task.id,
+        task: this.state.task,
+        isCompleted: this.props.task.isCompleted
+      });
+      this.setState({ isVisible: false });
+    } else {
+      alert("Duplicite task");
+    }
   };
   handleChangeTask = (e: React.ChangeEvent<HTMLInputElement>) => {
     const task = e.target.value;
@@ -117,11 +128,11 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             onChange={this.handleOnCheckboxChange}
           ></StyledCheckbox>
           <FaEdit
-            color="#FFF"
+            color="#1aff1a"
             onClick={() => this.setState({ isVisible: !this.state.isVisible })}
           />
 
-          <FaTrashAlt onClick={this.handleDeleteTask} color="FFF" />
+          <FaTrashAlt onClick={this.handleDeleteTask} color="	#ff1a1a" />
         </Buttons>
       </Menu>
     );
@@ -130,7 +141,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
 const mapStateToProps = (state: State) => {
   return {
-    item: state.tasks
+    taskList: state.tasks
   };
 };
 

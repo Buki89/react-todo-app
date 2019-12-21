@@ -20,8 +20,6 @@ const getDate = (date: string) => new Date(date).getTime();
 
 export const sortBy = (sortBy: string) => {
   switch (sortBy) {
-    case SortType.dateNewest:
-      return (a: Task, b: Task) => getDate(b.createdAt) - getDate(a.createdAt);
     case SortType.dateOldest:
       return (a: Task, b: Task) => getDate(a.createdAt) - getDate(b.createdAt);
     case SortType.fromAToZ:
@@ -30,6 +28,9 @@ export const sortBy = (sortBy: string) => {
     case SortType.fromZToA:
       return (a: Task, b: Task) =>
         a.task.toLocaleLowerCase() < b.task.toLocaleLowerCase() ? 1 : -1;
+    case SortType.dateNewest:
+    default:
+      return (a: Task, b: Task) => getDate(b.createdAt) - getDate(a.createdAt);
   }
 };
 

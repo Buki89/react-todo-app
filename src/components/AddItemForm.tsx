@@ -1,27 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
+import Input from "./fields/Input";
+import Button from "./Button";
 import { Task } from "../types/types";
-
-const AddButton = styled.button`
-  background: #0000ff;
-  color: #fff;
-  text-align: center;
-  border: none;
-  border-radius: 3px;
-  max-width: 70px;
-  font-weight: bold;
-  margin: 0 0 0 5px;
-`;
+import { ErrorMessage } from "./fields/errorMessages";
 
 const Menu = styled.div`
   display: flex;
-`;
-const StyledInput = styled.input`
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 3px;
-  text-align: center;
 `;
 
 interface ItemProps {
@@ -32,32 +18,54 @@ interface ItemProps {
 }
 
 interface State {
-  task: string;
+  value: string;
+  error: boolean;
+  errorMessage: string;
 }
 
 class AddItemForm extends React.PureComponent<ItemProps, State> {
   state = {
-    task: ""
+    value: "",
+    error: false,
+    errorMessage: ""
   };
 
-  handleChangeTask = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const task = e.target.value;
-    this.setState({ task });
+  handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    this.setState({ value });
   };
 
   handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { id } = this.props;
-    const { task } = this.state;
+    const { value } = this.state;
 
-    task !== "" &&
-      this.props.taskList.filter(item => item.task === task).length === 0 &&
-      this.props.handleSubmit({
-        task,
-        id,
-        createdAt: moment().toString()
+    const hasUniqueName =
+      this.props.taskList.filter(item => item.task === value).length === 0;
+    if (value) {
+      if (hasUniqueName) {
+        this.props.handleSubmit({
+          task: value,
+          id,
+          createdAt: moment().toString()
+        });
+        this.setState({
+          value: "",
+          error: false,
+          errorMessage: ""
+        });
+      } else {
+        this.setState({
+          error: true,
+          errorMessage: ErrorMessage.duplicate
+        });
+      }
+    } else {
+      this.setState({
+        error: true,
+        errorMessage: ErrorMessage.noValue
       });
-    this.setState({ task: "" });
+    }
   };
 
   render() {
@@ -65,16 +73,15 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
       <div>
         <form onSubmit={this.handleSubmitForm}>
           <Menu>
-            <StyledInput
-              name="task"
-              type="text"
-              onChange={this.handleChangeTask}
+            <Input
+              name="addTask"
               placeholder="What should I do?"
-              value={this.state.task}
+              value={this.state.value}
+              onChange={this.handleChangeValue}
             />
-
-            <AddButton type="submit">Add</AddButton>
+            <Button name="Add" color="#0000ff" type="submit"></Button>
           </Menu>
+          {this.state.error && <p>{this.state.errorMessage}</p>}
         </form>
       </div>
     );
