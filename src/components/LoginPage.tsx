@@ -4,6 +4,7 @@ import { startSetTasks } from "../store/actions/task";
 import { startLogin, login } from "../store/actions/auth";
 import { firebase } from "../firebase/firebase";
 import { ThunkResult, AuthAction } from "../types/types";
+import { Redirect } from "react-router-dom";
 
 interface LoginPageProps {
   startLogin: () => ThunkResult<void>;
@@ -23,6 +24,7 @@ class LoginPage extends React.PureComponent<LoginPageProps, any> {
   handleInitialization = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        console.log("1");
         this.props.login(user.uid);
         this.props.startSetTasks();
         this.props.history.push("/home");
