@@ -47,8 +47,8 @@ interface HomePageActions {
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
-  handleAddTask = ({ task, id, createdAt }: Task) => {
-    this.props.startTaskAdd({ task, id, createdAt });
+  handleAddTask = ({ taskName, id, createdAt }: Task) => {
+    this.props.startTaskAdd({ taskName, id, createdAt });
   };
 
   handleChangeFilter = (filter: string) => {

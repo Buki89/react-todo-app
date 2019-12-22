@@ -7,10 +7,10 @@ enum Database {
   users = "users"
 }
 
-export const taskAdd = ({ task, id, createdAt }: Task) => ({
+export const taskAdd = ({ taskName, id, createdAt }: Task) => ({
   type: TaskAction.addTask,
   payload: {
-    task,
+    taskName,
     id,
     createdAt,
     isCompleted: false
@@ -20,13 +20,13 @@ export const taskAdd = ({ task, id, createdAt }: Task) => ({
 export const startTaskAdd = (taskData: Task) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    const { task = "", isCompleted = false, createdAt } = taskData;
-    const taskItem = { task, isCompleted, createdAt };
+    const { taskName = "", isCompleted = false, createdAt } = taskData;
+    const taskItem = { taskName, isCompleted, createdAt };
     return database
       .ref(`${Database.users}/${uid}/${Database.tasks}`)
       .push(taskItem)
       .then(ref => {
-        dispatch(taskAdd({ task, id: ref.key, createdAt }));
+        dispatch(taskAdd({ taskName, id: ref.key, createdAt }));
       })
       .catch(e => {
         alert("chyba");
@@ -79,28 +79,27 @@ export const startDeleteTask = (id: string) => {
   };
 };
 
-export const editTask = ({ id, task, isCompleted }) => ({
+export const editTask = ({ id, taskName, isCompleted }) => ({
   type: TaskAction.editTask,
   payload: {
     id,
-    task,
-
+    taskName,
     isCompleted
   }
 });
 
-export const startEditTask = ({ id, task, isCompleted }) => {
+export const startEditTask = ({ id, taskName, isCompleted }) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
     return database
       .ref(`${Database.users}/${uid}/${Database.tasks}/${id}`)
-      .update({ task, isCompleted })
+      .update({ taskName, isCompleted })
       .then(() => {
         dispatch(
           editTask({
             id,
-            task,
+            taskName,
 
             isCompleted
           })

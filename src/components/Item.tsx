@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Input from "./fields/Input";
 import { connect } from "react-redux";
 import { State, TodoState, Task, ThunkResult } from "../types/types";
 import {
@@ -50,18 +51,20 @@ interface ItemProps {
   startCompleteTask: (id: string) => ThunkResult<void>;
   startEditTask: ({
     id,
-    task,
+    taskName,
     isCompleted
   }: {
     id: string;
-    task: string;
+    taskName: string;
     isCompleted: boolean;
   }) => ThunkResult<void>;
 }
 interface ItemState {
   isChecked: boolean;
   isVisible: boolean;
-  task: string;
+  taskName: string;
+  error: boolean;
+  errorMessage: string;
 }
 
 class Item extends React.PureComponent<ItemProps, ItemState> {
@@ -70,7 +73,9 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
     this.state = {
       isChecked: props.task ? props.task.isCompleted : false,
       isVisible: false,
-      task: props.task ? props.task.task : ""
+      taskName: props.task ? props.task.taskName : "",
+      error: false,
+      errorMessage: ""
     };
   }
   handleDeleteTask = () => {
@@ -85,40 +90,45 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
   handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasUniqueValue =
-      this.props.taskList.filter((item: Task) => item.task === this.state.task)
-        .length === 0;
+      this.props.taskList.filter(
+        (task: Task) => task.taskName === this.state.taskName
+      ).length === 0;
     if (hasUniqueValue) {
       this.props.startEditTask({
         id: this.props.task.id,
-        task: this.state.task,
+        taskName: this.state.taskName,
         isCompleted: this.props.task.isCompleted
       });
-      this.setState({ isVisible: false });
+      this.setState({ isVisible: false, error: false, errorMessage: "" });
     } else {
-      alert("Duplicite task");
+      this.setState({
+        error: true,
+        errorMessage: "Task with this name already exist"
+      });
     }
   };
   handleChangeTask = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const task = e.target.value;
-    this.setState({ task });
+    const taskName = e.target.value;
+    this.setState({ taskName });
   };
   render() {
     return (
       <Menu>
         <NameWithEdit>
-          {this.props.task.task}
+          {this.props.task.taskName}
           {this.state.isVisible && (
             <Flex>
               <form onSubmit={this.handleEdit}>
-                {/* TODO: input component */}
-                <EditInput
-                  value={this.state.task}
+                <Input
+                  name="edit"
+                  value={this.state.taskName}
                   onChange={this.handleChangeTask}
-                ></EditInput>
+                />
                 <button type="submit">Ok</button>
               </form>
             </Flex>
           )}
+          {this.state.error && <div>{this.state.errorMessage}</div>}
         </NameWithEdit>
 
         <Buttons>

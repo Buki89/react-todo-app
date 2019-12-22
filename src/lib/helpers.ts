@@ -6,10 +6,10 @@ export const filterStatusCompletion = (
 ) => {
   switch (filter) {
     case Filter.completed:
-      return taskList.filter((item: Task) => item.isCompleted);
+      return taskList.filter((task: Task) => task.isCompleted);
 
     case Filter.incompleted:
-      return taskList.filter((item: Task) => !item.isCompleted);
+      return taskList.filter((task: Task) => !task.isCompleted);
 
     default:
       return taskList;
@@ -24,10 +24,14 @@ export const sortBy = (sortBy: string) => {
       return (a: Task, b: Task) => getDate(a.createdAt) - getDate(b.createdAt);
     case SortType.fromAToZ:
       return (a: Task, b: Task) =>
-        a.task.toLocaleLowerCase() > b.task.toLocaleLowerCase() ? 1 : -1;
+        a.taskName.toLocaleLowerCase() > b.taskName.toLocaleLowerCase()
+          ? 1
+          : -1;
     case SortType.fromZToA:
       return (a: Task, b: Task) =>
-        a.task.toLocaleLowerCase() < b.task.toLocaleLowerCase() ? 1 : -1;
+        a.taskName.toLocaleLowerCase() < b.taskName.toLocaleLowerCase()
+          ? 1
+          : -1;
     case SortType.dateNewest:
     default:
       return (a: Task, b: Task) => getDate(b.createdAt) - getDate(a.createdAt);
@@ -37,10 +41,10 @@ export const sortBy = (sortBy: string) => {
 export const numberOfTasks = (taskList: Array<Task>, filterBy: string) => {
   switch (filterBy) {
     case Filter.completed:
-      return taskList.filter((item: Task) => item.isCompleted).length;
+      return taskList.filter((task: Task) => task.isCompleted).length;
 
     case Filter.incompleted:
-      return taskList.filter((item: Task) => !item.isCompleted).length;
+      return taskList.filter((task: Task) => !task.isCompleted).length;
 
     case Filter.everything:
       return taskList.length;

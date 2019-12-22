@@ -14,7 +14,7 @@ interface ItemProps {
   taskList: Array<Task>;
   id?: string;
   buttonTitle: string;
-  handleSubmit: ({ task, id, createdAt: string }) => void;
+  handleSubmit: ({ taskName, id, createdAt: string }) => void;
 }
 
 interface State {
@@ -41,11 +41,11 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
     const { value } = this.state;
 
     const hasUniqueName =
-      this.props.taskList.filter(item => item.task === value).length === 0;
+      this.props.taskList.filter(task => task.taskName === value).length === 0;
     if (value) {
       if (hasUniqueName) {
         this.props.handleSubmit({
-          task: value,
+          taskName: value,
           id,
           createdAt: moment().toString()
         });

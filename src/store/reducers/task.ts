@@ -6,25 +6,25 @@ const initialState: TodoState = [];
 export default (state = initialState, action) => {
   switch (action.type) {
     case TaskAction.addTask:
-      return state.some(item => item.task === action.payload.task)
+      return state.some(task => task.taskName === action.payload.task)
         ? state
         : [...state, action.payload];
     case TaskAction.setTasks:
       return action.payload;
     case TaskAction.deleteTask:
-      return state.filter(item => item.id !== action.payload.id);
+      return state.filter(task => task.id !== action.payload.id);
     case TaskAction.editTask:
-      return state.map(item => {
-        if (item.id === action.payload.id) {
+      return state.map(task => {
+        if (task.id === action.payload.id) {
           return action.payload;
         }
-        return item;
+        return task;
       });
     case TaskAction.completeTask:
-      return state.map(item =>
-        item.id === action.payload.id
-          ? { ...item, isCompleted: !item.isCompleted }
-          : item
+      return state.map(task =>
+        task.id === action.payload.id
+          ? { ...task, isCompleted: !task.isCompleted }
+          : task
       );
     default:
       return state;

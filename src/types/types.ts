@@ -9,7 +9,7 @@ export interface State {
 export type TodoState = Array<Task>;
 
 export interface Task {
-  task: string;
+  taskName: string;
   id: string;
   createdAt: string;
   isCompleted?: boolean;
