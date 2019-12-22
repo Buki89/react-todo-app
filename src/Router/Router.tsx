@@ -1,18 +1,21 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from "../components/HomePage";
-//import LoginPage from "../components/LoginPage";
+import LoginPage from "../components/LoginPage";
+import PrivateRoute from "../Router/PrivateRoute";
 import { createBrowserHistory } from "history";
+import { Router, Switch, Route } from "react-router-dom";
+
+interface AppRouterProps {}
 
 export const history = createBrowserHistory();
 
-const AppRouter = () => (
-  <BrowserRouter history={history}>
+const AppRouter = (props: AppRouterProps) => (
+  <Router history={history}>
     <Switch>
-      <Route path="/" component={HomePage} exact={true} />
-      <Route path="/home" component={HomePage} exact={true} />
+      <Route path="/" component={LoginPage} exact={true} />
+      <PrivateRoute path="/home" component={HomePage} />
     </Switch>
-  </BrowserRouter>
+  </Router>
 );
 
 export default AppRouter;

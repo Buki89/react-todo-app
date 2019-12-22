@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import HomeDashboard from "./HomeDashboard";
 import { connect } from "react-redux";
+import { logout, startLogout } from "../store/actions/auth";
 import { startTaskAdd, startSetTasks } from "../store/actions/task";
 import { filterChange, sortByMethod, showPage } from "../store/actions/filter";
 import {
@@ -9,7 +10,8 @@ import {
   Task,
   ThunkResult,
   FilterAction,
-  FilterState
+  FilterState,
+  AuthAction
 } from "../types/types";
 
 interface HomePageProps {
@@ -18,23 +20,20 @@ interface HomePageProps {
   location: any;
 }
 
-type StartTaskAddAction = (task: Task) => ThunkResult<void>;
-type StartSetTasksAction = () => ThunkResult<void>;
-type FilterChange = (
-  filter: string
-) => {
-  type: FilterAction.filterChange;
-  payload: {
-    filter: string;
-  };
-};
 // TODO: debilní naming
-type SortByMethod = (value: string) => void;
+
 interface HomePageActions {
-  startTaskAdd: StartTaskAddAction;
-  startSetTasks: StartSetTasksAction;
-  filterChange: FilterChange;
-  sortByMethod: SortByMethod;
+  startTaskAdd: (task: Task) => ThunkResult<void>;
+  startSetTasks: () => ThunkResult<void>;
+  filterChange: (
+    filter: string
+  ) => {
+    type: FilterAction.filterChange;
+    payload: {
+      filter: string;
+    };
+  };
+  sortByMethod: (value: string) => void;
   handleShowPage: (pageNumber: number) => void;
   showPage: (
     pageNumber: number
@@ -44,6 +43,8 @@ interface HomePageActions {
       pageNumber: number;
     };
   };
+  logout: () => { type: AuthAction.logout };
+  startLogout: () => ThunkResult<void>;
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
@@ -64,10 +65,16 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
     this.props.showPage(pageNumber);
   };
 
+  handleLogout = () => {
+    this.props.logout();
+    this.props.startLogout();
+    console.log("User logout");
+  };
+
   render() {
     return (
       <>
-        <Header />
+        <Header handleLogout={this.handleLogout} />
         <HomeDashboard
           taskList={this.props.taskList}
           filter={this.props.filter}
@@ -93,7 +100,9 @@ const mapDispatchToProps = {
   startSetTasks,
   filterChange,
   sortByMethod,
-  showPage
+  showPage,
+  logout,
+  startLogout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

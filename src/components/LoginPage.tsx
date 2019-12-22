@@ -1,13 +1,44 @@
 import React from "react";
 import { connect } from "react-redux";
-import { startLogin } from "../store/actions/auth";
+import { startSetTasks } from "../store/actions/task";
+import { startLogin, login } from "../store/actions/auth";
+import { firebase } from "../firebase/firebase";
+import { ThunkResult, AuthAction } from "../types/types";
 
-class LoginPage extends React.PureComponent<any, any> {
+interface LoginPageProps {
+  startLogin: () => ThunkResult<void>;
+  startSetTasks: () => ThunkResult<void>;
+  login: (
+    uid: string
+  ) => {
+    type: AuthAction.login;
+    uid: string;
+  };
+  history: {
+    push(url: string): void;
+  };
+}
+
+class LoginPage extends React.PureComponent<LoginPageProps, any> {
+  handleInitialization = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.login(user.uid);
+        this.props.startSetTasks();
+        this.props.history.push("/home");
+      } else {
+        console.log("No user sigh");
+      }
+    });
+  };
+
   handleLogin = () => {
     this.props.startLogin();
+    console.log("User logged");
   };
 
   render() {
+    this.handleInitialization();
     return (
       <div>
         {/* TODO: button compo */}
@@ -17,7 +48,7 @@ class LoginPage extends React.PureComponent<any, any> {
   }
 }
 
-const mapDispatchToProps = { startLogin };
+const mapDispatchToProps = { startLogin, login, startSetTasks };
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);
 

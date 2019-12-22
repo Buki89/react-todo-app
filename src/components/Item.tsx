@@ -38,11 +38,6 @@ const Buttons = styled.div`
 const Flex = styled.div`
   display: flex;
 `;
-const EditInput = styled.input`
-  border: none;
-  margin: 0 0 0 10px;
-  width: 70px;
-`;
 
 interface ItemProps {
   task: Task;
