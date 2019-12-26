@@ -50,7 +50,7 @@ const HomeDashboard = (props: HomeDashboardProps) => {
       <Item>
         <AddItemForm
           handleSubmit={props.handleAddTask}
-          buttonTitle="Add Item"
+          buttonTitle='Add Item'
           taskList={props.taskList}
         />
       </Item>
@@ -60,7 +60,7 @@ const HomeDashboard = (props: HomeDashboardProps) => {
           <FlexDiv>
             <Select
               onChange={props.handleSortBy}
-              label="Sort by"
+              label='Sort by   '
               options={[
                 { value: SortType.dateNewest, label: "Newest" },
                 { value: SortType.dateOldest, label: "Oldest" },
@@ -68,8 +68,14 @@ const HomeDashboard = (props: HomeDashboardProps) => {
                 { value: SortType.fromZToA, label: "Z - A" }
               ]}
             />
-
-            <Filter handleChangeFilter={props.handleChangeFilter} />
+            <Select
+              onChange={props.handleChangeFilter}
+              options={[
+                { value: "total", label: "Total" },
+                { value: "completed", label: "Completed" },
+                { value: "incompleted", label: "Incompleted" }
+              ]}
+            />
           </FlexDiv>
           <Overview taskList={props.taskList} />
         </OverviewBar>

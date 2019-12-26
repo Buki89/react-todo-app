@@ -4,7 +4,26 @@ import { startSetTasks } from "../store/actions/task";
 import { startLogin, login } from "../store/actions/auth";
 import { firebase } from "../firebase/firebase";
 import { ThunkResult, AuthAction, State, Task } from "../types/types";
-import Loading from "./Loading";
+import styled from "styled-components";
+
+const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
+
+const LoginButton = styled.button`
+  max-width: 200px;
+  width: 100%;
+  max-height: 100px;
+  height: 100%;
+  background: rgb(192, 192, 192);
+  color: white;
+  font-size: 25px;
+  font-weight: 700;
+`;
 
 interface LoginPageProps {
   startLogin: () => ThunkResult<void>;
@@ -36,13 +55,15 @@ class LoginPage extends React.PureComponent<LoginPageProps, any> {
     this.props.startLogin();
     this.props.history.push("/loading");
   };
+  /* TODO: button compo */
 
   render() {
     return (
-      <div>
-        {/* TODO: button compo */}
-        <button onClick={this.handleLogin}>Login</button>
-      </div>
+      <Box>
+        <LoginButton onClick={this.handleLogin}>
+          <p>Login with Google</p>
+        </LoginButton>
+      </Box>
     );
   }
 }
