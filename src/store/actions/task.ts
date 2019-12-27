@@ -29,7 +29,7 @@ export const startTaskAdd = (taskData: Task) => {
         dispatch(taskAdd({ taskName, id: ref.key, createdAt }));
       })
       .catch(e => {
-        alert("chyba");
+        alert(e);
       });
   };
 };
@@ -108,13 +108,6 @@ export const startEditTask = ({ id, taskName, isCompleted }) => {
       .catch(e => alert("něco je špatně"));
   };
 };
-
-// export const searchTask = ({ text }) => ({
-//   type: TaskAction.searchTask,
-//   payload: {
-//     text
-//   }
-// });
 
 export const completeTask = (id: string) => ({
   type: TaskAction.completeTask,

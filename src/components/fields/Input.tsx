@@ -17,8 +17,9 @@ interface InputProps {
 
 const Input = (props: InputProps) => (
   <StyledInput
+    maxLength={20}
     name={props.name}
-    type="text"
+    type='text'
     placeholder={props.placeholder}
     value={props.value}
     onChange={props.onChange}

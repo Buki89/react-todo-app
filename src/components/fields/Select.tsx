@@ -1,4 +1,13 @@
 import React from "react";
+import styled from "styled-components";
+
+const StyledSelect = styled.select`
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 0 2.5px;
+  text-align: center;
+`;
 
 interface Option {
   value: string;
@@ -30,13 +39,16 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
     return (
       <label>
         {this.props.label}
-        <select value={this.state.value} onChange={this.handleChangeValue}>
+        <StyledSelect
+          value={this.state.value}
+          onChange={this.handleChangeValue}
+        >
           {this.props.options.map((option: Option, index) => (
             <option key={index} value={option.value}>
               {option.label}
             </option>
           ))}
-        </select>
+        </StyledSelect>
       </label>
     );
   }
