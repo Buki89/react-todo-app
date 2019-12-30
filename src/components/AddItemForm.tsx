@@ -10,20 +10,23 @@ const Menu = styled.div`
   display: flex;
 `;
 
-interface ItemProps {
+interface AddItemFormProps {
   taskList: Array<Task>;
   id?: string;
   buttonTitle: string;
   handleSubmit: ({ taskName, id, createdAt: string }) => void;
 }
 
-interface State {
+interface AddItemFormState {
   value: string;
   error: boolean;
   errorMessage: string;
 }
 
-class AddItemForm extends React.PureComponent<ItemProps, State> {
+class AddItemForm extends React.PureComponent<
+  AddItemFormProps,
+  AddItemFormState
+> {
   state = {
     value: "",
     error: false,
@@ -70,20 +73,18 @@ class AddItemForm extends React.PureComponent<ItemProps, State> {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmitForm}>
-          <Menu>
-            <Input
-              name="addTask"
-              placeholder="What should I do?"
-              value={this.state.value}
-              onChange={this.handleChangeValue}
-            />
-            <Button name="Add" color="#0000ff" type="submit"></Button>
-          </Menu>
-          {this.state.error && <p>{this.state.errorMessage}</p>}
-        </form>
-      </div>
+      <form onSubmit={this.handleSubmitForm}>
+        <Menu>
+          <Input
+            name="addTask"
+            placeholder="What should I do?"
+            value={this.state.value}
+            onChange={this.handleChangeValue}
+          />
+          <Button name="Add" color="#0000ff" type="submit"></Button>
+        </Menu>
+        {this.state.error && <p>{this.state.errorMessage}</p>}
+      </form>
     );
   }
 }

@@ -1,18 +1,33 @@
 import React from "react";
 import { numberOfTasks } from "../lib/helpers";
 import { Task, Filter } from "../types/types";
+import { Box } from "../styles/styles";
 
-interface Overviewprops {
+interface OverviewProps {
   taskList: Array<Task>;
 }
 
-// TODO: use map instead
-const Overview = (props: Overviewprops) => (
-  <div>
-    <div>Completed : {numberOfTasks(props.taskList, Filter.completed)}</div>
-    <div>Incompleted : {numberOfTasks(props.taskList, Filter.incompleted)}</div>
-    <div>Total : {numberOfTasks(props.taskList, Filter.everything)}</div>
-  </div>
-);
+interface Category {
+  label: string;
+  filter: Filter;
+}
 
+const Overview = (props: OverviewProps) => {
+  const data: Array<Category> = [
+    { label: "Completed", filter: Filter.completed },
+    { label: "Incompleted", filter: Filter.incompleted },
+    { label: "All Tasks", filter: Filter.allTasks }
+  ];
+
+  return (
+    <Box display="block" width="100px">
+      {data.map((item: Category, index: number) => (
+        <Box key={index} justifyContent="space-between">
+          <div>{item.label}:</div>
+          <div>{numberOfTasks(props.taskList, item.filter)}</div>
+        </Box>
+      ))}
+    </Box>
+  );
+};
 export default Overview;

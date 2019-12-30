@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "../styles/styles";
 
 interface PaginationProps {
   tasksAmount: number;
@@ -14,13 +15,14 @@ const Pagination = ({ tasksAmount, showPage }: PaginationProps) => {
   }
 
   return (
-    <>
-      {pages.map((page: number, index: number) => (
-        <div key={index} onClick={() => showPage(page)}>
-          {page}
-        </div>
-      ))}
-    </>
+    <Box>
+      {numberOfPages > 1 &&
+        pages.map((page: number, index: number) => (
+          <div key={index} onClick={() => showPage(page)}>
+            {page}
+          </div>
+        ))}
+    </Box>
   );
 };
 

@@ -1,9 +1,10 @@
 import React from "react";
+import styled from "styled-components";
+import Button from "./Button";
 import { connect } from "react-redux";
 import { startSetTasks } from "../store/actions/task";
-import { startLogin, login, autoLogin } from "../store/actions/auth";
-import { ThunkResult, AuthAction, State, Task } from "../types/types";
-import styled from "styled-components";
+import { startLogin, autoLogin } from "../store/actions/auth";
+import { ThunkResult, State, Task, Action } from "../types/types";
 
 const Box = styled.div`
   display: flex;
@@ -13,27 +14,7 @@ const Box = styled.div`
   height: 100vh;
 `;
 
-const LoginButton = styled.button`
-  max-width: 200px;
-  width: 100%;
-  max-height: 100px;
-  height: 100%;
-  background: rgb(192, 192, 192);
-  color: white;
-  font-size: 25px;
-  font-weight: 700;
-`;
-
 interface LoginPageProps {
-  autoLogin: () => ThunkResult<void>;
-  startLogin: () => ThunkResult<void>;
-  startSetTasks: () => ThunkResult<void>;
-  login: (
-    uid: string
-  ) => {
-    type: AuthAction.login;
-    uid: string;
-  };
   history: {
     push(url: string): void;
   };
@@ -42,16 +23,22 @@ interface LoginPageProps {
   taskList: Array<Task>;
 }
 
-class LoginPage extends React.PureComponent<LoginPageProps, any> {
+interface LoginPageActions {
+  autoLogin: () => ThunkResult<void>;
+  startLogin: () => ThunkResult<void>;
+  startSetTasks: () => ThunkResult<void>;
+}
+
+class LoginPage extends React.PureComponent<LoginPageProps & LoginPageActions> {
   componentDidMount() {
     this.props.autoLogin();
   }
 
-  componentDidUpdate(prevProps: LoginPageProps) {
-    if (this.props.uid !== prevProps.uid) {
+  componentDidUpdate() {
+    if (this.props.uid) {
       this.props.startSetTasks();
     }
-    if (this.props.taskList !== prevProps.taskList) {
+    if (this.props.taskList) {
       this.props.history.push("/home");
     }
   }
@@ -59,14 +46,11 @@ class LoginPage extends React.PureComponent<LoginPageProps, any> {
   handleLogin = () => {
     this.props.startLogin();
   };
-  /* TODO: button compo */
 
   render() {
     return (
       <Box>
-        <LoginButton onClick={this.handleLogin}>
-          <p>Login with Google</p>
-        </LoginButton>
+        <Button onClick={this.handleLogin} name="Login with Google" />
         {this.props.error && <div>{this.props.error}</div>}
       </Box>
     );
@@ -81,6 +65,6 @@ const mapStatetoProps = (state: State) => {
   };
 };
 
-const mapDispatchToProps = { startLogin, login, startSetTasks, autoLogin };
+const mapDispatchToProps = { startLogin, startSetTasks, autoLogin };
 
 export default connect(mapStatetoProps, mapDispatchToProps)(LoginPage);

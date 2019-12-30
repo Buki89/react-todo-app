@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const ButtonStyled = styled.button`
+interface ButtonStylesProps {
+  color: string;
+  styles: { [key: string]: string };
+}
+
+const ButtonStyled = styled.button<ButtonStylesProps>`
   background: ${({ color }) => color};
   color: #fff;
   text-align: center;
@@ -13,17 +18,25 @@ const ButtonStyled = styled.button`
   :hover {
     cursor: pointer;
   }
+  ${({ styles }) => styles};
 `;
 
 interface ButtonProps {
   type?: "submit" | "button" | "reset";
   name: string;
-  color: string;
+  color?: string;
   onClick?: () => any;
+  styles?: { [key: string]: string };
 }
 
-const Button = ({ type = "button", name, color, onClick }: ButtonProps) => (
-  <ButtonStyled type={type} color={color} onClick={onClick}>
+const Button = ({
+  type = "button",
+  name,
+  color = "blue",
+  onClick,
+  styles
+}: ButtonProps) => (
+  <ButtonStyled type={type} color={color} onClick={onClick} styles={styles}>
     {name}
   </ButtonStyled>
 );

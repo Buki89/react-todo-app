@@ -1,5 +1,5 @@
 // // import React from "react";
-// // import HomeDashboard from "./HomeDashboard2";
+// // import Dashboard from "./HomeDashboard2";
 // // import Header from "./Header";
 // // import Menu from "./Menu";
 // // import styled from "styled-components";
@@ -46,7 +46,7 @@
 //       <MainContainer>
 //         <Header />
 //         <Menu />
-//         <HomeDashboard
+//         <Dashboard
 //           handleAddTask={this.handleAddTask}
 //           handleEditTask={this.handleEditTask}
 //           handleRemoveTask={this.handleRemoveTask}

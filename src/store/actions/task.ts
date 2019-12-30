@@ -78,7 +78,7 @@ export const startDeleteTask = (id: string) => {
       });
   };
 };
-
+//TODO: types
 export const editTask = ({ id, taskName, isCompleted }) => ({
   type: TaskAction.editTask,
   payload: {
@@ -88,7 +88,16 @@ export const editTask = ({ id, taskName, isCompleted }) => ({
   }
 });
 
-export const startEditTask = ({ id, taskName, isCompleted }) => {
+export interface StartEditTaskProps {
+  id: string;
+  taskName: string;
+  isCompleted: boolean;
+}
+export const startEditTask = ({
+  id,
+  taskName,
+  isCompleted
+}: StartEditTaskProps) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 

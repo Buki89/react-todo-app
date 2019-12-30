@@ -46,7 +46,7 @@ export const numberOfTasks = (taskList: Array<Task>, filterBy: string) => {
     case Filter.incompleted:
       return taskList.filter((task: Task) => !task.isCompleted).length;
 
-    case Filter.everything:
+    case Filter.allTasks:
       return taskList.length;
   }
 };

@@ -2,7 +2,7 @@ import { FilterAction, FilterState, Filter } from "../../types/types";
 
 // TODO: naming - sortAlphabetically -> isSortedAlphabetically
 const initialState: FilterState = {
-  displayTasks: Filter.everything,
+  displayTasks: Filter.allTasks,
   sortBy: "",
   pageNumber: 1
 };

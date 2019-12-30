@@ -1,15 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "./fields/Input";
-import { connect } from "react-redux";
-import { State, TodoState, Task, ThunkResult } from "../types/types";
-import {
-  startDeleteTask,
-  startCompleteTask,
-  startEditTask
-} from "../store/actions/task";
+import { Task } from "../types/types";
 import StyledCheckbox from "../themes/checkbox";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { HomePageActions } from "./HomePage";
+import { Box } from "../styles/styles";
 
 const Menu = styled.div`
   display: flex;
@@ -23,6 +19,7 @@ const Menu = styled.div`
     height: 100%;
   }
 `;
+
 const NameWithEdit = styled.div`
   font-size: 20px;
   font-weight: 500;
@@ -30,30 +27,16 @@ const NameWithEdit = styled.div`
   justify-content: flex-start;
   display: flex;
 `;
-const Buttons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-const Flex = styled.div`
-  display: flex;
-`;
 
 interface ItemProps {
   task: Task;
-  taskList: TodoState;
-  startDeleteTask: (id: string) => ThunkResult<void>;
-  startCompleteTask: (id: string) => ThunkResult<void>;
-  startEditTask: ({
-    id,
-    taskName,
-    isCompleted
-  }: {
-    id: string;
-    taskName: string;
-    isCompleted: boolean;
-  }) => ThunkResult<void>;
+  taskList: Array<Task>;
+  taskActions: Pick<
+    HomePageActions,
+    "startDeleteTask" | "startEditTask" | "startCompleteTask"
+  >;
 }
+
 interface ItemState {
   isChecked: boolean;
   isVisible: boolean;
@@ -63,7 +46,7 @@ interface ItemState {
 }
 
 class Item extends React.PureComponent<ItemProps, ItemState> {
-  constructor(props) {
+  constructor(props: ItemProps) {
     super(props);
     this.state = {
       isChecked: props.task ? props.task.isCompleted : false,
@@ -73,15 +56,17 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
       errorMessage: ""
     };
   }
+
   handleDeleteTask = () => {
-    this.props.startDeleteTask(this.props.task.id);
+    this.props.taskActions.startDeleteTask(this.props.task.id);
   };
 
   handleOnCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { task } = this.props;
     this.setState({ isChecked: e.target.checked });
-    this.props.startCompleteTask(task.id);
+    this.props.taskActions.startCompleteTask(task.id);
   };
+
   handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasUniqueValue =
@@ -89,7 +74,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
         (task: Task) => task.taskName === this.state.taskName
       ).length === 0;
     if (hasUniqueValue) {
-      this.props.startEditTask({
+      this.props.taskActions.startEditTask({
         id: this.props.task.id,
         taskName: this.state.taskName,
         isCompleted: this.props.task.isCompleted
@@ -102,17 +87,19 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
       });
     }
   };
+
   handleChangeTask = (e: React.ChangeEvent<HTMLInputElement>) => {
     const taskName = e.target.value;
     this.setState({ taskName });
   };
+
   render() {
     return (
       <Menu>
         <NameWithEdit>
           {this.props.task.taskName}
           {this.state.isVisible && (
-            <Flex>
+            <Box>
               <form onSubmit={this.handleEdit}>
                 <Input
                   name="edit"
@@ -121,12 +108,12 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
                 />
                 <button type="submit">Ok</button>
               </form>
-            </Flex>
+            </Box>
           )}
           {this.state.error && <div>{this.state.errorMessage}</div>}
         </NameWithEdit>
 
-        <Buttons>
+        <Box justifyContent="space-between" alignItems="center">
           <StyledCheckbox
             type="checkbox"
             checked={this.state.isChecked}
@@ -138,22 +125,9 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
           />
 
           <FaTrashAlt onClick={this.handleDeleteTask} color="	#ff1a1a" />
-        </Buttons>
+        </Box>
       </Menu>
     );
   }
 }
-
-const mapStateToProps = (state: State) => {
-  return {
-    taskList: state.tasks
-  };
-};
-
-const mapDispatchToProps = {
-  startDeleteTask,
-  startCompleteTask,
-  startEditTask
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Item);
+export default Item;

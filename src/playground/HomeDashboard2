@@ -12,7 +12,7 @@ export const BodyContainer = styled.div`
   border-radius: 10px;
 `;
 
-const HomeDashboard = props => (
+const Dashboard = props => (
   <BodyContainer>
     <div>Add what you should do</div>
     <AddItemForm
@@ -29,4 +29,4 @@ const HomeDashboard = props => (
   </BodyContainer>
 );
 
-export default HomeDashboard;
+export default Dashboard;

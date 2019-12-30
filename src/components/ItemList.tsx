@@ -3,18 +3,23 @@ import Item from "./Item";
 import { Task, FilterState } from "../types/types";
 import { filterStatusCompletion, sortBy } from "../lib/helpers";
 import styled from "styled-components";
+import { HomePageActions } from "./HomePage";
 
 interface ItemListProps {
   taskList: Array<Task>;
   filter: FilterState;
+  taskActions: Pick<
+    HomePageActions,
+    "startDeleteTask" | "startEditTask" | "startCompleteTask"
+  >;
 }
 
 const Row = styled.div`
   height: 70px;
   height: 100%;
 `;
-// TODO: Naming
-const ItemList = ({ taskList, filter }: ItemListProps) => (
+
+const ItemList = ({ taskList, filter, taskActions }: ItemListProps) => (
   <>
     {taskList &&
       filterStatusCompletion(filter.displayTasks, taskList)
@@ -26,7 +31,7 @@ const ItemList = ({ taskList, filter }: ItemListProps) => (
         })
         .map((task: Task) => (
           <Row key={task.id}>
-            <Item task={task} />
+            <Item task={task} taskList={taskList} taskActions={taskActions} />
           </Row>
         ))}
   </>

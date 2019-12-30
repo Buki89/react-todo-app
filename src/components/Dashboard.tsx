@@ -2,10 +2,11 @@ import React from "react";
 import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
 import styled from "styled-components";
-import { Task, FilterState, SortType } from "../types/types";
+import { Task, FilterState, SortType, Filter } from "../types/types";
 import Overview from "./Overview";
 import Pagination from "./Pagination";
 import { numberOfTasks } from "../lib/helpers";
+import { HomePageActions } from "./HomePage";
 import Select from "./fields/Select";
 
 interface HomeDashboardProps {
@@ -15,6 +16,10 @@ interface HomeDashboardProps {
   handleChangeFilter: (filter: string) => void;
   handleSortBy: (value: string) => void;
   showPage: (pageNumber: number) => void;
+  taskActions: Pick<
+    HomePageActions,
+    "startDeleteTask" | "startEditTask" | "startCompleteTask"
+  >;
 }
 
 const Container = styled.div`
@@ -41,7 +46,7 @@ const FlexDiv = styled.div`
   display: flex;
 `;
 
-const HomeDashboard = (props: HomeDashboardProps) => {
+const Dashboard = (props: HomeDashboardProps) => {
   const tasksAmount = numberOfTasks(props.taskList, props.filter.displayTasks);
 
   return (
@@ -59,7 +64,7 @@ const HomeDashboard = (props: HomeDashboardProps) => {
           <FlexDiv>
             <Select
               onChange={props.handleSortBy}
-              label="Sort by   "
+              label="Sort by"
               options={[
                 { value: SortType.dateNewest, label: "Newest" },
                 { value: SortType.dateOldest, label: "Oldest" },
@@ -70,19 +75,23 @@ const HomeDashboard = (props: HomeDashboardProps) => {
             <Select
               onChange={props.handleChangeFilter}
               options={[
-                { value: "total", label: "All Tasks" },
-                { value: "completed", label: "Completed" },
-                { value: "incompleted", label: "Incompleted" }
+                { value: Filter.allTasks, label: "All Tasks" },
+                { value: Filter.completed, label: "Completed" },
+                { value: Filter.incompleted, label: "Incompleted" }
               ]}
             />
           </FlexDiv>
           <Overview taskList={props.taskList} />
         </OverviewBar>
-        <ItemList taskList={props.taskList} filter={props.filter} />
+        <ItemList
+          taskList={props.taskList}
+          filter={props.filter}
+          taskActions={props.taskActions}
+        />
       </ItemListContainer>
       <Pagination tasksAmount={tasksAmount} showPage={props.showPage} />
     </Container>
   );
 };
 
-export default HomeDashboard;
+export default Dashboard;

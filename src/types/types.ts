@@ -50,7 +50,7 @@ export enum AuthAction {
 export enum Filter {
   completed = "completed",
   incompleted = "inCompleted",
-  everything = "total"
+  allTasks = "allTasks"
 }
 
 export enum SortType {
@@ -68,6 +68,29 @@ export type Action =
   | {
       type: TaskAction.deleteTask;
       payload: { id: string };
+    }
+  | {
+      type: FilterAction.filterChange;
+      payload: { filter: Filter };
+    }
+  | {
+      type: FilterAction.showPage;
+      payload: {
+        pageNumber: number;
+      };
+    }
+  | {
+      type: AuthAction.logout;
+    }
+  | {
+      type: FilterAction.sortMethod;
+      payload: {
+        value: SortType;
+      };
+    }
+  | {
+      type: AuthAction.login;
+      uid: string;
     };
 
 export type ThunkResult<R> = ThunkAction<R, State, undefined, Action>;

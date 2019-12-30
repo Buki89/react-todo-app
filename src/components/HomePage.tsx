@@ -1,18 +1,18 @@
 import React from "react";
 import Header from "./Header";
-import HomeDashboard from "./HomeDashboard";
+import Dashboard from "./Dashboard";
 import { connect } from "react-redux";
-import { logout, startLogout } from "../store/actions/auth";
-import { startTaskAdd, startSetTasks } from "../store/actions/task";
-import { filterChange, sortByMethod, showPage } from "../store/actions/filter";
+import { startLogout } from "../store/actions/auth";
 import {
-  State,
-  Task,
-  ThunkResult,
-  FilterAction,
-  FilterState,
-  AuthAction
-} from "../types/types";
+  startTaskAdd,
+  startSetTasks,
+  startDeleteTask,
+  startCompleteTask,
+  startEditTask,
+  StartEditTaskProps
+} from "../store/actions/task";
+import { filterChange, sortByMethod, showPage } from "../store/actions/filter";
+import { Action, State, Task, ThunkResult, FilterState } from "../types/types";
 
 interface HomePageProps {
   taskList: Array<Task>;
@@ -20,38 +20,24 @@ interface HomePageProps {
   location: any;
 }
 
-// TODO: debilní naming
-
-interface HomePageActions {
+export interface HomePageActions {
   startTaskAdd: (task: Task) => ThunkResult<void>;
   startSetTasks: () => ThunkResult<void>;
-  filterChange: (
-    filter: string
-  ) => {
-    type: FilterAction.filterChange;
-    payload: {
-      filter: string;
-    };
-  };
-  sortByMethod: (value: string) => void;
-  handleShowPage: (pageNumber: number) => void;
-  showPage: (
-    pageNumber: number
-  ) => {
-    type: FilterAction.showPage;
-    payload: {
-      pageNumber: number;
-    };
-  };
-  logout: () => { type: AuthAction.logout };
   startLogout: () => ThunkResult<void>;
+  filterChange: (filter: string) => Action;
+  sortByMethod: (value: string) => Action;
+  showPage: (pageNumber: number) => Action;
+  startDeleteTask: (id: string) => ThunkResult<void>;
+  startCompleteTask: (id: string) => ThunkResult<void>;
+  startEditTask: (props: StartEditTaskProps) => ThunkResult<void>;
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
   handleAddTask = ({ taskName, id, createdAt }: Task) => {
     this.props.startTaskAdd({ taskName, id, createdAt });
   };
-
+  // TODO: Unify filter and sortby actions
+  // TODO: Unify also enums - filter and sortType
   handleChangeFilter = (filter: string) => {
     this.props.filterChange(filter);
     this.props.showPage(1);
@@ -59,6 +45,7 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
 
   handleSortBy = (value: string) => {
     this.props.sortByMethod(value);
+    this.props.showPage(1);
   };
 
   handleShowPage = (pageNumber: number) => {
@@ -66,22 +53,25 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
   };
 
   handleLogout = () => {
-    this.props.logout();
     this.props.startLogout();
-    console.log("User logout");
   };
 
   render() {
     return (
       <>
         <Header handleLogout={this.handleLogout} />
-        <HomeDashboard
+        <Dashboard
           taskList={this.props.taskList}
           filter={this.props.filter}
           handleAddTask={this.handleAddTask}
           handleChangeFilter={this.handleChangeFilter}
           handleSortBy={this.handleSortBy}
           showPage={this.handleShowPage}
+          taskActions={{
+            startCompleteTask: this.props.startCompleteTask,
+            startEditTask: this.props.startEditTask,
+            startDeleteTask: this.props.startDeleteTask
+          }}
         />
       </>
     );
@@ -101,8 +91,10 @@ const mapDispatchToProps = {
   filterChange,
   sortByMethod,
   showPage,
-  logout,
-  startLogout
+  startLogout,
+  startDeleteTask,
+  startCompleteTask,
+  startEditTask
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
