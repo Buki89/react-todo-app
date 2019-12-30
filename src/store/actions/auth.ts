@@ -7,11 +7,15 @@ export const login = (uid: string) => ({
 });
 
 export const startLogin = () => {
-  return () => {
+  return dispatch => {
     return firebase
       .auth()
       .signInWithPopup(googleAuthProvider)
-      .catch(() => "něco je špatně");
+      .then(result => dispatch(login(result.user.uid)))
+      .catch(error => {
+        dispatch(loginError());
+        console.log(error);
+      });
   };
 };
 
@@ -22,5 +26,19 @@ export const logout = () => ({
 export const startLogout = () => {
   return () => {
     return firebase.auth().signOut();
+  };
+};
+
+export const loginError = () => ({
+  type: AuthAction.loginError
+});
+
+export const autoLogin = () => {
+  return dispatch => {
+    return firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        dispatch(login(user.uid));
+      }
+    });
   };
 };

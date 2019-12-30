@@ -17,6 +17,7 @@ export interface Task {
 
 export interface AuthState {
   uid: string;
+  error: string;
 }
 
 export interface FilterState {
@@ -42,7 +43,8 @@ export enum FilterAction {
 
 export enum AuthAction {
   login = "LOGIN",
-  logout = "LOGOUT"
+  logout = "LOGOUT",
+  loginError = "LOGIN_ERROR"
 }
 
 export enum Filter {

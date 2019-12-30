@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { startSetTasks } from "../store/actions/task";
-import { startLogin, login } from "../store/actions/auth";
-import { firebase } from "../firebase/firebase";
+import { startLogin, login, autoLogin } from "../store/actions/auth";
 import { ThunkResult, AuthAction, State, Task } from "../types/types";
 import styled from "styled-components";
 
@@ -26,6 +25,7 @@ const LoginButton = styled.button`
 `;
 
 interface LoginPageProps {
+  autoLogin: () => ThunkResult<void>;
   startLogin: () => ThunkResult<void>;
   startSetTasks: () => ThunkResult<void>;
   login: (
@@ -37,23 +37,27 @@ interface LoginPageProps {
   history: {
     push(url: string): void;
   };
-  state: State;
+  error: string;
+  uid: string;
+  taskList: Array<Task>;
 }
 
 class LoginPage extends React.PureComponent<LoginPageProps, any> {
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.props.login(user.uid);
-        this.props.startSetTasks();
-        this.props.history.push("/home");
-      }
-    });
+    this.props.autoLogin();
+  }
+
+  componentDidUpdate(prevProps: LoginPageProps) {
+    if (this.props.uid !== prevProps.uid) {
+      this.props.startSetTasks();
+    }
+    if (this.props.taskList !== prevProps.taskList) {
+      this.props.history.push("/home");
+    }
   }
 
   handleLogin = () => {
     this.props.startLogin();
-    this.props.history.push("/loading");
   };
   /* TODO: button compo */
 
@@ -63,6 +67,7 @@ class LoginPage extends React.PureComponent<LoginPageProps, any> {
         <LoginButton onClick={this.handleLogin}>
           <p>Login with Google</p>
         </LoginButton>
+        {this.props.error && <div>{this.props.error}</div>}
       </Box>
     );
   }
@@ -70,20 +75,12 @@ class LoginPage extends React.PureComponent<LoginPageProps, any> {
 
 const mapStatetoProps = (state: State) => {
   return {
-    state: state
+    error: state.auth.error,
+    uid: state.auth.uid,
+    taskList: state.tasks
   };
 };
 
-const mapDispatchToProps = { startLogin, login, startSetTasks };
+const mapDispatchToProps = { startLogin, login, startSetTasks, autoLogin };
 
 export default connect(mapStatetoProps, mapDispatchToProps)(LoginPage);
-
-// firebase.auth().onAuthStateChanged(user => {
-//   if (user) {
-//     store.dispatch(login(user.uid));
-//     history.push("/home");
-//     store.dispatch({ type: "START_SET_TASKS", payload: startSetTasks() });
-//   } else {
-//     store.dispatch(logout());
-//   }
-// });

@@ -2,7 +2,6 @@ import React from "react";
 import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
 import styled from "styled-components";
-import Filter from "./Filter";
 import { Task, FilterState, SortType } from "../types/types";
 import Overview from "./Overview";
 import Pagination from "./Pagination";
@@ -50,7 +49,7 @@ const HomeDashboard = (props: HomeDashboardProps) => {
       <Item>
         <AddItemForm
           handleSubmit={props.handleAddTask}
-          buttonTitle='Add Item'
+          buttonTitle="Add Item"
           taskList={props.taskList}
         />
       </Item>
@@ -60,7 +59,7 @@ const HomeDashboard = (props: HomeDashboardProps) => {
           <FlexDiv>
             <Select
               onChange={props.handleSortBy}
-              label='Sort by   '
+              label="Sort by   "
               options={[
                 { value: SortType.dateNewest, label: "Newest" },
                 { value: SortType.dateOldest, label: "Oldest" },
@@ -71,7 +70,7 @@ const HomeDashboard = (props: HomeDashboardProps) => {
             <Select
               onChange={props.handleChangeFilter}
               options={[
-                { value: "total", label: "Total" },
+                { value: "total", label: "All Tasks" },
                 { value: "completed", label: "Completed" },
                 { value: "incompleted", label: "Incompleted" }
               ]}
