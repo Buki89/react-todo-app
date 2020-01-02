@@ -24,11 +24,11 @@ interface HomeDashboardProps {
 
 const Container = styled.div`
   flex-direction: column;
-  background: #c0c0c0;
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 30px 10px;
 `;
 const Item = styled.div`
   margin: 20px;
@@ -39,11 +39,8 @@ const ItemListContainer = styled.div`
 `;
 const OverviewBar = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin: 0 30px 0 0;
-`;
-const FlexDiv = styled.div`
-  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 `;
 
 const Dashboard = (props: HomeDashboardProps) => {
@@ -58,30 +55,27 @@ const Dashboard = (props: HomeDashboardProps) => {
           taskList={props.taskList}
         />
       </Item>
-
+      <Overview taskList={props.taskList} />
       <ItemListContainer>
         <OverviewBar>
-          <FlexDiv>
-            <Select
-              onChange={props.handleSortBy}
-              label="Sort by"
-              options={[
-                { value: SortType.dateNewest, label: "Newest" },
-                { value: SortType.dateOldest, label: "Oldest" },
-                { value: SortType.fromAToZ, label: "A - Z" },
-                { value: SortType.fromZToA, label: "Z - A" }
-              ]}
-            />
-            <Select
-              onChange={props.handleChangeFilter}
-              options={[
-                { value: Filter.allTasks, label: "All Tasks" },
-                { value: Filter.completed, label: "Completed" },
-                { value: Filter.incompleted, label: "Incompleted" }
-              ]}
-            />
-          </FlexDiv>
-          <Overview taskList={props.taskList} />
+          <Select
+            onChange={props.handleSortBy}
+            label="Sort by"
+            options={[
+              { value: SortType.dateNewest, label: "Newest" },
+              { value: SortType.dateOldest, label: "Oldest" },
+              { value: SortType.fromAToZ, label: "A - Z" },
+              { value: SortType.fromZToA, label: "Z - A" }
+            ]}
+          />
+          <Select
+            onChange={props.handleChangeFilter}
+            options={[
+              { value: Filter.allTasks, label: "All Tasks" },
+              { value: Filter.completed, label: "Completed" },
+              { value: Filter.incompleted, label: "Incompleted" }
+            ]}
+          />
         </OverviewBar>
         <ItemList
           taskList={props.taskList}

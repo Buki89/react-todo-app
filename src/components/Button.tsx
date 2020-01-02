@@ -12,12 +12,10 @@ const ButtonStyled = styled.button<ButtonStylesProps>`
   text-align: center;
   border: none;
   border-radius: 3px;
-  max-width: 70px;
-  font-weight: bold;
-  margin: 0 0 0 5px;
-  :hover {
-    cursor: pointer;
-  }
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 24px;
   ${({ styles }) => styles};
 `;
 
@@ -32,7 +30,7 @@ interface ButtonProps {
 const Button = ({
   type = "button",
   name,
-  color = "blue",
+  color = "#00ACC1",
   onClick,
   styles
 }: ButtonProps) => (

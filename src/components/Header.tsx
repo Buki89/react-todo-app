@@ -1,31 +1,47 @@
 import React from "react";
 import styled from "styled-components";
-import theme from "../themes/theme";
+import { FaPowerOff } from "react-icons/fa";
 
-const HeaderWrapper = styled.div`
+const Wrapper = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: column;
-  background: #333333;
-  max-height: 150px;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  background-color: ${({ theme }) => theme.colors.black};
 `;
-const HeaderTitle = styled.div`
+
+const LogoutButtonWrapper = styled.div`
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  font-weight: 700;
-  font-family: "Times New Roman", Times, serif;
-  color: ${theme.colors.color1};
+  right: 15px;
+  bottom: 15px;
+  color: ${({ theme }) => theme.colors.whiteDirty};
+  cursor: pointer;
 `;
-const Logout = styled.div`
+
+const AppName = styled.div`
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  margin: 0 15px 15px 0;
-  color: ${theme.colors.color1};
-  :hover {
-    cursor: pointer;
-  }
+  align-items: center;
+`;
+
+const H1 = styled.h1`
+  font-size: 42px;
+  line-height: 50px;
+  color: ${({ theme }) => theme.colors.whiteDirty};
+  margin: 0;
+`;
+
+const Text = styled.p`
+  font-size: 18px;
+  line-height: 24px;
+  color: ${({ theme }) => theme.colors.whiteDirty};
+  margin: 0 16px;
+`;
+
+const LogoutText = styled.p`
+  margin: 0 5px 0 0;
 `;
 
 interface HeaderProps {
@@ -33,12 +49,17 @@ interface HeaderProps {
 }
 
 const Header = (props: HeaderProps) => (
-  <HeaderWrapper>
-    <HeaderTitle>
-      <h1>Todo application</h1>
-    </HeaderTitle>
-    <Logout onClick={props.handleLogout}>Logout</Logout>
-  </HeaderWrapper>
+  <Wrapper>
+    <AppName>
+      <H1>TODO</H1>
+      <Text>or not</Text>
+      <H1>TODO?</H1>
+    </AppName>
+    <LogoutButtonWrapper onClick={props.handleLogout}>
+      <LogoutText>logout</LogoutText>
+      <FaPowerOff />
+    </LogoutButtonWrapper>
+  </Wrapper>
 );
 
 export default Header;

@@ -8,6 +8,9 @@ import { ErrorMessage } from "./fields/errorMessages";
 
 const Menu = styled.div`
   display: flex;
+  > button {
+    margin-left: 5px;
+  }
 `;
 
 interface AddItemFormProps {
@@ -81,7 +84,7 @@ class AddItemForm extends React.PureComponent<
             value={this.state.value}
             onChange={this.handleChangeValue}
           />
-          <Button name="Add" color="#0000ff" type="submit"></Button>
+          <Button name="Add me!" type="submit"></Button>
         </Menu>
         {this.state.error && <p>{this.state.errorMessage}</p>}
       </form>

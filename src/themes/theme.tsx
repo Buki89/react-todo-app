@@ -1,8 +1,11 @@
 const colors = {
-  color1: "#F6F6F6",
-  color2: "#47363E"
+  gray: "#c0c0c0",
+  black: "#333333",
+  whiteDirty: "#F6F6F6"
 };
+
 const theme = {
   colors
 };
+
 export default theme;

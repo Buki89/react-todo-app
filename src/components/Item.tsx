@@ -9,11 +9,11 @@ import { Box } from "../styles/styles";
 
 const Menu = styled.div`
   display: flex;
-  border: 1px solid #000;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
   justify-content: space-between;
   border-radius: 10px;
-  margin: 5px;
-  padding: 5px;
+  margin: 10px 0;
+  padding: 10px;
   align-items: center;
   div {
     height: 100%;
@@ -21,11 +21,27 @@ const Menu = styled.div`
 `;
 
 const NameWithEdit = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   margin: 0 0 0 10px;
   justify-content: flex-start;
   display: flex;
+`;
+
+const MenuItem = styled.div`
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+`;
+
+interface TestStyleProps {
+  isCompleted: boolean;
+}
+
+const Test = styled.div<TestStyleProps>`
+  color: ${({ isCompleted }) => (isCompleted ? "#28e08d" : "#333")};
+  text-decoration: ${({ isCompleted }) =>
+    isCompleted ? "line-through" : "none"};
 `;
 
 interface ItemProps {
@@ -94,10 +110,13 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
   };
 
   render() {
+    const isCompleted = this.props.task && this.props.task.isCompleted;
+
     return (
       <Menu>
         <NameWithEdit>
-          {this.props.task.taskName}
+          <Test isCompleted={isCompleted}>{this.props.task.taskName}</Test>
+
           {this.state.isVisible && (
             <Box>
               <form onSubmit={this.handleEdit}>
@@ -114,17 +133,29 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
         </NameWithEdit>
 
         <Box justifyContent="space-between" alignItems="center">
-          <StyledCheckbox
-            type="checkbox"
-            checked={this.state.isChecked}
-            onChange={this.handleOnCheckboxChange}
-          ></StyledCheckbox>
-          <FaEdit
-            color="#1aff1a"
-            onClick={() => this.setState({ isVisible: !this.state.isVisible })}
-          />
-
-          <FaTrashAlt onClick={this.handleDeleteTask} color="	#ff1a1a" />
+          <MenuItem>
+            <FaEdit
+              color="#00ACC1"
+              onClick={() =>
+                this.setState({ isVisible: !this.state.isVisible })
+              }
+              size={25}
+            />
+          </MenuItem>
+          <MenuItem>
+            <FaTrashAlt
+              onClick={this.handleDeleteTask}
+              color="#d85d71"
+              size={22}
+            />
+          </MenuItem>
+          <MenuItem>
+            <StyledCheckbox
+              type="checkbox"
+              checked={this.state.isChecked}
+              onChange={this.handleOnCheckboxChange}
+            />
+          </MenuItem>
         </Box>
       </Menu>
     );
