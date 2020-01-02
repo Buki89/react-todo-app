@@ -20,7 +20,7 @@ export const taskAdd = ({ taskName, id, createdAt }: Task) => ({
 export const startTaskAdd = (taskData: Task) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    const { taskName = "", isCompleted = false, createdAt } = taskData;
+    const { taskName, isCompleted, createdAt } = taskData;
     const taskItem = { taskName, isCompleted, createdAt };
     return database
       .ref(`${Database.users}/${uid}/${Database.tasks}`)
@@ -125,16 +125,15 @@ export const completeTask = (id: string) => ({
   }
 });
 
-export const startCompleteTask = (id: string) => {
+export const startCompleteTask = (id: string, isChecked: boolean) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
     return database
       .ref(`${Database.users}/${uid}/${Database.tasks}/${id}`)
-      .update({ isCompleted: true })
+      .update({ isCompleted: isChecked })
       .then(() => {
         dispatch(completeTask(id));
-        // TODO: dispatch redux action -> error handling
       })
       .catch(e => console.log(":(", e));
   };

@@ -4,7 +4,7 @@ import Button from "./Button";
 import { connect } from "react-redux";
 import { startSetTasks } from "../store/actions/task";
 import { startLogin, autoLogin } from "../store/actions/auth";
-import { ThunkResult, State, Task, Action } from "../types/types";
+import { ThunkResult, State, Task } from "../types/types";
 
 const Box = styled.div`
   display: flex;

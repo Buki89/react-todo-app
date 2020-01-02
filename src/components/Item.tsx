@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Input from "./fields/Input";
 import { Task } from "../types/types";
-import StyledCheckbox from "../themes/checkbox";
+import Checkbox from "./fields/Checkbox";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HomePageActions } from "./HomePage";
 import { Box } from "../styles/styles";
@@ -79,8 +79,9 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
   handleOnCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { task } = this.props;
-    this.setState({ isChecked: e.target.checked });
-    this.props.taskActions.startCompleteTask(task.id);
+    const isChecked = e.target.checked;
+    this.setState({ isChecked });
+    this.props.taskActions.startCompleteTask(task.id, isChecked);
   };
 
   handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -150,8 +151,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             />
           </MenuItem>
           <MenuItem>
-            <StyledCheckbox
-              type="checkbox"
+            <Checkbox
               checked={this.state.isChecked}
               onChange={this.handleOnCheckboxChange}
             />

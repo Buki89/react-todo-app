@@ -28,7 +28,7 @@ export interface HomePageActions {
   sortByMethod: (value: string) => Action;
   showPage: (pageNumber: number) => Action;
   startDeleteTask: (id: string) => ThunkResult<void>;
-  startCompleteTask: (id: string) => ThunkResult<void>;
+  startCompleteTask: (id: string, isChecked: boolean) => ThunkResult<void>;
   startEditTask: (props: StartEditTaskProps) => ThunkResult<void>;
 }
 

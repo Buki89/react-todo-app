@@ -24,3 +24,7 @@ export const Box = styled.div<BoxProps>`
   ${({ width }) => width && `width: ${width}`};
   ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth}`};
 `;
+
+// TODO: unify styles and themes folders
+// TODO: create typography file
+// TODO: colors from theme
