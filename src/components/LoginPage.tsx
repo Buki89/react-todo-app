@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
+import Header from "./Header";
 import { connect } from "react-redux";
 import { startSetTasks } from "../store/actions/task";
 import { startLogin, autoLogin } from "../store/actions/auth";
@@ -10,8 +11,7 @@ const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  margin: 40px auto;
 `;
 
 interface LoginPageProps {
@@ -49,10 +49,13 @@ class LoginPage extends React.PureComponent<LoginPageProps & LoginPageActions> {
 
   render() {
     return (
-      <Box>
-        <Button onClick={this.handleLogin} name="Login with Google" />
-        {this.props.error && <div>{this.props.error}</div>}
-      </Box>
+      <div>
+        <Header withLogoutButton={false} />
+        <Box>
+          <Button onClick={this.handleLogin} name="Login with Google" />
+          {this.props.error && <div>{this.props.error}</div>}
+        </Box>
+      </div>
     );
   }
 }

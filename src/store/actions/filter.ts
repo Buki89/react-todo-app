@@ -1,20 +1,20 @@
-import { FilterAction, Filter, SortType } from "../../types/types";
+import { FilterAction, SortType } from "../../types/types";
 
-export const filterChange = (filter: Filter) => ({
-  type: FilterAction.filterChange,
+export const filterByChange = (filter: SortType) => ({
+  type: FilterAction.filterByChange,
   payload: {
     filter
   }
 });
-export const sortByMethod = (value: SortType) => ({
-  type: FilterAction.sortMethod,
+export const sortByChange = (sort: SortType) => ({
+  type: FilterAction.sortByChange,
   payload: {
-    value
+    sort
   }
 });
 
-export const showPage = (pageNumber: number) => ({
-  type: FilterAction.showPage,
+export const getPageNumber = (pageNumber: number) => ({
+  type: FilterAction.getPageNumber,
   payload: {
     pageNumber
   }

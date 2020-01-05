@@ -1,14 +1,11 @@
-import { Task, Filter, SortType } from "../types/types";
+import { Task, SortType } from "../types/types";
 
-export const filterStatusCompletion = (
-  filter: string,
-  taskList: Array<Task>
-) => {
+export const filterBy = (filter: string, taskList: Array<Task>) => {
   switch (filter) {
-    case Filter.completed:
+    case SortType.completed:
       return taskList.filter((task: Task) => task.isCompleted);
 
-    case Filter.incompleted:
+    case SortType.incompleted:
       return taskList.filter((task: Task) => !task.isCompleted);
 
     default:
@@ -40,13 +37,13 @@ export const sortBy = (sortBy: string) => {
 
 export const numberOfTasks = (taskList: Array<Task>, filterBy: string) => {
   switch (filterBy) {
-    case Filter.completed:
+    case SortType.completed:
       return taskList.filter((task: Task) => task.isCompleted).length;
 
-    case Filter.incompleted:
+    case SortType.incompleted:
       return taskList.filter((task: Task) => !task.isCompleted).length;
 
-    case Filter.allTasks:
+    case SortType.allTasks:
       return taskList.length;
   }
 };

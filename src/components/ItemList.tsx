@@ -1,7 +1,7 @@
 import React from "react";
 import Item from "./Item";
 import { Task, FilterState } from "../types/types";
-import { filterStatusCompletion, sortBy } from "../lib/helpers";
+import { filterBy, sortBy } from "../lib/helpers";
 import styled from "styled-components";
 import { HomePageActions } from "./HomePage";
 
@@ -22,10 +22,10 @@ const Row = styled.div`
 const ItemList = ({ taskList, filter, taskActions }: ItemListProps) => (
   <>
     {taskList &&
-      filterStatusCompletion(filter.displayTasks, taskList)
+      filterBy(filter.filterBy, taskList)
         .sort(sortBy(filter.sortBy))
         .filter((_, index) => {
-          const lastIndex = filter.pageNumber * 10 - 1;
+          const lastIndex = filter.currentPage * 10 - 1;
           const firstIndex = lastIndex - 9;
           return index >= firstIndex && index <= lastIndex;
         })

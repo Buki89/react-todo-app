@@ -1,18 +1,18 @@
 import { ThunkAction } from "redux-thunk";
 
 export interface State {
-  tasks: TodoState;
+  tasks: TasksState;
   auth: AuthState;
   filter: FilterState;
 }
 
-export type TodoState = Array<Task>;
+export type TasksState = Array<Task>;
 
 export interface Task {
   taskName: string;
   id: string;
   createdAt: string;
-  isCompleted?: boolean;
+  isCompleted: boolean;
 }
 
 export interface AuthState {
@@ -21,24 +21,23 @@ export interface AuthState {
 }
 
 export interface FilterState {
-  displayTasks: string;
+  filterBy: string;
   sortBy: string;
-  pageNumber: number;
+  currentPage: number;
 }
 
 export enum TaskAction {
   addTask = "ADD_TASK",
   deleteTask = "DELETE_TASK",
   editTask = "EDIT_TASK",
-  searchTask = "SEARCH_TASK",
   completeTask = "COMPLETE_TASK",
   setTasks = "SET_TASKS"
 }
 
 export enum FilterAction {
-  filterChange = "FILTER_CHANGE",
-  sortMethod = "SORT_METHOD",
-  showPage = "SHOW_PAGE"
+  filterByChange = "FILTER_BY_CHANGE",
+  sortByChange = "SORT_BY_CHANGE",
+  getPageNumber = "GET_PAGE_NUMBER"
 }
 
 export enum AuthAction {
@@ -47,17 +46,14 @@ export enum AuthAction {
   loginError = "LOGIN_ERROR"
 }
 
-export enum Filter {
-  completed = "completed",
-  incompleted = "inCompleted",
-  allTasks = "allTasks"
-}
-
 export enum SortType {
   dateNewest = "dateNewest",
   dateOldest = "dateOldest",
   fromAToZ = "fromAToZ",
-  fromZToA = "fromZToA"
+  fromZToA = "fromZToA",
+  completed = "completed",
+  incompleted = "inCompleted",
+  allTasks = "allTasks"
 }
 
 export type Action =
@@ -70,27 +66,39 @@ export type Action =
       payload: { id: string };
     }
   | {
-      type: FilterAction.filterChange;
-      payload: { filter: Filter };
+      type: TaskAction.editTask;
+      payload: { id: string; taskName: string; isCompleted: boolean };
     }
   | {
-      type: FilterAction.showPage;
+      type: TaskAction.completeTask;
+      payload: { id: string };
+    }
+  | {
+      type: TaskAction.setTasks;
+      payload: {};
+    }
+  | {
+      type: FilterAction.filterByChange;
+      payload: { filter: SortType };
+    }
+  | {
+      type: FilterAction.getPageNumber;
       payload: {
         pageNumber: number;
       };
     }
   | {
-      type: AuthAction.logout;
-    }
-  | {
-      type: FilterAction.sortMethod;
+      type: FilterAction.sortByChange;
       payload: {
-        value: SortType;
+        sort: SortType;
       };
     }
   | {
       type: AuthAction.login;
       uid: string;
+    }
+  | {
+      type: AuthAction.logout;
     };
 
 export type ThunkResult<R> = ThunkAction<R, State, undefined, Action>;

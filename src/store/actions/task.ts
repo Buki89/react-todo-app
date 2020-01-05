@@ -1,24 +1,28 @@
 import { TaskAction } from "../../types/types";
+import { Task, State } from "../../types/types";
+import { Dispatch } from "redux";
+
 import database from "../../firebase/firebase";
-import { Task } from "../../types/types";
+
+type GetState = () => State;
 
 enum Database {
   tasks = "tasks",
   users = "users"
 }
 
-export const taskAdd = ({ taskName, id, createdAt }: Task) => ({
+export const taskAdd = ({ taskName, id, createdAt, isCompleted }: Task) => ({
   type: TaskAction.addTask,
   payload: {
     taskName,
     id,
     createdAt,
-    isCompleted: false
+    isCompleted
   }
 });
 
 export const startTaskAdd = (taskData: Task) => {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
     const { taskName, isCompleted, createdAt } = taskData;
     const taskItem = { taskName, isCompleted, createdAt };
@@ -26,28 +30,29 @@ export const startTaskAdd = (taskData: Task) => {
       .ref(`${Database.users}/${uid}/${Database.tasks}`)
       .push(taskItem)
       .then(ref => {
-        dispatch(taskAdd({ taskName, id: ref.key, createdAt }));
+        dispatch(taskAdd({ taskName, id: ref.key, createdAt, isCompleted }));
       })
       .catch(e => {
-        alert(e);
+        alert("Database error");
+        console.log(e);
       });
   };
 };
 
-export const setTasks = payload => ({
+export const setTasks = (tasks: Array<Task>) => ({
   type: TaskAction.setTasks,
-  payload
+  payload: { tasks }
 });
 
 export const startSetTasks = () => {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
 
     return database
       .ref(`${Database.users}/${uid}/${Database.tasks}`)
       .once("value")
       .then(snapshot => {
-        const tasks = [];
+        const tasks: Array<Task> = [];
         snapshot.forEach(item => {
           tasks.push({
             id: item.key,
@@ -55,6 +60,10 @@ export const startSetTasks = () => {
           });
         });
         dispatch(setTasks(tasks));
+      })
+      .catch(e => {
+        alert("Database error");
+        console.log(e);
       });
   };
 };
@@ -67,7 +76,7 @@ export const deleteTask = (id: string) => ({
 });
 
 export const startDeleteTask = (id: string) => {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
 
     return database
@@ -75,11 +84,21 @@ export const startDeleteTask = (id: string) => {
       .remove()
       .then(() => {
         dispatch(deleteTask(id));
+      })
+      .catch(e => {
+        alert("Database error");
+        console.log(e);
       });
   };
 };
-//TODO: types
-export const editTask = ({ id, taskName, isCompleted }) => ({
+
+export interface EditTaskArgs {
+  id: string;
+  taskName: string;
+  isCompleted: boolean;
+}
+
+export const editTask = ({ id, taskName, isCompleted }: EditTaskArgs) => ({
   type: TaskAction.editTask,
   payload: {
     id,
@@ -88,16 +107,7 @@ export const editTask = ({ id, taskName, isCompleted }) => ({
   }
 });
 
-export interface StartEditTaskProps {
-  id: string;
-  taskName: string;
-  isCompleted: boolean;
-}
-export const startEditTask = ({
-  id,
-  taskName,
-  isCompleted
-}: StartEditTaskProps) => {
+export const startEditTask = ({ id, taskName, isCompleted }: EditTaskArgs) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
@@ -114,7 +124,10 @@ export const startEditTask = ({
           })
         );
       })
-      .catch(e => alert("něco je špatně"));
+      .catch(e => {
+        alert("Database error");
+        console.log(e);
+      });
   };
 };
 
@@ -126,7 +139,7 @@ export const completeTask = (id: string) => ({
 });
 
 export const startCompleteTask = (id: string, isChecked: boolean) => {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
 
     return database
@@ -135,6 +148,9 @@ export const startCompleteTask = (id: string, isChecked: boolean) => {
       .then(() => {
         dispatch(completeTask(id));
       })
-      .catch(e => console.log(":(", e));
+      .catch(e => {
+        alert("Database error");
+        console.log(e);
+      });
   };
 };

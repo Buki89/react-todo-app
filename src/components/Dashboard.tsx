@@ -2,7 +2,7 @@ import React from "react";
 import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
 import styled from "styled-components";
-import { Task, FilterState, SortType, Filter } from "../types/types";
+import { Task, FilterState, SortType } from "../types/types";
 import Overview from "./Overview";
 import Pagination from "./Pagination";
 import { numberOfTasks } from "../lib/helpers";
@@ -10,12 +10,13 @@ import { HomePageActions } from "./HomePage";
 import Select from "./fields/Select";
 
 interface HomeDashboardProps {
+  currentPage: number;
   handleAddTask: (params: Task) => void;
   taskList: Array<Task>;
   filter: FilterState;
   handleChangeFilter: (filter: string) => void;
   handleSortBy: (value: string) => void;
-  showPage: (pageNumber: number) => void;
+  getPageNumber: (pageNumber: number) => void;
   taskActions: Pick<
     HomePageActions,
     "startDeleteTask" | "startEditTask" | "startCompleteTask"
@@ -44,7 +45,7 @@ const OverviewBar = styled.div`
 `;
 
 const Dashboard = (props: HomeDashboardProps) => {
-  const tasksAmount = numberOfTasks(props.taskList, props.filter.displayTasks);
+  const tasksAmount = numberOfTasks(props.taskList, props.filter.filterBy);
 
   return (
     <Container>
@@ -71,9 +72,9 @@ const Dashboard = (props: HomeDashboardProps) => {
           <Select
             onChange={props.handleChangeFilter}
             options={[
-              { value: Filter.allTasks, label: "All Tasks" },
-              { value: Filter.completed, label: "Completed" },
-              { value: Filter.incompleted, label: "Incompleted" }
+              { value: SortType.allTasks, label: "All Tasks" },
+              { value: SortType.completed, label: "Completed" },
+              { value: SortType.incompleted, label: "Incompleted" }
             ]}
           />
         </OverviewBar>
@@ -83,7 +84,11 @@ const Dashboard = (props: HomeDashboardProps) => {
           taskActions={props.taskActions}
         />
       </ItemListContainer>
-      <Pagination tasksAmount={tasksAmount} showPage={props.showPage} />
+      <Pagination
+        tasksAmount={tasksAmount}
+        getPageNumber={props.getPageNumber}
+        currentPage={props.currentPage}
+      />
     </Container>
   );
 };

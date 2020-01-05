@@ -1,24 +1,22 @@
-import { FilterAction, FilterState, Filter } from "../../types/types";
+import { FilterAction, FilterState, SortType, Action } from "../../types/types";
 
-// TODO: naming - sortAlphabetically -> isSortedAlphabetically
 const initialState: FilterState = {
-  displayTasks: Filter.allTasks,
+  filterBy: SortType.allTasks,
   sortBy: "",
-  pageNumber: 1
+  currentPage: 1
 };
 
-// TODO: type: Action
-export default (state = initialState, action) => {
+export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case FilterAction.filterChange:
+    case FilterAction.filterByChange:
       return {
         ...state,
-        displayTasks: action.payload.filter
+        filterBy: action.payload.filter
       };
-    case FilterAction.sortMethod:
-      return { ...state, sortBy: action.payload.value };
-    case FilterAction.showPage:
-      return { ...state, pageNumber: action.payload.pageNumber };
+    case FilterAction.sortByChange:
+      return { ...state, sortBy: action.payload.sort };
+    case FilterAction.getPageNumber:
+      return { ...state, currentPage: action.payload.pageNumber };
 
     default:
       return state;

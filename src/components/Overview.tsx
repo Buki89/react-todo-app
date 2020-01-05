@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { numberOfTasks } from "../lib/helpers";
-import { Task, Filter } from "../types/types";
-import { Box } from "../styles/styles";
+import { Task, SortType } from "../types/types";
+import { Box } from "../themes/styles";
 import { GoGraph } from "react-icons/go";
 
 const iconSize = 40;
@@ -46,14 +46,14 @@ interface OverviewProps {
 
 interface Category {
   label: string;
-  filter: Filter;
+  filter: SortType;
 }
 
 const Overview = (props: OverviewProps) => {
   const data: Array<Category> = [
-    { label: "Done", filter: Filter.completed },
-    { label: "Not done yet", filter: Filter.incompleted },
-    { label: "All Tasks", filter: Filter.allTasks }
+    { label: "Done", filter: SortType.completed },
+    { label: "Not done yet", filter: SortType.incompleted },
+    { label: "All Tasks", filter: SortType.allTasks }
   ];
 
   return (

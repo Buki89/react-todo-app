@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import theme from "./themes/theme";
+import GlobalStyle from "./themes";
+import AppRouter from "./Router/Router";
 import store from "./store/store";
 import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
-import theme from "./themes/theme";
-import GlobalStyle from "./styles";
-import AppRouter from "./Router/Router";
 
 const App = () => (
   <Provider store={store}>

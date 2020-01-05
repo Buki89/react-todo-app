@@ -9,47 +9,51 @@ import {
   startDeleteTask,
   startCompleteTask,
   startEditTask,
-  StartEditTaskProps
+  EditTaskArgs
 } from "../store/actions/task";
-import { filterChange, sortByMethod, showPage } from "../store/actions/filter";
+import {
+  filterByChange,
+  sortByChange,
+  getPageNumber
+} from "../store/actions/filter";
 import { Action, State, Task, ThunkResult, FilterState } from "../types/types";
 
 interface HomePageProps {
   taskList: Array<Task>;
   filter: FilterState;
   location: any;
+  currentPage: number;
 }
 
 export interface HomePageActions {
   startTaskAdd: (task: Task) => ThunkResult<void>;
   startSetTasks: () => ThunkResult<void>;
   startLogout: () => ThunkResult<void>;
-  filterChange: (filter: string) => Action;
-  sortByMethod: (value: string) => Action;
-  showPage: (pageNumber: number) => Action;
+  filterByChange: (filter: string) => Action;
+  sortByChange: (value: string) => Action;
+  getPageNumber: (pageNumber: number) => Action;
   startDeleteTask: (id: string) => ThunkResult<void>;
   startCompleteTask: (id: string, isChecked: boolean) => ThunkResult<void>;
-  startEditTask: (props: StartEditTaskProps) => ThunkResult<void>;
+  startEditTask: (args: EditTaskArgs) => ThunkResult<void>;
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
   handleAddTask = ({ taskName, id, createdAt }: Task) => {
-    this.props.startTaskAdd({ taskName, id, createdAt });
+    this.props.startTaskAdd({ taskName, id, createdAt, isCompleted: false });
   };
   // TODO: Unify filter and sortby actions
-  // TODO: Unify also enums - filter and sortType
   handleChangeFilter = (filter: string) => {
-    this.props.filterChange(filter);
-    this.props.showPage(1);
+    this.props.filterByChange(filter);
+    this.props.getPageNumber(1);
   };
 
   handleSortBy = (value: string) => {
-    this.props.sortByMethod(value);
-    this.props.showPage(1);
+    this.props.sortByChange(value);
+    this.props.getPageNumber(1);
   };
 
   handleShowPage = (pageNumber: number) => {
-    this.props.showPage(pageNumber);
+    this.props.getPageNumber(pageNumber);
   };
 
   handleLogout = () => {
@@ -61,12 +65,13 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
       <>
         <Header handleLogout={this.handleLogout} />
         <Dashboard
+          currentPage={this.props.currentPage}
           taskList={this.props.taskList}
           filter={this.props.filter}
           handleAddTask={this.handleAddTask}
           handleChangeFilter={this.handleChangeFilter}
           handleSortBy={this.handleSortBy}
-          showPage={this.handleShowPage}
+          getPageNumber={this.handleShowPage}
           taskActions={{
             startCompleteTask: this.props.startCompleteTask,
             startEditTask: this.props.startEditTask,
@@ -81,16 +86,17 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
 const mapStateToProps = (state: State) => {
   return {
     taskList: state.tasks,
-    filter: state.filter
+    filter: state.filter,
+    currentPage: state.filter.currentPage
   };
 };
 
 const mapDispatchToProps = {
   startTaskAdd,
   startSetTasks,
-  filterChange,
-  sortByMethod,
-  showPage,
+  filterByChange,
+  sortByChange,
+  getPageNumber,
   startLogout,
   startDeleteTask,
   startCompleteTask,

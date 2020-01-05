@@ -45,20 +45,23 @@ const LogoutText = styled.p`
 `;
 
 interface HeaderProps {
-  handleLogout: () => void;
+  handleLogout?: () => void;
+  withLogoutButton?: boolean;
 }
 
-const Header = (props: HeaderProps) => (
+const Header = ({ handleLogout, withLogoutButton = true }: HeaderProps) => (
   <Wrapper>
     <AppName>
       <H1>TODO</H1>
       <Text>or not</Text>
       <H1>TODO?</H1>
     </AppName>
-    <LogoutButtonWrapper onClick={props.handleLogout}>
-      <LogoutText>logout</LogoutText>
-      <FaPowerOff />
-    </LogoutButtonWrapper>
+    {withLogoutButton && (
+      <LogoutButtonWrapper onClick={handleLogout}>
+        <LogoutText>logout</LogoutText>
+        <FaPowerOff />
+      </LogoutButtonWrapper>
+    )}
   </Wrapper>
 );
 

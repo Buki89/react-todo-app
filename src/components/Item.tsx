@@ -5,22 +5,22 @@ import { Task } from "../types/types";
 import Checkbox from "./fields/Checkbox";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HomePageActions } from "./HomePage";
-import { Box } from "../styles/styles";
+import { Box } from "../themes/styles";
 
-const Menu = styled.div`
+const Container = styled.div`
+  align-items: center;
   display: flex;
   border: 1px solid ${({ theme }) => theme.colors.gray};
-  justify-content: space-between;
   border-radius: 10px;
+  justify-content: space-between;
   margin: 10px 0;
   padding: 10px;
-  align-items: center;
   div {
     height: 100%;
   }
 `;
 
-const NameWithEdit = styled.div`
+const Inputs = styled.div`
   font-size: 18px;
   font-weight: 500;
   margin: 0 0 0 10px;
@@ -28,17 +28,17 @@ const NameWithEdit = styled.div`
   display: flex;
 `;
 
-const MenuItem = styled.div`
+const Icons = styled.div`
   &:not(:last-child) {
     margin-right: 5px;
   }
 `;
 
-interface TestStyleProps {
+interface StyledTextProps {
   isCompleted: boolean;
 }
 
-const Test = styled.div<TestStyleProps>`
+const StyledText = styled.div<StyledTextProps>`
   color: ${({ isCompleted }) => (isCompleted ? "#28e08d" : "#333")};
   text-decoration: ${({ isCompleted }) =>
     isCompleted ? "line-through" : "none"};
@@ -114,9 +114,11 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
     const isCompleted = this.props.task && this.props.task.isCompleted;
 
     return (
-      <Menu>
-        <NameWithEdit>
-          <Test isCompleted={isCompleted}>{this.props.task.taskName}</Test>
+      <Container>
+        <Inputs>
+          <StyledText isCompleted={isCompleted}>
+            {this.props.task.taskName}
+          </StyledText>
 
           {this.state.isVisible && (
             <Box>
@@ -131,10 +133,10 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             </Box>
           )}
           {this.state.error && <div>{this.state.errorMessage}</div>}
-        </NameWithEdit>
+        </Inputs>
 
         <Box justifyContent="space-between" alignItems="center">
-          <MenuItem>
+          <Icons>
             <FaEdit
               color="#00ACC1"
               onClick={() =>
@@ -142,22 +144,22 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
               }
               size={25}
             />
-          </MenuItem>
-          <MenuItem>
+          </Icons>
+          <Icons>
             <FaTrashAlt
               onClick={this.handleDeleteTask}
               color="#d85d71"
               size={22}
             />
-          </MenuItem>
-          <MenuItem>
+          </Icons>
+          <Icons>
             <Checkbox
               checked={this.state.isChecked}
               onChange={this.handleOnCheckboxChange}
             />
-          </MenuItem>
+          </Icons>
         </Box>
-      </Menu>
+      </Container>
     );
   }
 }

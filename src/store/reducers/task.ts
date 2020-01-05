@@ -1,6 +1,6 @@
-import { TaskAction, TodoState } from "../../types/types";
+import { TaskAction, TasksState } from "../../types/types";
 
-const initialState: TodoState = [];
+const initialState: TasksState = [];
 
 // TODO: action type
 export default (state = initialState, action) => {
@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
         ? state
         : [...state, action.payload];
     case TaskAction.setTasks:
-      return action.payload;
+      return action.payload.tasks;
     case TaskAction.deleteTask:
       return state.filter(task => task.id !== action.payload.id);
     case TaskAction.editTask:
