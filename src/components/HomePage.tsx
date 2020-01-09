@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./Header";
+import Layout from "./Layout";
 import Dashboard from "./Dashboard";
 import { connect } from "react-redux";
 import { startLogout } from "../store/actions/auth";
@@ -62,8 +62,12 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
 
   render() {
     return (
-      <>
-        <Header handleLogout={this.handleLogout} />
+      <Layout
+        header={{
+          handleLogout: this.handleLogout,
+          title: "logout"
+        }}
+      >
         <Dashboard
           currentPage={this.props.currentPage}
           taskList={this.props.taskList}
@@ -78,7 +82,7 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
             startDeleteTask: this.props.startDeleteTask
           }}
         />
-      </>
+      </Layout>
     );
   }
 }

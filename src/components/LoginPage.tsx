@@ -1,17 +1,35 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
-import Header from "./Header";
+import Layout from "./Layout";
+import { Box } from "../themes/styles";
 import { connect } from "react-redux";
 import { startSetTasks } from "../store/actions/task";
 import { startLogin, autoLogin } from "../store/actions/auth";
 import { ThunkResult, State, Task } from "../types/types";
+import { FaUserAstronaut, FaExclamationTriangle } from "react-icons/fa";
 
-const Box = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 40px auto;
+`;
+
+const IconWrapper = styled.div`
+  padding: 10px;
+  background: #f7e200;
+  cursor: pointer;
+`;
+
+const ErrorMessage = styled.div`
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  > p {
+    color: #cc0000;
+    margin: 0 0 0 10px;
+  }
 `;
 
 interface LoginPageProps {
@@ -49,13 +67,28 @@ class LoginPage extends React.PureComponent<LoginPageProps & LoginPageActions> {
 
   render() {
     return (
-      <div>
-        <Header withLogoutButton={false} />
-        <Box>
-          <Button onClick={this.handleLogin} name="Login with Google" />
-          {this.props.error && <div>{this.props.error}</div>}
-        </Box>
-      </div>
+      <Layout>
+        <Wrapper>
+          <Box
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
+            onClick={this.handleLogin}
+          >
+            <IconWrapper>
+              <FaUserAstronaut size={80} color='black' />
+            </IconWrapper>
+            <Button name='Login with Google' />
+            {this.props.error && (
+              <ErrorMessage>
+                <FaExclamationTriangle color='#cc0000' />
+                <p>{this.props.error}</p>
+              </ErrorMessage>
+            )}
+          </Box>
+        </Wrapper>
+      </Layout>
     );
   }
 }
