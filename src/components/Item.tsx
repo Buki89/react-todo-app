@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "./fields/Input";
-import { Task } from "../types/types";
 import Checkbox from "./fields/Checkbox";
+import Button from "./Button";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HomePageActions } from "./HomePage";
 import { Box } from "../themes/styles";
+import { Task } from "../types/types";
 
 const Container = styled.div`
   align-items: center;
@@ -14,10 +15,9 @@ const Container = styled.div`
   border-radius: 10px;
   justify-content: space-between;
   margin: 10px 0;
-  padding: 10px;
-  div {
-    height: 100%;
-  }
+  padding: 15px;
+  max-height: 60px;
+  height: 100%;
 `;
 
 const Inputs = styled.div`
@@ -62,16 +62,13 @@ interface ItemState {
 }
 
 class Item extends React.PureComponent<ItemProps, ItemState> {
-  constructor(props: ItemProps) {
-    super(props);
-    this.state = {
-      isChecked: props.task ? props.task.isCompleted : false,
-      isVisible: false,
-      taskName: props.task ? props.task.taskName : "",
-      error: false,
-      errorMessage: ""
-    };
-  }
+  state = {
+    isChecked: this.props.task ? this.props.task.isCompleted : false,
+    isVisible: false,
+    taskName: this.props.task ? this.props.task.taskName : "",
+    error: false,
+    errorMessage: ""
+  };
 
   handleDeleteTask = () => {
     this.props.taskActions.startDeleteTask(this.props.task.id);
@@ -116,9 +113,11 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
     return (
       <Container>
         <Inputs>
-          <StyledText isCompleted={isCompleted}>
-            {this.props.task.taskName}
-          </StyledText>
+          {!this.state.isVisible && (
+            <StyledText isCompleted={isCompleted}>
+              {this.props.task.taskName}
+            </StyledText>
+          )}
 
           {this.state.isVisible && (
             <Box>
@@ -128,7 +127,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
                   value={this.state.taskName}
                   onChange={this.handleChangeTask}
                 />
-                <button type="submit">Ok</button>
+                <Button name="Edit" type="submit"></Button>
               </form>
             </Box>
           )}

@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import { startSetTasks } from "../store/actions/task";
 import { startLogin, autoLogin } from "../store/actions/auth";
 import { ThunkResult, State, Task } from "../types/types";
-import { FaUserAstronaut, FaExclamationTriangle } from "react-icons/fa";
+import { FaExclamationTriangle } from "react-icons/fa";
+import { FaTasks } from "react-icons/fa";
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,19 +71,19 @@ class LoginPage extends React.PureComponent<LoginPageProps & LoginPageActions> {
       <Layout>
         <Wrapper>
           <Box
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            justifyContent='center'
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
             onClick={this.handleLogin}
           >
             <IconWrapper>
-              <FaUserAstronaut size={80} color='black' />
+              <FaTasks size={80} color="black" />
             </IconWrapper>
-            <Button name='Login with Google' />
+            <Button name="Login with Google" />
             {this.props.error && (
               <ErrorMessage>
-                <FaExclamationTriangle color='#cc0000' />
+                <FaExclamationTriangle color="#cc0000" />
                 <p>{this.props.error}</p>
               </ErrorMessage>
             )}

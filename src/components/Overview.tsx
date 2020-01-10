@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   color: white;
   width: 100%;
   max-width: 200px;
-  margin: 30px 0 50px;
+  margin: 0 0 50px;
 `;
 
 const IconWrapper = styled.div`

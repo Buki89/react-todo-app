@@ -12,6 +12,17 @@ const Menu = styled.div`
     margin-left: 5px;
   }
 `;
+const Message = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30px;
+  > p {
+    font-size: 15px;
+    color: red;
+    margin: 0;
+  }
+`;
 
 interface AddItemFormProps {
   taskList: Array<Task>;
@@ -86,7 +97,9 @@ class AddItemForm extends React.PureComponent<
           />
           <Button name="Add me!" type="submit"></Button>
         </Menu>
-        {this.state.error && <p>{this.state.errorMessage}</p>}
+        <Message>
+          {this.state.error && <p>{this.state.errorMessage}</p>}
+        </Message>
       </form>
     );
   }
