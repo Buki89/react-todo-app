@@ -19,8 +19,8 @@ interface BoxProps {
 export const Box = styled.div<BoxProps>`
   display: ${({ display }) => display || "flex"};
   flex-direction: ${({ flexDirection }) => flexDirection || "row"};
-  justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
-  align-items: ${({ alignItems }) => alignItems || "flex-start"};
+  justify-content: ${({ justifyContent }) => justifyContent || "center"};
+  align-items: ${({ alignItems }) => alignItems || "center"};
   ${({ width }) => width && `width: ${width}`};
   ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth}`};
 `;

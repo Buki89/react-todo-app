@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "./Layout";
 import Dashboard from "./Dashboard";
+import StyledModal from "./StyledModal";
 import { connect } from "react-redux";
 import { startLogout } from "../store/actions/auth";
 import {
@@ -38,10 +39,13 @@ export interface HomePageActions {
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
+  state = {
+    showModal: false
+  };
   handleAddTask = ({ taskName, id, createdAt }: Task) => {
     this.props.startTaskAdd({ taskName, id, createdAt, isCompleted: false });
   };
-  // TODO: Unify filter and sortby actions
+
   handleChangeFilter = (filter: string) => {
     this.props.filterByChange(filter);
     this.props.getPageNumber(1);

@@ -10,10 +10,7 @@ import { ThunkResult, State, Task } from "../types/types";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { FaTasks } from "react-icons/fa";
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Wrapper = styled(Box)`
   margin: 40px auto;
 `;
 
@@ -71,19 +68,19 @@ class LoginPage extends React.PureComponent<LoginPageProps & LoginPageActions> {
       <Layout>
         <Wrapper>
           <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
             onClick={this.handleLogin}
           >
             <IconWrapper>
-              <FaTasks size={80} color="black" />
+              <FaTasks size={80} color='black' />
             </IconWrapper>
-            <Button name="Login with Google" />
+            <Button name='Login with Google' />
             {this.props.error && (
               <ErrorMessage>
-                <FaExclamationTriangle color="#cc0000" />
+                <FaExclamationTriangle color='#cc0000' />
                 <p>{this.props.error}</p>
               </ErrorMessage>
             )}

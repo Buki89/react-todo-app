@@ -3,14 +3,14 @@ import styled from "styled-components";
 import Input from "./fields/Input";
 import Checkbox from "./fields/Checkbox";
 import Button from "./Button";
+import StyledModal from "./StyledModal";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HomePageActions } from "./HomePage";
 import { Box } from "../themes/styles";
 import { Task } from "../types/types";
+import { ErrorMessage } from "./fields/errorMessages";
 
-const Container = styled.div`
-  align-items: center;
-  display: flex;
+const Container = styled(Box)`
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: 10px;
   justify-content: space-between;
@@ -83,21 +83,29 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
   handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const hasUniqueValue =
+    const value = this.state.taskName;
+    const hasUniqueName =
       this.props.taskList.filter(
         (task: Task) => task.taskName === this.state.taskName
       ).length === 0;
-    if (hasUniqueValue) {
-      this.props.taskActions.startEditTask({
-        id: this.props.task.id,
-        taskName: this.state.taskName,
-        isCompleted: this.props.task.isCompleted
-      });
-      this.setState({ isVisible: false, error: false, errorMessage: "" });
+    if (value) {
+      if (hasUniqueName) {
+        this.props.taskActions.startEditTask({
+          id: this.props.task.id,
+          taskName: this.state.taskName,
+          isCompleted: this.props.task.isCompleted
+        });
+        this.setState({ isVisible: false, error: false, errorMessage: "" });
+      } else {
+        this.setState({
+          error: true,
+          errorMessage: ErrorMessage.duplicate
+        });
+      }
     } else {
       this.setState({
         error: true,
-        errorMessage: "Task with this name already exist"
+        errorMessage: ErrorMessage.noValue
       });
     }
   };
@@ -109,9 +117,12 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
   render() {
     const isCompleted = this.props.task && this.props.task.isCompleted;
-
     return (
       <Container>
+        <StyledModal
+          handleOpenModal={this.state.error}
+          errorMessage={this.state.errorMessage}
+        />
         <Inputs>
           {!this.state.isVisible && (
             <StyledText isCompleted={isCompleted}>
@@ -123,21 +134,28 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             <Box>
               <form onSubmit={this.handleEdit}>
                 <Input
-                  name="edit"
+                  name='edit'
                   value={this.state.taskName}
                   onChange={this.handleChangeTask}
                 />
-                <Button name="Edit" type="submit"></Button>
+                <Button
+                  name='Edit'
+                  type='submit'
+                  styles={{
+                    margin: "0 5px",
+                    "font-size": "14px",
+                    "line-height": "18px"
+                  }}
+                ></Button>
               </form>
             </Box>
           )}
-          {this.state.error && <div>{this.state.errorMessage}</div>}
         </Inputs>
 
-        <Box justifyContent="space-between" alignItems="center">
+        <Box justifyContent='space-between' alignItems='center'>
           <Icons>
             <FaEdit
-              color="#00ACC1"
+              color='#00ACC1'
               onClick={() =>
                 this.setState({ isVisible: !this.state.isVisible })
               }
@@ -147,7 +165,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
           <Icons>
             <FaTrashAlt
               onClick={this.handleDeleteTask}
-              color="#d85d71"
+              color='#d85d71'
               size={22}
             />
           </Icons>

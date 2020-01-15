@@ -1,8 +1,8 @@
 import React from "react";
 import Item from "./Item";
+import styled from "styled-components";
 import { Task, FilterState } from "../types/types";
 import { filterBy, sortBy } from "../lib/helpers";
-import styled from "styled-components";
 import { HomePageActions } from "./HomePage";
 
 interface ItemListProps {

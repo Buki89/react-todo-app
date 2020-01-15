@@ -17,11 +17,8 @@ const Wrapper = styled.div`
   margin: 0 0 50px;
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled(Box)`
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: ${({ theme }) => theme.colors.black};
   width: ${iconSize}px;
   height: ${iconSize}px;
@@ -62,7 +59,7 @@ const Overview = (props: OverviewProps) => {
         <GoGraph size={20} />
       </IconWrapper>
       {data.map((item: Category, index: number) => (
-        <Box key={index} justifyContent="space-between">
+        <Box key={index} justifyContent='space-between'>
           <Text>{item.label} </Text>
           <Text>{numberOfTasks(props.taskList, item.filter)}</Text>
         </Box>

@@ -2,12 +2,13 @@ import React from "react";
 import AddItemForm from "./AddItemForm";
 import ItemList from "./ItemList";
 import styled from "styled-components";
-import { Task, FilterState, SortType } from "../types/types";
 import Overview from "./Overview";
 import Pagination from "./Pagination";
+import Select from "./fields/Select";
 import { numberOfTasks } from "../lib/helpers";
 import { HomePageActions } from "./HomePage";
-import Select from "./fields/Select";
+import { Task, FilterState, SortType } from "../types/types";
+import { Box } from "../themes/styles";
 
 interface HomeDashboardProps {
   currentPage: number;
@@ -23,12 +24,9 @@ interface HomeDashboardProps {
   >;
 }
 
-const Container = styled.div`
+const Container = styled(Box)`
   flex-direction: column;
   margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 30px 10px;
 `;
 const Item = styled.div`
@@ -52,7 +50,7 @@ const Dashboard = (props: HomeDashboardProps) => {
       <Item>
         <AddItemForm
           handleSubmit={props.handleAddTask}
-          buttonTitle="Add Item"
+          buttonTitle='Add Item'
           taskList={props.taskList}
         />
       </Item>
@@ -61,7 +59,7 @@ const Dashboard = (props: HomeDashboardProps) => {
         <OverviewBar>
           <Select
             onChange={props.handleSortBy}
-            label="Sort by"
+            label='Sort by'
             options={[
               { value: SortType.dateNewest, label: "Newest" },
               { value: SortType.dateOldest, label: "Oldest" },

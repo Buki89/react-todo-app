@@ -105,10 +105,7 @@ interface PageProps {
   page: number;
 }
 
-const Navigation = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Navigation = styled(Box)`
   margin: 0 5px;
   padding: 2px;
   font-size: 15px;

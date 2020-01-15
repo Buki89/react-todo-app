@@ -6,9 +6,15 @@ const colors = {
 
 const transition = "all 0.2s ease-in-out";
 
+const breakpoints = {
+  sm: 320,
+  md: 600
+};
+
 const theme = {
   colors,
-  transition
+  transition,
+  breakpoints
 };
 
 export default theme;
