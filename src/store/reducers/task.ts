@@ -1,4 +1,4 @@
-import { TaskAction, TasksState } from "../../types/types";
+import { TaskAction, TasksState } from "../types";
 
 const initialState: TasksState = [];
 

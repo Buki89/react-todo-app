@@ -3,7 +3,7 @@ import styled from "styled-components";
 import moment from "moment";
 import Input from "./fields/Input";
 import Button from "./Button";
-import { Task } from "../types/types";
+import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 

@@ -1,4 +1,4 @@
-import { Task, SortType } from "../types/types";
+import { Task, SortType } from "../store/types";
 
 export const filterBy = (filter: string, taskList: Array<Task>) => {
   switch (filter) {

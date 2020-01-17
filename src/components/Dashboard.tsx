@@ -7,7 +7,7 @@ import Pagination from "./Pagination";
 import Select from "./fields/Select";
 import { numberOfTasks } from "../lib/helpers";
 import { HomePageActions } from "./HomePage";
-import { Task, FilterState, SortType } from "../types/types";
+import { Task, FilterState, SortType } from "../store/types";
 import { Box } from "../themes/styles";
 
 interface HomeDashboardProps {

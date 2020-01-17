@@ -1,5 +1,5 @@
 import { firebase, googleAuthProvider } from "../../firebase/firebase";
-import { AuthAction, ThunkResult, Action } from "../../types/types";
+import { AuthAction, ThunkResult, Action } from "../types";
 import { Dispatch } from "redux";
 
 export const login = (uid: string): Action => ({

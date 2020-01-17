@@ -1,4 +1,4 @@
-import { FilterAction, SortType, Action } from "../../types/types";
+import { FilterAction, SortType, Action } from "../types";
 
 export const filterByChange = (filter: SortType): Action => ({
   type: FilterAction.filterByChange,

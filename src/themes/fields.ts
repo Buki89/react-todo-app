@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { TextStyles } from "./typography";
+import { H4Styles } from "./typography";
 
 export enum TextAlignment {
   left = "left",
@@ -12,7 +12,7 @@ interface SharedStylesProps {
 }
 
 export const SharedStyles = css<SharedStylesProps>`
-  ${TextStyles};
+  ${H4Styles};
   color: ${({ theme }) => theme.colors.black};
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: 5px;

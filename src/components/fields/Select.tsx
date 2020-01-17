@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Text } from "../../themes/typography";
+import { H4 } from "../../themes/typography";
 import { StyledSelect } from "../../themes/fields";
 
 const Label = styled.label`
@@ -37,7 +37,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
   render() {
     return (
       <Label>
-        <Text color="#000"> {this.props.label}</Text>
+        <H4 color="#000"> {this.props.label}</H4>
 
         <StyledSelect
           value={this.state.value}

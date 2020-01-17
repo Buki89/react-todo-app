@@ -15,7 +15,7 @@ import {
   sortByChange,
   getPageNumber
 } from "../store/actions/filter";
-import { State, Task, FilterState, SortType } from "../types/types";
+import { State, Task, FilterState, SortType } from "../store/types";
 
 interface HomePageProps {
   taskList: Array<Task>;

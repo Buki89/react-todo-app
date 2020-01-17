@@ -7,7 +7,7 @@ import theme from "../themes/theme";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HomePageActions } from "./HomePage";
 import { Box } from "../themes/styles";
-import { Task } from "../types/types";
+import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 import { TextAlignment } from "../themes/fields";

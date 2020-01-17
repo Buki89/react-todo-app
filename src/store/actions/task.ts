@@ -1,5 +1,5 @@
-import { TaskAction, ThunkResult, Action } from "../../types/types";
-import { Task, State } from "../../types/types";
+import { TaskAction, ThunkResult, Action } from "../types";
+import { Task, State } from "../types";
 import { Dispatch } from "redux";
 
 import database from "../../firebase/firebase";

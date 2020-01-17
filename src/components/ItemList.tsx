@@ -1,7 +1,7 @@
 import React from "react";
 import Item from "./Item";
 import styled from "styled-components";
-import { Task, FilterState } from "../types/types";
+import { Task, FilterState } from "../store/types";
 import { filterBy, sortBy } from "../lib/helpers";
 import { HomePageActions } from "./HomePage";
 

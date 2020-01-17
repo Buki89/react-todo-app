@@ -1,4 +1,4 @@
-import { FilterAction, FilterState, SortType, Action } from "../../types/types";
+import { FilterAction, FilterState, SortType, Action } from "../types";
 
 const initialState: FilterState = {
   filterBy: SortType.allTasks,

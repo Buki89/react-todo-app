@@ -1,19 +1,25 @@
 import styled, { css } from "styled-components";
 
 const sizes = {
-  H1: {
+  h1: {
     size: "42px",
     height: "50px",
     sizeMobile: "28px",
     heightMobile: "32px"
   },
-  Text: {
+  h4: {
     size: "18px",
     height: "24px",
     sizeMobile: "16px",
     heightMobile: "22px"
   },
-  TextSmall: {
+  text: {
+    size: "16px",
+    height: "20px",
+    sizeMobile: "14px",
+    heightMobile: "18px"
+  },
+  textSmall: {
     size: "14px",
     height: "18px",
     sizeMobile: "12px",
@@ -30,11 +36,11 @@ const SharedStyles = css<{ fontWeight: number; color: string }>`
 // H1
 export const H1Styles = css`
   ${SharedStyles}
-  font-size: ${sizes.H1.sizeMobile};
-  line-height: ${sizes.H1.heightMobile};
+  font-size: ${sizes.h1.sizeMobile};
+  line-height: ${sizes.h1.heightMobile};
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: ${sizes.H1.size};
-    line-height: ${sizes.H1.height};
+    font-size: ${sizes.h1.size};
+    line-height: ${sizes.h1.height};
   }
 `;
 
@@ -42,11 +48,30 @@ export const H1 = styled.h1`
   ${H1Styles};
 `;
 
+// H4
+export const H4Styles = css`
+  ${SharedStyles}
+  font-size: ${sizes.h4.size};
+  line-height: ${sizes.h4.height};
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${sizes.h4.size};
+    line-height: ${sizes.h4.height};
+  }
+`;
+
+export const H4 = styled.h4`
+  ${H4Styles};
+`;
+
 // Text
 export const TextStyles = css`
   ${SharedStyles}
-  font-size: ${sizes.Text.size};
-  line-height: ${sizes.Text.height};
+  font-size: ${sizes.text.size};
+  line-height: ${sizes.text.height};
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${sizes.text.size};
+    line-height: ${sizes.text.height};
+  }
 `;
 
 export const Text = styled.p`
@@ -56,8 +81,12 @@ export const Text = styled.p`
 // TextSmall
 export const TextSmallStyles = css`
   ${SharedStyles}
-  font-size: ${sizes.TextSmall.size};
-  line-height: ${sizes.TextSmall.height};
+  font-size: ${sizes.textSmall.size};
+  line-height: ${sizes.textSmall.height};
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${sizes.textSmall.size};
+    line-height: ${sizes.textSmall.height};
+  }
 `;
 
 export const TextSmall = styled.p`

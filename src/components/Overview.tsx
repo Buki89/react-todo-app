@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { numberOfTasks } from "../lib/helpers";
-import { Task, SortType } from "../types/types";
+import { Task, SortType } from "../store/types";
 import { Box } from "../themes/styles";
 import { GoGraph } from "react-icons/go";
+import { TextSmallStyles } from "../themes/typography";
 
 const iconSize = 40;
 
@@ -15,6 +16,9 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 200px;
   margin: 0 0 50px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin: 0 0 15px;
+  }
 `;
 
 const IconWrapper = styled(Box)`
@@ -27,10 +31,8 @@ const IconWrapper = styled(Box)`
 `;
 
 const Text = styled.p`
-  font-size: 16px;
-  line-height: 24px;
+  ${TextSmallStyles}
   color: #333;
-  margin: 0;
   text-transform: uppercase;
   &:not(:first-of-type) {
     font-weight: 700;
@@ -59,7 +61,7 @@ const Overview = (props: OverviewProps) => {
         <GoGraph size={20} />
       </IconWrapper>
       {data.map((item: Category, index: number) => (
-        <Box key={index} justifyContent='space-between'>
+        <Box key={index} justifyContent="space-between">
           <Text>{item.label} </Text>
           <Text>{numberOfTasks(props.taskList, item.filter)}</Text>
         </Box>

@@ -6,7 +6,7 @@ import { Box } from "../themes/styles";
 import { connect } from "react-redux";
 import { startSetTasks } from "../store/actions/task";
 import { startLogin, autoLogin } from "../store/actions/auth";
-import { State, Task } from "../types/types";
+import { State, Task } from "../store/types";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { FaTasks } from "react-icons/fa";
 

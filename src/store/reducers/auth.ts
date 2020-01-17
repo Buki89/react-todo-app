@@ -1,5 +1,5 @@
-import { AuthState } from "../../types/types";
-import { AuthAction } from "../../types/types";
+import { AuthState } from "../types";
+import { AuthAction } from "../types";
 
 // TODO: AuthAction
 
