@@ -15,7 +15,6 @@ interface ItemListProps {
 }
 
 const Row = styled.div`
-  max-height: 60px;
   height: 100%;
 `;
 

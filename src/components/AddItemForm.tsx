@@ -5,6 +5,7 @@ import Input from "./fields/Input";
 import Button from "./Button";
 import { Task } from "../types/types";
 import { ErrorMessage } from "./fields/errorMessages";
+import { TextSmall } from "../themes/typography";
 
 const Menu = styled.div`
   display: flex;
@@ -14,12 +15,17 @@ const Menu = styled.div`
 `;
 const Message = styled.div`
   display: flex;
+  margin: 5px 0 0 0;
   justify-content: center;
   align-items: center;
   min-height: 30px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    min-height: 18px;
+    > p {
+      margin: 5px 0 0 0;
+    }
+  }
   > p {
-    font-size: 15px;
-    color: red;
     margin: 0;
   }
 `;
@@ -98,7 +104,9 @@ class AddItemForm extends React.PureComponent<
           <Button name="Add me!" type="submit"></Button>
         </Menu>
         <Message>
-          {this.state.error && <p>{this.state.errorMessage}</p>}
+          {this.state.error && (
+            <TextSmall color="#cc0000">{this.state.errorMessage}</TextSmall>
+          )}
         </Message>
       </form>
     );

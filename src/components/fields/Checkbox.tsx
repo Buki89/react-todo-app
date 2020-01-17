@@ -16,7 +16,7 @@ const StyledCheckbox = styled.input`
   width: ${checkboxSize};
   height: ${checkboxSize};
   background: transparent;
-  z-index: 1;
+  z-index: 0;
   cursor: pointer;
   margin: 0;
 

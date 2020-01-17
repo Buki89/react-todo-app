@@ -16,7 +16,18 @@ const ButtonStyled = styled.button<ButtonStylesProps>`
   cursor: pointer;
   font-size: 18px;
   line-height: 24px;
+  outline: none;
+  transition: ${({ theme }) => theme.transition};
   ${({ styles }) => styles};
+
+  &:hover {
+    background: #00cbe6;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 14px;
+    line-height: 18px;
+  }
 `;
 
 interface ButtonProps {

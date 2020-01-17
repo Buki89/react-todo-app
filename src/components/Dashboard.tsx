@@ -26,11 +26,17 @@ interface HomeDashboardProps {
 
 const Container = styled(Box)`
   flex-direction: column;
-  margin: auto;
+  margin: 10px auto;
   padding: 30px 10px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 5px 5px;
+  }
 `;
 const Item = styled.div`
   margin: 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin: 5px;
+  }
 `;
 const ItemListContainer = styled.div`
   max-width: 600px;
@@ -40,6 +46,9 @@ const OverviewBar = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-bottom: 5px;
+  }
 `;
 
 const Dashboard = (props: HomeDashboardProps) => {
@@ -50,7 +59,7 @@ const Dashboard = (props: HomeDashboardProps) => {
       <Item>
         <AddItemForm
           handleSubmit={props.handleAddTask}
-          buttonTitle='Add Item'
+          buttonTitle="Add Item"
           taskList={props.taskList}
         />
       </Item>
@@ -59,7 +68,7 @@ const Dashboard = (props: HomeDashboardProps) => {
         <OverviewBar>
           <Select
             onChange={props.handleSortBy}
-            label='Sort by'
+            label="Sort by"
             options={[
               { value: SortType.dateNewest, label: "Newest" },
               { value: SortType.dateOldest, label: "Oldest" },

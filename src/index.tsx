@@ -5,7 +5,6 @@ import GlobalStyle from "./themes";
 import AppRouter from "./Router/Router";
 import store from "./store/store";
 import * as serviceWorker from "./serviceWorker";
-import Modal from "react-modal";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
@@ -18,6 +17,5 @@ const App = () => (
   </Provider>
 );
 
-Modal.setAppElement("body");
 serviceWorker.unregister();
 ReactDOM.render(<App />, document.getElementById("root"));

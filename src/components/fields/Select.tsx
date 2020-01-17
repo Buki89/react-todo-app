@@ -1,16 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { Text } from "../../themes/typography";
+import { StyledSelect } from "../../themes/fields";
 
-const StyledSelect = styled.select`
-  border: 1px solid ${({ theme }) => theme.colors.gray};
-  border-radius: 5px;
-  padding: 3px;
-  margin: 0 2.5px;
-  text-align: center;
-  padding: 5px 10px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #666666;
+const Label = styled.label`
+  align-items: center;
+  display: flex;
 `;
 
 interface Option {
@@ -41,8 +36,9 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 
   render() {
     return (
-      <label>
-        {this.props.label}
+      <Label>
+        <Text color="#000"> {this.props.label}</Text>
+
         <StyledSelect
           value={this.state.value}
           onChange={this.handleChangeValue}
@@ -53,7 +49,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
             </option>
           ))}
         </StyledSelect>
-      </label>
+      </Label>
     );
   }
 }

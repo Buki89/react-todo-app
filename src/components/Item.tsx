@@ -3,12 +3,27 @@ import styled from "styled-components";
 import Input from "./fields/Input";
 import Checkbox from "./fields/Checkbox";
 import Button from "./Button";
-import StyledModal from "./StyledModal";
+import theme from "../themes/theme";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HomePageActions } from "./HomePage";
 import { Box } from "../themes/styles";
 import { Task } from "../types/types";
 import { ErrorMessage } from "./fields/errorMessages";
+import { TextSmall } from "../themes/typography";
+import { TextAlignment } from "../themes/fields";
+
+const mediaQuery = (breakPoint: string): boolean =>
+  window ? window.matchMedia(`(max-width: ${breakPoint})`).matches : false;
+
+const iconSize = (size: number): number => {
+  const iconMobileSize = 0.8;
+
+  if (mediaQuery(theme.breakpoints.mobile)) {
+    return size * iconMobileSize;
+  } else {
+    return size;
+  }
+};
 
 const Container = styled(Box)`
   border: 1px solid ${({ theme }) => theme.colors.gray};
@@ -16,8 +31,13 @@ const Container = styled(Box)`
   justify-content: space-between;
   margin: 10px 0;
   padding: 15px;
-  max-height: 60px;
   height: 100%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    border-radius: 8px;
+    padding: 10px;
+    max-height: 40px;
+    margin: 5px 0;
+  }
 `;
 
 const Inputs = styled.div`
@@ -26,6 +46,10 @@ const Inputs = styled.div`
   margin: 0 0 0 10px;
   justify-content: flex-start;
   display: flex;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 14px;
+    line-height: 18px;
+  }
 `;
 
 const Icons = styled.div`
@@ -117,12 +141,9 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
   render() {
     const isCompleted = this.props.task && this.props.task.isCompleted;
+
     return (
       <Container>
-        <StyledModal
-          handleOpenModal={this.state.error}
-          errorMessage={this.state.errorMessage}
-        />
         <Inputs>
           {!this.state.isVisible && (
             <StyledText isCompleted={isCompleted}>
@@ -131,42 +152,49 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
           )}
 
           {this.state.isVisible && (
-            <Box>
-              <form onSubmit={this.handleEdit}>
-                <Input
-                  name='edit'
-                  value={this.state.taskName}
-                  onChange={this.handleChangeTask}
-                />
-                <Button
-                  name='Edit'
-                  type='submit'
-                  styles={{
-                    margin: "0 5px",
-                    "font-size": "14px",
-                    "line-height": "18px"
-                  }}
-                ></Button>
-              </form>
+            <Box flexDirection="column">
+              <div>
+                <form onSubmit={this.handleEdit}>
+                  <Input
+                    name="edit"
+                    value={this.state.taskName}
+                    onChange={this.handleChangeTask}
+                    textAlign={TextAlignment.left}
+                  />
+
+                  <Button
+                    name="Edit"
+                    type="submit"
+                    styles={{
+                      margin: "0 5px",
+                      "font-size": "14px",
+                      "line-height": "18px"
+                    }}
+                  ></Button>
+                </form>
+              </div>
+              {this.state.error && (
+                <TextSmall color="#cc0000">{this.state.errorMessage}</TextSmall>
+              )}
             </Box>
           )}
         </Inputs>
 
-        <Box justifyContent='space-between' alignItems='center'>
+        <Box justifyContent="space-between" alignItems="center">
           <Icons>
             <FaEdit
-              color='#00ACC1'
+              color="#00ACC1"
               onClick={() =>
                 this.setState({ isVisible: !this.state.isVisible })
               }
-              size={25}
+              size={iconSize(25)}
             />
           </Icons>
           <Icons>
             <FaTrashAlt
               onClick={this.handleDeleteTask}
-              color='#d85d71'
-              size={22}
+              color="#d85d71"
+              size={iconSize(22)}
             />
           </Icons>
           <Icons>
