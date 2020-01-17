@@ -1,4 +1,4 @@
-import { TaskAction } from "../../types/types";
+import { TaskAction, ThunkResult, Action } from "../../types/types";
 import { Task, State } from "../../types/types";
 import { Dispatch } from "redux";
 
@@ -21,7 +21,7 @@ export const taskAdd = ({ taskName, id, createdAt, isCompleted }: Task) => ({
   }
 });
 
-export const startTaskAdd = (taskData: Task) => {
+export const startTaskAdd = (taskData: Task): ThunkResult<void> => {
   return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
     const { taskName, isCompleted, createdAt } = taskData;
@@ -39,12 +39,12 @@ export const startTaskAdd = (taskData: Task) => {
   };
 };
 
-export const setTasks = (tasks: Array<Task>) => ({
+export const setTasks = (tasks: Array<Task>): Action => ({
   type: TaskAction.setTasks,
   payload: { tasks }
 });
 
-export const startSetTasks = () => {
+export const startSetTasks = (): ThunkResult<void> => {
   return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
 
@@ -68,14 +68,14 @@ export const startSetTasks = () => {
   };
 };
 
-export const deleteTask = (id: string) => ({
+export const deleteTask = (id: string): Action => ({
   type: TaskAction.deleteTask,
   payload: {
     id
   }
 });
 
-export const startDeleteTask = (id: string) => {
+export const startDeleteTask = (id: string): ThunkResult<void> => {
   return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
 
@@ -98,7 +98,11 @@ export interface EditTaskArgs {
   isCompleted: boolean;
 }
 
-export const editTask = ({ id, taskName, isCompleted }: EditTaskArgs) => ({
+export const editTask = ({
+  id,
+  taskName,
+  isCompleted
+}: EditTaskArgs): Action => ({
   type: TaskAction.editTask,
   payload: {
     id,
@@ -107,7 +111,11 @@ export const editTask = ({ id, taskName, isCompleted }: EditTaskArgs) => ({
   }
 });
 
-export const startEditTask = ({ id, taskName, isCompleted }: EditTaskArgs) => {
+export const startEditTask = ({
+  id,
+  taskName,
+  isCompleted
+}: EditTaskArgs): ThunkResult<void> => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
@@ -131,14 +139,17 @@ export const startEditTask = ({ id, taskName, isCompleted }: EditTaskArgs) => {
   };
 };
 
-export const completeTask = (id: string) => ({
+export const completeTask = (id: string): Action => ({
   type: TaskAction.completeTask,
   payload: {
     id
   }
 });
 
-export const startCompleteTask = (id: string, isChecked: boolean) => {
+export const startCompleteTask = (
+  id: string,
+  isChecked: boolean
+): ThunkResult<void> => {
   return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
 

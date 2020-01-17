@@ -1,13 +1,13 @@
 import { firebase, googleAuthProvider } from "../../firebase/firebase";
-import { AuthAction } from "../../types/types";
+import { AuthAction, ThunkResult, Action } from "../../types/types";
 import { Dispatch } from "redux";
 
-export const login = (uid: string) => ({
+export const login = (uid: string): Action => ({
   type: AuthAction.login,
   uid
 });
 
-export const startLogin = () => {
+export const startLogin = (): ThunkResult<void> => {
   return (dispatch: Dispatch) => {
     return firebase
       .auth()
@@ -20,11 +20,11 @@ export const startLogin = () => {
   };
 };
 
-export const logout = () => ({
+export const logout = (): Action => ({
   type: AuthAction.logout
 });
 
-export const startLogout = () => {
+export const startLogout = (): ThunkResult<void> => {
   return (dispatch: Dispatch) => {
     return firebase
       .auth()
@@ -34,11 +34,11 @@ export const startLogout = () => {
   };
 };
 
-export const loginError = () => ({
+export const loginError = (): Action => ({
   type: AuthAction.loginError
 });
 
-export const autoLogin = () => {
+export const autoLogin = (): ThunkResult<void> => {
   return (dispatch: Dispatch) => {
     return firebase.auth().onAuthStateChanged(user => {
       if (user) {

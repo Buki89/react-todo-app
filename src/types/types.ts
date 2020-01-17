@@ -99,6 +99,9 @@ export type Action =
     }
   | {
       type: AuthAction.logout;
+    }
+  | {
+      type: AuthAction.loginError;
     };
 
 export type ThunkResult<R> = ThunkAction<R, State, undefined, Action>;

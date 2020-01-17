@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "./Layout";
 import Dashboard from "./Dashboard";
-import StyledModal from "./StyledModal";
 import { connect } from "react-redux";
 import { startLogout } from "../store/actions/auth";
 import {
@@ -9,15 +8,14 @@ import {
   startSetTasks,
   startDeleteTask,
   startCompleteTask,
-  startEditTask,
-  EditTaskArgs
+  startEditTask
 } from "../store/actions/task";
 import {
   filterByChange,
   sortByChange,
   getPageNumber
 } from "../store/actions/filter";
-import { Action, State, Task, ThunkResult, FilterState } from "../types/types";
+import { State, Task, FilterState, SortType } from "../types/types";
 
 interface HomePageProps {
   taskList: Array<Task>;
@@ -27,15 +25,15 @@ interface HomePageProps {
 }
 
 export interface HomePageActions {
-  startTaskAdd: (task: Task) => ThunkResult<void>;
-  startSetTasks: () => ThunkResult<void>;
-  startLogout: () => ThunkResult<void>;
-  filterByChange: (filter: string) => Action;
-  sortByChange: (value: string) => Action;
-  getPageNumber: (pageNumber: number) => Action;
-  startDeleteTask: (id: string) => ThunkResult<void>;
-  startCompleteTask: (id: string, isChecked: boolean) => ThunkResult<void>;
-  startEditTask: (args: EditTaskArgs) => ThunkResult<void>;
+  startTaskAdd: typeof startTaskAdd;
+  startSetTasks: typeof startSetTasks;
+  startLogout: typeof startLogout;
+  filterByChange: typeof filterByChange;
+  sortByChange: typeof sortByChange;
+  getPageNumber: typeof getPageNumber;
+  startDeleteTask: typeof startDeleteTask;
+  startCompleteTask: typeof startCompleteTask;
+  startEditTask: typeof startEditTask;
 }
 
 class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
@@ -46,12 +44,12 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
     this.props.startTaskAdd({ taskName, id, createdAt, isCompleted: false });
   };
 
-  handleChangeFilter = (filter: string) => {
+  handleChangeFilter = (filter: SortType) => {
     this.props.filterByChange(filter);
     this.props.getPageNumber(1);
   };
 
-  handleSortBy = (value: string) => {
+  handleSortBy = (value: SortType) => {
     this.props.sortByChange(value);
     this.props.getPageNumber(1);
   };
