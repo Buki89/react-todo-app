@@ -4,7 +4,7 @@ import { numberOfTasks } from "../lib/helpers";
 import { Task, SortType } from "../store/types";
 import { Box } from "../themes/styles";
 import { GoGraph } from "react-icons/go";
-import { TextSmallStyles } from "../themes/typography";
+import { TextStyles } from "../themes/typography";
 
 const iconSize = 40;
 
@@ -15,9 +15,9 @@ const Wrapper = styled.div`
   color: white;
   width: 100%;
   max-width: 200px;
-  margin: 0 0 50px;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin: 0 0 15px;
+  margin: 40px 0 15px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin: 0 0 50px;
   }
 `;
 
@@ -26,12 +26,16 @@ const IconWrapper = styled(Box)`
   background: ${({ theme }) => theme.colors.black};
   width: ${iconSize}px;
   height: ${iconSize}px;
-  top: calc(50% - ${iconSize / 2}px);
-  left: -${iconSize}px;
+  top: -40px;
+  left: 80px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    top: calc(50% - ${iconSize / 2}px);
+    left: -${iconSize}px;
+  }
 `;
 
 const Text = styled.p`
-  ${TextSmallStyles}
+  ${TextStyles}
   color: #333;
   text-transform: uppercase;
   &:not(:first-of-type) {

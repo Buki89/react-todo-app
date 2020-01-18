@@ -11,7 +11,7 @@ enum Database {
   users = "users"
 }
 
-export const taskAdd = ({ taskName, id, createdAt, isCompleted }: Task) => ({
+export const addTask = ({ taskName, id, createdAt, isCompleted }: Task) => ({
   type: TaskAction.addTask,
   payload: {
     taskName,
@@ -21,7 +21,7 @@ export const taskAdd = ({ taskName, id, createdAt, isCompleted }: Task) => ({
   }
 });
 
-export const startTaskAdd = (taskData: Task): ThunkResult<void> => {
+export const startAddTask = (taskData: Task): ThunkResult<void> => {
   return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
     const { taskName, isCompleted, createdAt } = taskData;
@@ -30,7 +30,7 @@ export const startTaskAdd = (taskData: Task): ThunkResult<void> => {
       .ref(`${Database.users}/${uid}/${Database.tasks}`)
       .push(taskItem)
       .then(ref => {
-        dispatch(taskAdd({ taskName, id: ref.key, createdAt, isCompleted }));
+        dispatch(addTask({ taskName, id: ref.key, createdAt, isCompleted }));
       })
       .catch(e => {
         alert("Database error");
@@ -116,7 +116,7 @@ export const startEditTask = ({
   taskName,
   isCompleted
 }: EditTaskArgs): ThunkResult<void> => {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: GetState) => {
     const uid = getState().auth.uid;
 
     return database

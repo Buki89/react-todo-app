@@ -8,7 +8,7 @@ import { startSetTasks } from "../store/actions/task";
 import { startLogin, autoLogin } from "../store/actions/auth";
 import { State, Task } from "../store/types";
 import { FaExclamationTriangle } from "react-icons/fa";
-import { FaTasks } from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa";
 
 const Wrapper = styled(Box)`
   margin: 40px auto;
@@ -50,6 +50,7 @@ class LoginPage extends React.PureComponent<LoginPageProps & LoginPageActions> {
     this.props.autoLogin();
   }
 
+  // TODO: use route enum
   componentDidUpdate() {
     if (this.props.uid) {
       this.props.startSetTasks();
@@ -75,7 +76,7 @@ class LoginPage extends React.PureComponent<LoginPageProps & LoginPageActions> {
             onClick={this.handleLogin}
           >
             <IconWrapper>
-              <FaTasks size={80} color="black" />
+              <FaUserAlt size={80} color="black" />
             </IconWrapper>
             <Button name="Login with Google" />
             {this.props.error && (

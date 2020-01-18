@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
+import { State } from "../store/types";
 
 interface PrivateRouteProps {
   isAuthenticated: boolean;
@@ -8,6 +9,7 @@ interface PrivateRouteProps {
   component: React.ElementType;
 }
 
+// TODO: use route enum
 const PrivateRoute = ({
   isAuthenticated,
   component: Component,
@@ -27,7 +29,7 @@ const PrivateRoute = ({
   />
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: State) => ({
   isAuthenticated: !!state.auth.uid
 });
 

@@ -1,12 +1,11 @@
-import { TaskAction, TasksState } from "../types";
+import { TaskAction, TasksState, Action } from "../types";
 
 const initialState: TasksState = [];
 
-// TODO: action type
-export default (state = initialState, action) => {
+export default (state = initialState, action: Action) => {
   switch (action.type) {
     case TaskAction.addTask:
-      return state.some(task => task.taskName === action.payload.task)
+      return state.some(task => task.taskName === action.payload.taskName)
         ? state
         : [...state, action.payload];
     case TaskAction.setTasks:

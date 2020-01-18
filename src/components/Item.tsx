@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Input from "./fields/Input";
 import Checkbox from "./fields/Checkbox";
 import Button from "./Button";
-import theme from "../themes/theme";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HomePageActions } from "./HomePage";
 import { Box } from "../themes/styles";
@@ -11,19 +10,7 @@ import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 import { TextAlignment } from "../themes/fields";
-
-const mediaQuery = (breakPoint: string): boolean =>
-  window ? window.matchMedia(`(max-width: ${breakPoint})`).matches : false;
-
-const iconSize = (size: number): number => {
-  const iconMobileSize = 0.8;
-
-  if (mediaQuery(theme.breakpoints.mobile)) {
-    return size * iconMobileSize;
-  } else {
-    return size;
-  }
-};
+import { iconSize } from "../lib/helpers";
 
 const Container = styled(Box)`
   border: 1px solid ${({ theme }) => theme.colors.gray};
@@ -32,6 +19,7 @@ const Container = styled(Box)`
   margin: 10px 0;
   padding: 15px;
   height: 100%;
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     border-radius: 8px;
     padding: 10px;
@@ -53,9 +41,14 @@ const Inputs = styled.div`
 `;
 
 const Icons = styled.div`
+  cursor: pointer;
   &:not(:last-child) {
     margin-right: 5px;
   }
+`;
+
+const InputEdit = styled(Input)`
+  color: "#F00";
 `;
 
 interface StyledTextProps {
@@ -155,7 +148,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             <Box flexDirection="column">
               <div>
                 <form onSubmit={this.handleEdit}>
-                  <Input
+                  <InputEdit
                     name="edit"
                     value={this.state.taskName}
                     onChange={this.handleChangeTask}
@@ -174,7 +167,13 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
                 </form>
               </div>
               {this.state.error && (
-                <TextSmall color="#cc0000">{this.state.errorMessage}</TextSmall>
+                <>
+                  <Box margin="5px 0 0 0" justifyContent="flex-start">
+                    <TextSmall color="#cc0000">
+                      {this.state.errorMessage}
+                    </TextSmall>
+                  </Box>
+                </>
               )}
             </Box>
           )}

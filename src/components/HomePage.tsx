@@ -4,7 +4,7 @@ import Dashboard from "./Dashboard";
 import { connect } from "react-redux";
 import { startLogout } from "../store/actions/auth";
 import {
-  startTaskAdd,
+  startAddTask,
   startSetTasks,
   startDeleteTask,
   startCompleteTask,
@@ -25,7 +25,7 @@ interface HomePageProps {
 }
 
 export interface HomePageActions {
-  startTaskAdd: typeof startTaskAdd;
+  startAddTask: typeof startAddTask;
   startSetTasks: typeof startSetTasks;
   startLogout: typeof startLogout;
   filterByChange: typeof filterByChange;
@@ -41,7 +41,7 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
     showModal: false
   };
   handleAddTask = ({ taskName, id, createdAt }: Task) => {
-    this.props.startTaskAdd({ taskName, id, createdAt, isCompleted: false });
+    this.props.startAddTask({ taskName, id, createdAt, isCompleted: false });
   };
 
   handleChangeFilter = (filter: SortType) => {
@@ -98,7 +98,7 @@ const mapStateToProps = (state: State) => {
 };
 
 const mapDispatchToProps = {
-  startTaskAdd,
+  startAddTask,
   startSetTasks,
   filterByChange,
   sortByChange,

@@ -5,11 +5,10 @@ import PrivateRoute from "../Router/PrivateRoute";
 import { createBrowserHistory } from "history";
 import { Router, Switch, Route } from "react-router-dom";
 
-interface AppRouterProps {}
-
+// TODO: routes enum
 export const history = createBrowserHistory();
 
-const AppRouter = (props: AppRouterProps) => (
+const AppRouter = () => (
   <Router history={history}>
     <Switch>
       <Route path="/" component={LoginPage} exact={true} />

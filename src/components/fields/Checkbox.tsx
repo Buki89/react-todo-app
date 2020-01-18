@@ -7,6 +7,7 @@ interface CheckboxProps {
 }
 
 const checkboxSize = "23px";
+const mobileSize = "21px";
 
 const StyledCheckbox = styled.input`
   position: relative;
@@ -19,12 +20,16 @@ const StyledCheckbox = styled.input`
   z-index: 0;
   cursor: pointer;
   margin: 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: "10px";
+    height: "10px";
+  }
 
   &:checked:after {
     content: "";
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     position: absolute;
     top: 3px;
     left: 3px;
@@ -47,6 +52,11 @@ const StyledCheckbox = styled.input`
     top: 0;
     left: 0;
     z-index: 0;
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      width: ${mobileSize};
+      height: ${mobileSize};
+      top: 2px;
+    }
   }
 `;
 

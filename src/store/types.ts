@@ -75,7 +75,9 @@ export type Action =
     }
   | {
       type: TaskAction.setTasks;
-      payload: {};
+      payload: {
+        tasks: Array<Task>;
+      };
     }
   | {
       type: FilterAction.filterByChange;

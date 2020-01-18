@@ -51,8 +51,8 @@ export const H1 = styled.h1`
 // H4
 export const H4Styles = css`
   ${SharedStyles}
-  font-size: ${sizes.h4.size};
-  line-height: ${sizes.h4.height};
+  font-size: ${sizes.h4.sizeMobile};
+  line-height: ${sizes.h4.heightMobile};
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: ${sizes.h4.size};
     line-height: ${sizes.h4.height};
@@ -66,8 +66,8 @@ export const H4 = styled.h4`
 // Text
 export const TextStyles = css`
   ${SharedStyles}
-  font-size: ${sizes.text.size};
-  line-height: ${sizes.text.height};
+  font-size: ${sizes.text.sizeMobile};
+  line-height: ${sizes.text.heightMobile};
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: ${sizes.text.size};
     line-height: ${sizes.text.height};
@@ -81,8 +81,8 @@ export const Text = styled.p`
 // TextSmall
 export const TextSmallStyles = css`
   ${SharedStyles}
-  font-size: ${sizes.textSmall.size};
-  line-height: ${sizes.textSmall.height};
+  font-size: ${sizes.textSmall.sizeMobile};
+  line-height: ${sizes.textSmall.heightMobile};
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: ${sizes.textSmall.size};
     line-height: ${sizes.textSmall.height};

@@ -1,15 +1,12 @@
 import { AuthState } from "../types";
-import { AuthAction } from "../types";
-
-// TODO: AuthAction
+import { AuthAction, Action } from "../types";
 
 const initialState: AuthState = {
   uid: "",
   error: ""
 };
 
-// TODO: action type
-export default (state = initialState, action) => {
+export default (state = initialState, action: Action) => {
   switch (action.type) {
     case AuthAction.login:
       return {

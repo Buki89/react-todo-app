@@ -9,7 +9,6 @@ import {
 } from "react-icons/md";
 
 interface PaginationProps {
-  // TODO: maybe use currentPage or different naming
   currentPage: number;
   tasksAmount: number;
   getPageNumber: (pageNumber: number) => void;
@@ -27,26 +26,6 @@ const Pagination = ({
     pages.push(i);
   }
 
-  // const showNumberTabs = pages.filter((page: number) => {
-  //   const numberOfTabs = 5;
-  //   const numberOfSideTabs = 2;
-
-  //   // 4-11
-  //   if (currentPage > 3 && currentPage < numberOfPages - 3) {
-  //     return (
-  //       page <= currentPage + numberOfSideTabs &&
-  //       page >= currentPage - numberOfSideTabs
-  //     );
-  //   }
-  //   // 12-end
-  //   if (currentPage >= numberOfPages - 3) {
-  //     return page >= numberOfPages - numberOfTabs;
-  //     // start-5
-  //   } else {
-  //     return page <= numberOfTabs;
-  //   }
-  // });
-
   const showNumberTabs = (pages: Array<number>) => {
     const start = currentPage - 3;
     const end = currentPage + 2;
@@ -61,7 +40,7 @@ const Pagination = ({
   };
 
   return (
-    <Box>
+    <Box margin="10px 0 0 0">
       {currentPage >= 5 && (
         <Navigation onClick={() => getPageNumber(1)}>
           <MdFirstPage />
@@ -75,8 +54,7 @@ const Pagination = ({
       {numberOfPages > 1 &&
         showNumberTabs(pages).map((page: number, index: number) => (
           <Page
-            page={page}
-            currentPage={currentPage}
+            selectedPage={page === currentPage}
             key={index}
             onClick={() => getPageNumber(page)}
           >
@@ -101,8 +79,7 @@ const Pagination = ({
 export default Pagination;
 
 interface PageProps {
-  currentPage: number;
-  page: number;
+  selectedPage: boolean;
 }
 
 const Navigation = styled(Box)`
@@ -118,11 +95,18 @@ const Navigation = styled(Box)`
   transition: ${({ theme }) => theme.transition};
   user-select: none;
   &:hover {
-    background: #cccccc;
+    background: #ccc;
   }
 `;
 
 const Page = styled(Navigation)<PageProps>`
-  background: ${({ theme, page, currentPage }) =>
-    page === currentPage ? "#cccccc" : theme.colors.whiteDirty};
+  background: ${({ theme, selectedPage }) =>
+    selectedPage ? "#00ACC1" : theme.colors.whiteDirty};
+  color: ${({ theme, selectedPage }) => (selectedPage ? "#FFF" : "#666")};
+  border: ${({ theme, selectedPage }) =>
+    selectedPage ? "none" : `1px solid ${theme.colors.gray}`};
+  &:hover {
+    background: ${({ theme, selectedPage }) =>
+      selectedPage ? theme.colors.turquise : "#ccc"};
+  }
 `;

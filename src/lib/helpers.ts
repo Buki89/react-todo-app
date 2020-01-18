@@ -1,4 +1,5 @@
 import { Task, SortType } from "../store/types";
+import theme from "../themes/theme";
 
 export const filterBy = (filter: string, taskList: Array<Task>) => {
   switch (filter) {
@@ -45,5 +46,18 @@ export const numberOfTasks = (taskList: Array<Task>, filterBy: string) => {
 
     case SortType.allTasks:
       return taskList.length;
+  }
+};
+
+const mediaQuery = (breakPoint: string): boolean =>
+  window ? window.matchMedia(`(max-width: ${breakPoint})`).matches : false;
+
+export const iconSize = (size: number): number => {
+  const iconMobileSize = 0.8;
+
+  if (mediaQuery(theme.breakpoints.mobile)) {
+    return size * iconMobileSize;
+  } else {
+    return size;
   }
 };

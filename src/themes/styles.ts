@@ -14,6 +14,7 @@ interface BoxProps {
   width?: string;
   maxWidth?: string;
   display?: "flex" | "block";
+  margin?: string;
 }
 
 export const Box = styled.div<BoxProps>`
@@ -23,7 +24,7 @@ export const Box = styled.div<BoxProps>`
   align-items: ${({ alignItems }) => alignItems || "center"};
   ${({ width }) => width && `width: ${width}`};
   ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth}`};
+  ${({ margin }) => margin && `margin : ${margin}`};
 `;
 
-// TODO: create typography file
 // TODO: colors from theme
