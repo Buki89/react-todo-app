@@ -9,6 +9,7 @@ export enum TextAlignment {
 
 interface SharedStylesProps {
   textAlign?: TextAlignment;
+  className?: string;
 }
 
 export const SharedStyles = css<SharedStylesProps>`

@@ -7,6 +7,7 @@ interface InputProps {
   textAlign?: TextAlignment;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  className?: string;
 }
 
 const Input = (props: InputProps) => (
@@ -14,10 +15,11 @@ const Input = (props: InputProps) => (
     maxLength={20}
     name={props.name}
     textAlign={props.textAlign}
-    type="text"
+    type='text'
     placeholder={props.placeholder}
     value={props.value}
     onChange={props.onChange}
+    className={props.className}
   />
 );
 

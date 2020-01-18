@@ -7,6 +7,7 @@ import { GoGraph } from "react-icons/go";
 import { TextStyles } from "../themes/typography";
 
 const iconSize = 40;
+const calculateCenter = `calc(50% - ${iconSize / 2}px)`;
 
 const Wrapper = styled.div`
   position: relative;
@@ -26,10 +27,10 @@ const IconWrapper = styled(Box)`
   background: ${({ theme }) => theme.colors.black};
   width: ${iconSize}px;
   height: ${iconSize}px;
-  top: -40px;
-  left: 80px;
+  top: -${iconSize}px;
+  left: ${calculateCenter};
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    top: calc(50% - ${iconSize / 2}px);
+    top: ${calculateCenter};
     left: -${iconSize}px;
   }
 `;
@@ -65,7 +66,7 @@ const Overview = (props: OverviewProps) => {
         <GoGraph size={20} />
       </IconWrapper>
       {data.map((item: Category, index: number) => (
-        <Box key={index} justifyContent="space-between">
+        <Box key={index} justifyContent='space-between'>
           <Text>{item.label} </Text>
           <Text>{numberOfTasks(props.taskList, item.filter)}</Text>
         </Box>

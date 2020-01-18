@@ -32,7 +32,6 @@ const Inputs = styled.div`
   font-size: 18px;
   font-weight: 500;
   margin: 0 0 0 10px;
-  justify-content: flex-start;
   display: flex;
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 14px;
@@ -48,7 +47,7 @@ const Icons = styled.div`
 `;
 
 const InputEdit = styled(Input)`
-  color: "#F00";
+  background: blue;
 `;
 
 interface StyledTextProps {
@@ -145,19 +144,19 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
           )}
 
           {this.state.isVisible && (
-            <Box flexDirection="column">
+            <Box flexDirection='column'>
               <div>
                 <form onSubmit={this.handleEdit}>
                   <InputEdit
-                    name="edit"
+                    name='edit'
                     value={this.state.taskName}
                     onChange={this.handleChangeTask}
                     textAlign={TextAlignment.left}
                   />
 
                   <Button
-                    name="Edit"
-                    type="submit"
+                    name='Edit'
+                    type='submit'
                     styles={{
                       margin: "0 5px",
                       "font-size": "14px",
@@ -168,8 +167,8 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
               </div>
               {this.state.error && (
                 <>
-                  <Box margin="5px 0 0 0" justifyContent="flex-start">
-                    <TextSmall color="#cc0000">
+                  <Box margin='5px 0 0 0' justifyContent='flex-start'>
+                    <TextSmall color='#cc0000'>
                       {this.state.errorMessage}
                     </TextSmall>
                   </Box>
@@ -179,10 +178,10 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
           )}
         </Inputs>
 
-        <Box justifyContent="space-between" alignItems="center">
+        <Box justifyContent='space-between' alignItems='center'>
           <Icons>
             <FaEdit
-              color="#00ACC1"
+              color='#00ACC1'
               onClick={() =>
                 this.setState({ isVisible: !this.state.isVisible })
               }
@@ -192,7 +191,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
           <Icons>
             <FaTrashAlt
               onClick={this.handleDeleteTask}
-              color="#d85d71"
+              color='#d85d71'
               size={iconSize(22)}
             />
           </Icons>
