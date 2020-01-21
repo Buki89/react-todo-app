@@ -16,8 +16,8 @@ const ButtonStyled = styled.button<ButtonStylesProps>`
   border-radius: 3px;
   padding: 5px 10px;
   cursor: pointer;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 18px;
   outline: none;
   transition: ${({ theme }) => theme.transition};
   ${({ styles }) => styles};
@@ -26,9 +26,9 @@ const ButtonStyled = styled.button<ButtonStylesProps>`
     background: ${({ theme }) => theme.colors.turquiseLight};
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 14px;
-    line-height: 18px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 18px;
+    line-height: 24px;
   }
 `;
 

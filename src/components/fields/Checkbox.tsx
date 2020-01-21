@@ -20,10 +20,6 @@ const StyledCheckbox = styled.input`
   z-index: 0;
   cursor: pointer;
   margin: 0;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: "10px";
-    height: "10px";
-  }
 
   &:checked:after {
     content: "";
@@ -36,6 +32,10 @@ const StyledCheckbox = styled.input`
     z-index: 0;
     background: transparent no-repeat;
     background-image: url("/images/check.svg");
+    @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      top: 2px;
+      left: 4px;
+    }
   }
 
   &:before {
@@ -43,21 +43,21 @@ const StyledCheckbox = styled.input`
 
     content: "";
     display: block;
-    width: ${checkboxSize};
-    height: ${checkboxSize};
+    width: ${mobileSize};
+    height: ${mobileSize};
     border: 1px solid
       ${({ checked, theme }) =>
         checked ? theme.colors.green : theme.colors.gray};
     border-radius: 4px;
     background: ${({ theme }) => theme.colors.white};
     position: absolute;
-    top: 0;
+    top: 2px;
     left: 0;
     z-index: 0;
-    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-      width: ${mobileSize};
-      height: ${mobileSize};
-      top: 2px;
+    @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      width: ${checkboxSize};
+      height: ${checkboxSize};
+      top: 0;
     }
   }
 `;
@@ -66,7 +66,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
   render() {
     return (
       <StyledCheckbox
-        type='checkbox'
+        type="checkbox"
         checked={this.props.checked}
         onChange={e => this.props.onChange(e)}
       />

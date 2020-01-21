@@ -8,6 +8,39 @@ import {
   MdFirstPage
 } from "react-icons/md";
 
+const Navigation = styled(Box)`
+  margin: 0 5px;
+  padding: 2px;
+  font-size: 15px;
+  height: 25px;
+  width: 25px;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  background: ${({ theme }) => theme.colors.whiteDirty};
+  border-radius: 3px;
+  cursor: pointer;
+  transition: ${({ theme }) => theme.transition};
+  user-select: none;
+  &:hover {
+    background: ${({ theme }) => theme.colors.grayLight};
+  }
+`;
+
+interface PageProps {
+  selectedPage: boolean;
+}
+const Page = styled(Navigation)<PageProps>`
+  background: ${({ theme, selectedPage }) =>
+    selectedPage ? theme.colors.turquise : theme.colors.whiteDirty};
+  color: ${({ theme, selectedPage }) =>
+    selectedPage ? theme.colors.white : theme.colors.grayDark};
+  border: ${({ theme, selectedPage }) =>
+    selectedPage ? "none" : `1px solid ${theme.colors.gray}`};
+  &:hover {
+    background: ${({ theme, selectedPage }) =>
+      selectedPage ? theme.colors.turquise : theme.colors.grayLight};
+  }
+`;
+
 interface PaginationProps {
   currentPage: number;
   tasksAmount: number;
@@ -40,7 +73,7 @@ const Pagination = ({
   };
 
   return (
-    <Box margin='10px 0 0 0'>
+    <Box margin="10px 0 0 0">
       {currentPage >= 5 && (
         <Navigation onClick={() => getPageNumber(1)}>
           <MdFirstPage />
@@ -77,37 +110,3 @@ const Pagination = ({
 };
 
 export default Pagination;
-
-interface PageProps {
-  selectedPage: boolean;
-}
-
-const Navigation = styled(Box)`
-  margin: 0 5px;
-  padding: 2px;
-  font-size: 15px;
-  height: 25px;
-  width: 25px;
-  border: 1px solid ${({ theme }) => theme.colors.gray};
-  background: ${({ theme }) => theme.colors.whiteDirty};
-  border-radius: 3px;
-  cursor: pointer;
-  transition: ${({ theme }) => theme.transition};
-  user-select: none;
-  &:hover {
-    background: ${({ theme }) => theme.colors.grayLight};
-  }
-`;
-
-const Page = styled(Navigation)<PageProps>`
-  background: ${({ theme, selectedPage }) =>
-    selectedPage ? theme.colors.turquise : theme.colors.whiteDirty};
-  color: ${({ theme, selectedPage }) =>
-    selectedPage ? theme.colors.white : theme.colors.grayDark};
-  border: ${({ theme, selectedPage }) =>
-    selectedPage ? "none" : `1px solid ${theme.colors.gray}`};
-  &:hover {
-    background: ${({ theme, selectedPage }) =>
-      selectedPage ? theme.colors.turquise : theme.colors.grayLight};
-  }
-`;

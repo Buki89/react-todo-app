@@ -20,14 +20,14 @@ const Message = styled.div`
   margin: 5px 0 0 0;
   justify-content: center;
   align-items: center;
-  min-height: 30px;
+  min-height: 18px;
   > p {
-    margin: 0;
+    margin: 5px 0 0 0;
   }
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    min-height: 18px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    min-height: 30px;
     > p {
-      margin: 5px 0 0 0;
+      margin: 0;
     }
   }
 `;

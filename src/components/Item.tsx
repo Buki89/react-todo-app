@@ -22,14 +22,15 @@ const Container = styled(Box)`
 `;
 
 const Inputs = styled.div`
-  font-size: 18px;
+  font-size: 14px;
+  line-height: 18px;
   font-weight: 500;
   margin: 0 0 0 10px;
   display: flex;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 14px;
-    line-height: 18px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 18px;
+    line-height: 24px;
   }
 `;
 

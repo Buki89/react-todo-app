@@ -27,15 +27,15 @@ interface HomeDashboardProps {
 const Container = styled(Box)`
   flex-direction: column;
   margin: 10px auto;
-  padding: 30px 10px;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 5px 5px;
+  padding: 5px 5px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 30px 10px;
   }
 `;
 const Item = styled.div`
-  margin: 20px;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin: 5px;
+  margin: 5px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin: 20px;
   }
 `;
 const ItemListContainer = styled.div`
@@ -45,9 +45,9 @@ const ItemListContainer = styled.div`
 const OverviewBar = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-bottom: 20px;
   }
 `;
 

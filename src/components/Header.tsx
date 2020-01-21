@@ -6,10 +6,10 @@ import { iconSize } from "../lib/helpers";
 
 const Wrapper = styled(Box)`
   position: relative;
-  height: 120px;
+  height: 80px;
   background-color: ${({ theme }) => theme.colors.black};
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    height: 80px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 120px;
   }
 `;
 
@@ -17,13 +17,13 @@ const LogoutButtonWrapper = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
-  right: 8px;
-  bottom: 8px;
+  right: 6px;
+  bottom: 6px;
   color: ${({ theme }) => theme.colors.whiteDirty};
   cursor: pointer;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    right: 6px;
-    bottom: 6px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    right: 8px;
+    bottom: 8px;
   }
 `;
 
@@ -33,25 +33,25 @@ const AppName = styled.div`
 `;
 
 const H1 = styled.h1`
-  font-size: 42px;
-  line-height: 50px;
+  font-size: 28px;
+  line-height: 32px;
   color: ${({ theme }) => theme.colors.whiteDirty};
   margin: 0;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 28px;
-    line-height: 32px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 42px;
+    line-height: 50px;
   }
 `;
 
 const Text = styled.p`
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 12px;
+  line-height: 18px;
   color: ${({ theme }) => theme.colors.whiteDirty};
-  margin: 0 16px;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 12px;
-    line-height: 18px;
-    margin: 0 10px;
+  margin: 0 10px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0 16px;
   }
 `;
 
