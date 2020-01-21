@@ -70,3 +70,5 @@ export const iconSize = (size: number): number => {
     return size;
   }
 };
+
+export const anyChar = (str: string): boolean => /\S+/.test(str);

@@ -88,7 +88,6 @@ class HomePage extends React.PureComponent<HomePageProps & HomePageActions> {
     );
   }
 }
-
 const mapStateToProps = (state: State) => {
   return {
     taskList: state.tasks,

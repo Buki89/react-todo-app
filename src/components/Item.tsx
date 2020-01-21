@@ -10,7 +10,7 @@ import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 import { TextAlignment } from "../themes/fields";
-import { iconSize } from "../lib/helpers";
+import { iconSize, anyChar } from "../lib/helpers";
 import { Theme } from "../themes/theme";
 
 const Container = styled(Box)`
@@ -113,7 +113,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
       this.props.taskList.filter(
         (task: Task) => task.taskName === this.state.taskName
       ).length === 0;
-    if (value) {
+    if (anyChar(value)) {
       if (hasUniqueName) {
         this.props.taskActions.startEditTask({
           id: this.props.task.id,
@@ -154,19 +154,19 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             )}
 
             {this.state.isVisible && (
-              <Box flexDirection='column' alignItems='flex-start'>
+              <Box flexDirection="column" alignItems="flex-start">
                 <div>
                   <form onSubmit={this.handleEdit}>
                     <InputEdit
-                      name='edit'
+                      name="edit"
                       value={this.state.taskName}
                       onChange={this.handleChangeTask}
                       textAlign={TextAlignment.left}
                     />
 
                     <Button
-                      name='Edit'
-                      type='submit'
+                      name="Edit"
+                      type="submit"
                       styles={{
                         margin: "0 5px",
                         "font-size": "14px",
@@ -179,7 +179,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
             )}
           </Inputs>
 
-          <Box justifyContent='space-between' alignItems='center'>
+          <Box justifyContent="space-between" alignItems="center">
             <Icons>
               <FaEdit
                 color={this.props.theme.colors.turquise}
@@ -210,7 +210,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
         {this.state.error && (
           <>
-            <Box margin='0 0 10px 20px' justifyContent='flex-start'>
+            <Box margin="0 0 10px 20px" justifyContent="flex-start">
               <TextSmall color={this.props.theme.colors.red}>
                 {this.state.errorMessage}
               </TextSmall>

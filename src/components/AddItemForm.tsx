@@ -7,11 +7,12 @@ import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 import { Theme } from "../themes/theme";
+import { anyChar } from "../lib/helpers";
 
 const Menu = styled.div`
   display: flex;
   > button {
-    margin-left: 5px;
+    margin-left: ${({ theme }) => theme.sizes.xs};
   }
 `;
 const Message = styled.div`
@@ -48,7 +49,7 @@ interface AddItemFormState {
 class AddItemForm extends React.PureComponent<
   AddItemFormProps,
   AddItemFormState
-  > {
+> {
   state = {
     value: "",
     error: false,
@@ -67,7 +68,7 @@ class AddItemForm extends React.PureComponent<
 
     const hasUniqueName =
       this.props.taskList.filter(task => task.taskName === value).length === 0;
-    if (value) {
+    if (anyChar(value)) {
       if (hasUniqueName) {
         this.props.handleSubmit({
           taskName: value,
@@ -98,12 +99,12 @@ class AddItemForm extends React.PureComponent<
       <form onSubmit={this.handleSubmitForm}>
         <Menu>
           <Input
-            name='addTask'
-            placeholder='What should I do?'
+            name="addTask"
+            placeholder="What should I do?"
             value={this.state.value}
             onChange={this.handleChangeValue}
           />
-          <Button name='Add me!' type='submit'></Button>
+          <Button name="Add me!" type="submit"></Button>
         </Menu>
         <Message>
           {this.state.error && (
