@@ -22,8 +22,8 @@ const LogoutButtonWrapper = styled.div`
   color: ${({ theme }) => theme.colors.whiteDirty};
   cursor: pointer;
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    right: 5px;
-    bottom: 5px;
+    right: 6px;
+    bottom: 6px;
   }
 `;
 

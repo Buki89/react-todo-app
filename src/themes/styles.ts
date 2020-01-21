@@ -26,5 +26,3 @@ export const Box = styled.div<BoxProps>`
   ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth}`};
   ${({ margin }) => margin && `margin : ${margin}`};
 `;
-
-// TODO: colors from theme

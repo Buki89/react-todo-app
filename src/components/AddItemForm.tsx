@@ -1,11 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 import moment from "moment";
 import Input from "./fields/Input";
 import Button from "./Button";
 import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
+import { Theme } from "../themes/theme";
 
 const Menu = styled.div`
   display: flex;
@@ -19,18 +20,19 @@ const Message = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 30px;
+  > p {
+    margin: 0;
+  }
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     min-height: 18px;
     > p {
       margin: 5px 0 0 0;
     }
   }
-  > p {
-    margin: 0;
-  }
 `;
 
 interface AddItemFormProps {
+  theme?: Theme;
   taskList: Array<Task>;
   id?: string;
   buttonTitle: string;
@@ -46,7 +48,7 @@ interface AddItemFormState {
 class AddItemForm extends React.PureComponent<
   AddItemFormProps,
   AddItemFormState
-> {
+  > {
   state = {
     value: "",
     error: false,
@@ -96,16 +98,18 @@ class AddItemForm extends React.PureComponent<
       <form onSubmit={this.handleSubmitForm}>
         <Menu>
           <Input
-            name="addTask"
-            placeholder="What should I do?"
+            name='addTask'
+            placeholder='What should I do?'
             value={this.state.value}
             onChange={this.handleChangeValue}
           />
-          <Button name="Add me!" type="submit"></Button>
+          <Button name='Add me!' type='submit'></Button>
         </Menu>
         <Message>
           {this.state.error && (
-            <TextSmall color="#cc0000">{this.state.errorMessage}</TextSmall>
+            <TextSmall color={this.props.theme.colors.red}>
+              {this.state.errorMessage}
+            </TextSmall>
           )}
         </Message>
       </form>
@@ -113,4 +117,4 @@ class AddItemForm extends React.PureComponent<
   }
 }
 
-export default AddItemForm;
+export default withTheme(AddItemForm);

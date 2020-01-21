@@ -1,14 +1,16 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
+import { Theme } from "../themes/theme";
 
 interface ButtonStylesProps {
   color: string;
   styles: { [key: string]: string };
+  theme: Theme;
 }
 
 const ButtonStyled = styled.button<ButtonStylesProps>`
   background: ${({ color }) => color};
-  color: #fff;
+  color: ${({ theme }) => theme.colors.white};
   text-align: center;
   border: none;
   border-radius: 3px;
@@ -21,7 +23,7 @@ const ButtonStyled = styled.button<ButtonStylesProps>`
   ${({ styles }) => styles};
 
   &:hover {
-    background: #00cbe6;
+    background: ${({ theme }) => theme.colors.turquiseLight};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -36,12 +38,14 @@ interface ButtonProps {
   color?: string;
   onClick?: () => any;
   styles?: { [key: string]: string };
+  theme: Theme;
 }
 
 const Button = ({
   type = "button",
   name,
-  color = "#00ACC1",
+  theme,
+  color = theme.colors.turquise,
   onClick,
   styles
 }: ButtonProps) => (
@@ -50,4 +54,4 @@ const Button = ({
   </ButtonStyled>
 );
 
-export default Button;
+export default withTheme(Button);

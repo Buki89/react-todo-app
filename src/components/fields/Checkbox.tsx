@@ -45,9 +45,11 @@ const StyledCheckbox = styled.input`
     display: block;
     width: ${checkboxSize};
     height: ${checkboxSize};
-    border: 1px solid ${({ checked }) => (checked ? "#28e08d" : "#c0c0c0")};
+    border: 1px solid
+      ${({ checked, theme }) =>
+        checked ? theme.colors.green : theme.colors.gray};
     border-radius: 4px;
-    background: white;
+    background: ${({ theme }) => theme.colors.white};
     position: absolute;
     top: 0;
     left: 0;
@@ -64,7 +66,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
   render() {
     return (
       <StyledCheckbox
-        type="checkbox"
+        type='checkbox'
         checked={this.props.checked}
         onChange={e => this.props.onChange(e)}
       />

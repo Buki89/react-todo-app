@@ -47,7 +47,7 @@ const OverviewBar = styled.div`
   justify-content: center;
   margin-bottom: 20px;
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
   }
 `;
 

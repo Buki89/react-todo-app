@@ -1,7 +1,10 @@
 import { Task, SortType } from "../store/types";
 import theme from "../themes/theme";
 
-export const filterBy = (filter: string, taskList: Array<Task>) => {
+export const filterBy = (
+  filter: string,
+  taskList: Array<Task>
+): Array<Task> => {
   switch (filter) {
     case SortType.completed:
       return taskList.filter((task: Task) => task.isCompleted);
@@ -14,29 +17,35 @@ export const filterBy = (filter: string, taskList: Array<Task>) => {
   }
 };
 
-const getDate = (date: string) => new Date(date).getTime();
+const getDate = (date: string): number => new Date(date).getTime();
 
-export const sortBy = (sortBy: string) => {
+// TODO: could be (a: Task, b: Task): number reused somehow?
+export const sortBy = (sortBy: string): ((a: Task, b: Task) => number) => {
   switch (sortBy) {
     case SortType.dateOldest:
-      return (a: Task, b: Task) => getDate(a.createdAt) - getDate(b.createdAt);
+      return (a: Task, b: Task): number =>
+        getDate(a.createdAt) - getDate(b.createdAt);
     case SortType.fromAToZ:
-      return (a: Task, b: Task) =>
+      return (a: Task, b: Task): number =>
         a.taskName.toLocaleLowerCase() > b.taskName.toLocaleLowerCase()
           ? 1
           : -1;
     case SortType.fromZToA:
-      return (a: Task, b: Task) =>
+      return (a: Task, b: Task): number =>
         a.taskName.toLocaleLowerCase() < b.taskName.toLocaleLowerCase()
           ? 1
           : -1;
     case SortType.dateNewest:
     default:
-      return (a: Task, b: Task) => getDate(b.createdAt) - getDate(a.createdAt);
+      return (a: Task, b: Task): number =>
+        getDate(b.createdAt) - getDate(a.createdAt);
   }
 };
 
-export const numberOfTasks = (taskList: Array<Task>, filterBy: string) => {
+export const numberOfTasks = (
+  taskList: Array<Task>,
+  filterBy: string
+): number => {
   switch (filterBy) {
     case SortType.completed:
       return taskList.filter((task: Task) => task.isCompleted).length;

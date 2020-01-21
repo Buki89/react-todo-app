@@ -11,14 +11,14 @@ const calculateCenter = `calc(50% - ${iconSize / 2}px)`;
 
 const Wrapper = styled.div`
   position: relative;
-  background: #f7e200;
+  background: ${({ theme }) => theme.colors.yellow};
   padding: 10px 20px;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   width: 100%;
   max-width: 200px;
   margin: 40px 0 15px;
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin: 0 0 50px;
+    margin: 0 0 20px;
   }
 `;
 
@@ -37,7 +37,7 @@ const IconWrapper = styled(Box)`
 
 const Text = styled.p`
   ${TextStyles}
-  color: #333;
+  color: ${({ theme }) => theme.colors.black};;
   text-transform: uppercase;
   &:not(:first-of-type) {
     font-weight: 700;

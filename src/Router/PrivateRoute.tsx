@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 import { State } from "../store/types";
+import { RouteType } from "../store/types";
 
 interface PrivateRouteProps {
   isAuthenticated: boolean;
@@ -9,21 +10,18 @@ interface PrivateRouteProps {
   component: React.ElementType;
 }
 
-// TODO: use route enum
 const PrivateRoute = ({
   isAuthenticated,
-  component: Component,
-  ...rest
+  component: Component
 }: PrivateRouteProps) => (
   <Route
-    {...rest}
     component={props =>
       isAuthenticated ? (
         <div>
           <Component {...props} />
         </div>
       ) : (
-        <Redirect to="/" />
+        <Redirect to={RouteType.login} />
       )
     }
   />

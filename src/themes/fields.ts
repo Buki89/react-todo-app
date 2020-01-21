@@ -18,13 +18,11 @@ export const SharedStyles = css<SharedStylesProps>`
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: 5px;
   padding: 5px;
+  background: ${({ theme }) => theme.colors.white};
   text-align: ${({ textAlign }) => textAlign || "center"};
   outline: none;
   &:focus {
     border: 1px solid #00acc1;
-  }
-  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 5px 10px;
   }
 `;
 

@@ -40,7 +40,7 @@ const Pagination = ({
   };
 
   return (
-    <Box margin="10px 0 0 0">
+    <Box margin='10px 0 0 0'>
       {currentPage >= 5 && (
         <Navigation onClick={() => getPageNumber(1)}>
           <MdFirstPage />
@@ -95,18 +95,19 @@ const Navigation = styled(Box)`
   transition: ${({ theme }) => theme.transition};
   user-select: none;
   &:hover {
-    background: #ccc;
+    background: ${({ theme }) => theme.colors.grayLight};
   }
 `;
 
 const Page = styled(Navigation)<PageProps>`
   background: ${({ theme, selectedPage }) =>
-    selectedPage ? "#00ACC1" : theme.colors.whiteDirty};
-  color: ${({ theme, selectedPage }) => (selectedPage ? "#FFF" : "#666")};
+    selectedPage ? theme.colors.turquise : theme.colors.whiteDirty};
+  color: ${({ theme, selectedPage }) =>
+    selectedPage ? theme.colors.white : theme.colors.grayDark};
   border: ${({ theme, selectedPage }) =>
     selectedPage ? "none" : `1px solid ${theme.colors.gray}`};
   &:hover {
     background: ${({ theme, selectedPage }) =>
-      selectedPage ? theme.colors.turquise : "#ccc"};
+      selectedPage ? theme.colors.turquise : theme.colors.grayLight};
   }
 `;

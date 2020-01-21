@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 import Input from "./fields/Input";
 import Checkbox from "./fields/Checkbox";
 import Button from "./Button";
@@ -11,21 +11,14 @@ import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 import { TextAlignment } from "../themes/fields";
 import { iconSize } from "../lib/helpers";
+import { Theme } from "../themes/theme";
 
 const Container = styled(Box)`
-  border: 1px solid ${({ theme }) => theme.colors.gray};
-  border-radius: 10px;
   justify-content: space-between;
-  margin: 10px 0;
-  padding: 15px;
-  height: 100%;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    border-radius: 8px;
-    padding: 10px;
-    max-height: 40px;
-    margin: 5px 0;
-  }
+  height: 100%;
+  min-height: 36px;
+  margin: 10px;
 `;
 
 const Inputs = styled.div`
@@ -33,6 +26,7 @@ const Inputs = styled.div`
   font-weight: 500;
   margin: 0 0 0 10px;
   display: flex;
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 14px;
     line-height: 18px;
@@ -47,7 +41,12 @@ const Icons = styled.div`
 `;
 
 const InputEdit = styled(Input)`
-  background: blue;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0;
+    margin: 0;
+    max-height: 30px;
+    max-width: 120px;
+  }
 `;
 
 interface StyledTextProps {
@@ -55,13 +54,15 @@ interface StyledTextProps {
 }
 
 const StyledText = styled.div<StyledTextProps>`
-  color: ${({ isCompleted }) => (isCompleted ? "#28e08d" : "#333")};
+  color: ${({ isCompleted, theme }) =>
+    isCompleted ? theme.colors.green : theme.colors.black};
   text-decoration: ${({ isCompleted }) =>
     isCompleted ? "line-through" : "none"};
 `;
 
 interface ItemProps {
   task: Task;
+  theme: Theme;
   taskList: Array<Task>;
   taskActions: Pick<
     HomePageActions,
@@ -76,6 +77,14 @@ interface ItemState {
   error: boolean;
   errorMessage: string;
 }
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  border-radius: 10px;
+  margin: 10px 0;
+`;
 
 class Item extends React.PureComponent<ItemProps, ItemState> {
   state = {
@@ -133,77 +142,83 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
 
   render() {
     const isCompleted = this.props.task && this.props.task.isCompleted;
-
+    // TODO: maybe put in separate components?
     return (
-      <Container>
-        <Inputs>
-          {!this.state.isVisible && (
-            <StyledText isCompleted={isCompleted}>
-              {this.props.task.taskName}
-            </StyledText>
-          )}
+      <Div>
+        <Container>
+          <Inputs>
+            {!this.state.isVisible && (
+              <StyledText isCompleted={isCompleted}>
+                {this.props.task.taskName}
+              </StyledText>
+            )}
 
-          {this.state.isVisible && (
-            <Box flexDirection='column'>
-              <div>
-                <form onSubmit={this.handleEdit}>
-                  <InputEdit
-                    name='edit'
-                    value={this.state.taskName}
-                    onChange={this.handleChangeTask}
-                    textAlign={TextAlignment.left}
-                  />
+            {this.state.isVisible && (
+              <Box flexDirection='column' alignItems='flex-start'>
+                <div>
+                  <form onSubmit={this.handleEdit}>
+                    <InputEdit
+                      name='edit'
+                      value={this.state.taskName}
+                      onChange={this.handleChangeTask}
+                      textAlign={TextAlignment.left}
+                    />
 
-                  <Button
-                    name='Edit'
-                    type='submit'
-                    styles={{
-                      margin: "0 5px",
-                      "font-size": "14px",
-                      "line-height": "18px"
-                    }}
-                  ></Button>
-                </form>
-              </div>
-              {this.state.error && (
-                <>
-                  <Box margin='5px 0 0 0' justifyContent='flex-start'>
-                    <TextSmall color='#cc0000'>
-                      {this.state.errorMessage}
-                    </TextSmall>
-                  </Box>
-                </>
-              )}
+                    <Button
+                      name='Edit'
+                      type='submit'
+                      styles={{
+                        margin: "0 5px",
+                        "font-size": "14px",
+                        "line-height": "18px"
+                      }}
+                    />
+                  </form>
+                </div>
+              </Box>
+            )}
+          </Inputs>
+
+          <Box justifyContent='space-between' alignItems='center'>
+            <Icons>
+              <FaEdit
+                color={this.props.theme.colors.turquise}
+                onClick={() =>
+                  this.setState({
+                    isVisible: !this.state.isVisible,
+                    error: false
+                  })
+                }
+                size={iconSize(25)}
+              />
+            </Icons>
+            <Icons>
+              <FaTrashAlt
+                onClick={this.handleDeleteTask}
+                color={this.props.theme.colors.redLight}
+                size={iconSize(22)}
+              />
+            </Icons>
+            <Icons>
+              <Checkbox
+                checked={this.state.isChecked}
+                onChange={this.handleOnCheckboxChange}
+              />
+            </Icons>
+          </Box>
+        </Container>
+
+        {this.state.error && (
+          <>
+            <Box margin='0 0 10px 20px' justifyContent='flex-start'>
+              <TextSmall color={this.props.theme.colors.red}>
+                {this.state.errorMessage}
+              </TextSmall>
             </Box>
-          )}
-        </Inputs>
-
-        <Box justifyContent='space-between' alignItems='center'>
-          <Icons>
-            <FaEdit
-              color='#00ACC1'
-              onClick={() =>
-                this.setState({ isVisible: !this.state.isVisible })
-              }
-              size={iconSize(25)}
-            />
-          </Icons>
-          <Icons>
-            <FaTrashAlt
-              onClick={this.handleDeleteTask}
-              color='#d85d71'
-              size={iconSize(22)}
-            />
-          </Icons>
-          <Icons>
-            <Checkbox
-              checked={this.state.isChecked}
-              onChange={this.handleOnCheckboxChange}
-            />
-          </Icons>
-        </Box>
-      </Container>
+          </>
+        )}
+      </Div>
     );
   }
 }
-export default Item;
+export default withTheme(Item);

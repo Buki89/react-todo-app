@@ -52,8 +52,13 @@ export enum SortType {
   fromAToZ = "fromAToZ",
   fromZToA = "fromZToA",
   completed = "completed",
-  incompleted = "inCompleted",
+  incompleted = "incompleted",
   allTasks = "allTasks"
+}
+
+export enum RouteType {
+  login = "/",
+  home = "/home"
 }
 
 export type Action =
