@@ -1,13 +1,13 @@
 type Color = { [color: string]: string };
 type Transition = string;
 type Breakpoint = { [device: string]: string };
-type Size = { [size: string]: string };
+type Space = Array<string>;
 
 export interface Theme {
   colors: Color;
   transition: Transition;
   breakpoints: Breakpoint;
-  sizes: Size;
+  spacing: Space;
 }
 
 const colors: Color = {
@@ -25,15 +25,16 @@ const colors: Color = {
   green: "#28e08d"
 };
 
-const sizes: Size = {
-  xs: "5px",
-  s: "10px",
-  m: "15px",
-  l: "20px",
-  xl: "25px",
-  xxl: "30px",
-  xxxl: "40px"
-};
+const spacing: Space = [
+  "5px",
+  "10px",
+  "15px",
+  "20px",
+  "25px",
+  "30px",
+  "35px",
+  "40px"
+];
 
 const transition: Transition = "all 0.2s ease-in-out";
 
@@ -45,7 +46,7 @@ const theme: Theme = {
   colors,
   transition,
   breakpoints,
-  sizes
+  spacing
 };
 
 export default theme;

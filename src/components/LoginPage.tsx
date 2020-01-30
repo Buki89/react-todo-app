@@ -56,9 +56,6 @@ class LoginPage extends React.PureComponent<
   LoginPageProps & LoginPageActions,
   LoginPageState
 > {
-  state = {
-    isLoadingData: false
-  };
   componentDidMount() {
     this.props.autoLogin();
   }
@@ -66,10 +63,7 @@ class LoginPage extends React.PureComponent<
   componentDidUpdate() {
     if (this.props.uid) {
       this.props.startSetTasks();
-      this.setState({ isLoadingData: true });
-    }
-    if (this.props.taskList) {
-      setTimeout(() => this.props.history.push(RouteType.home), 2000);
+      this.props.history.push(RouteType.home);
     }
   }
 
@@ -81,29 +75,24 @@ class LoginPage extends React.PureComponent<
     return (
       <Layout>
         <Wrapper>
-          {!this.state.isLoadingData && (
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              onClick={this.handleLogin}
-            >
-              <IconWrapper>
-                <FaUserAlt size={iconSize(80)} color="black" />
-              </IconWrapper>
-              <Button name="Login with Google" />
-              {this.props.error && (
-                <ErrorMessage>
-                  <FaExclamationTriangle color={this.props.theme.colors.red} />
-                  <p>{this.props.error}</p>
-                </ErrorMessage>
-              )}
-            </Box>
-          )}
-          {this.state.isLoadingData && (
-            <img src="/images/loading.gif" alt="loadingGif" />
-          )}
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            onClick={this.handleLogin}
+          >
+            <IconWrapper>
+              <FaUserAlt size={iconSize(80)} color="black" />
+            </IconWrapper>
+            <Button name="Login with Google" />
+            {this.props.error && (
+              <ErrorMessage>
+                <FaExclamationTriangle color={this.props.theme.colors.red} />
+                <p>{this.props.error}</p>
+              </ErrorMessage>
+            )}
+          </Box>
         </Wrapper>
       </Layout>
     );

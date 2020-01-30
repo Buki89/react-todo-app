@@ -7,12 +7,12 @@ import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 import { Theme } from "../themes/theme";
-import { anyChar } from "../lib/helpers";
+import { hasValue } from "../lib/helpers";
 
 const Menu = styled.div`
   display: flex;
   > button {
-    margin-left: ${({ theme }) => theme.sizes.xs};
+    margin-left: ${({ theme }) => theme.spacing[0]};
   }
 `;
 const Message = styled.div`
@@ -68,7 +68,7 @@ class AddItemForm extends React.PureComponent<
 
     const hasUniqueName =
       this.props.taskList.filter(task => task.taskName === value).length === 0;
-    if (anyChar(value)) {
+    if (hasValue(value)) {
       if (hasUniqueName) {
         this.props.handleSubmit({
           taskName: value,

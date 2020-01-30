@@ -10,7 +10,7 @@ import { Task } from "../store/types";
 import { ErrorMessage } from "./fields/errorMessages";
 import { TextSmall } from "../themes/typography";
 import { TextAlignment } from "../themes/fields";
-import { iconSize, anyChar } from "../lib/helpers";
+import { iconSize, hasValue } from "../lib/helpers";
 import { Theme } from "../themes/theme";
 
 const Container = styled(Box)`
@@ -114,7 +114,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
       this.props.taskList.filter(
         (task: Task) => task.taskName === this.state.taskName
       ).length === 0;
-    if (anyChar(value)) {
+    if (hasValue(value)) {
       if (hasUniqueName) {
         this.props.taskActions.startEditTask({
           id: this.props.task.id,
